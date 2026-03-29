@@ -26,10 +26,83 @@
       color:var(--text);
     }
 
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(243,239,232,0.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      width:min(var(--max),calc(100% - 32px));
+      margin:0 auto;
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+
+    .brand-logo{
+      height:94px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+      flex-shrink:0;
+    }
+
+    .brand-name{
+      font-size:1.8rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--text);
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .top-pill{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      color:var(--text);
+      font:inherit;
+      font-weight:700;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+    }
+
     .wrap{
       width:min(var(--max),calc(100% - 32px));
       margin:0 auto;
-      padding:40px 0 56px;
+      padding:32px 0 56px;
     }
 
     .card{
@@ -200,9 +273,32 @@
     }
 
     @media (max-width:720px){
+      .topbar-inner{
+        min-height:auto;
+        padding:14px 0;
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .brand,
+      .top-actions{
+        justify-content:center;
+      }
+
+      .brand{
+        flex-direction:column;
+        text-align:center;
+      }
+
+      .brand-logo{
+        height:46px;
+        margin:0 auto;
+      }
+
       .menu{
         grid-template-columns:1fr;
       }
+
       .actions .btn{
         width:100%;
       }
@@ -210,6 +306,19 @@
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Axe Dossier Admin">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+
+      <div class="top-actions">
+        <a class="top-pill" href="settings.html">Réglages</a>
+      </div>
+    </div>
+  </header>
+
   <div class="wrap">
     <div class="stack">
       <section class="card">
@@ -271,6 +380,7 @@
             <div class="menu">
               <a href="paiements.html">Paiements</a>
               <a href="recouvrement.html">Recouvrement</a>
+              <a href="relance.html">Relances</a>
             </div>
           </div>
 
