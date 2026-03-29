@@ -47,21 +47,27 @@
     .brand{
       display:flex;
       align-items:center;
-      gap:12px;
-      font-weight:800;
+      gap:16px;
+      font-weight:700;
       letter-spacing:.02em;
     }
 
-    .brand-mark{
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      background:var(--accent);
-      color:#fff;
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      box-shadow:var(--shadow);
+    .brand-logo{
+      height:94px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+      flex-shrink:0;
+    }
+
+    .brand-name{
+      font-size:1.8rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--text);
+      line-height:1;
+      white-space:nowrap;
     }
 
     .nav{
@@ -237,6 +243,14 @@
         align-items:stretch;
       }
       .brand,.nav{justify-content:center}
+      .brand{
+        flex-direction:column;
+        text-align:center;
+      }
+      .brand-logo{
+        height:46px;
+        margin:0 auto;
+      }
       .hero{flex-direction:column;align-items:start}
       .stats{grid-template-columns:1fr}
       .toolbar{grid-template-columns:1fr}
@@ -268,9 +282,9 @@
 <body>
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="brand" href="index.html" aria-label="Retour admin">
-        <span class="brand-mark">AD</span>
-        <span>Axe Dossier · Journal des règlements</span>
+      <a class="brand" href="index.html" aria-label="Retour admin Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
       </a>
       <nav class="nav" aria-label="Navigation admin">
         <a class="pill" href="index.html">Admin</a>
