@@ -422,6 +422,10 @@
       }) + " €";
     }
 
+    function safeDate(value = "") {
+      return String(value || "").trim();
+    }
+
     function normalizeStatus(type, status) {
       const s = String(status || "").trim().toUpperCase();
 
@@ -435,17 +439,12 @@
       }
 
       if (type === "AVOIR") {
-        if (s === "EMIS") return "EMIS";
         if (s === "APPLIQUE") return "APPLIQUE";
         if (s === "ANNULE") return "ANNULE";
-        return s || "EMIS";
+        return "APPLIQUE";
       }
 
       return s || "—";
-    }
-
-    function safeDate(value = "") {
-      return String(value || "").trim();
     }
 
     function normalizeEntries() {
@@ -571,7 +570,7 @@
           <td>${escapeHtml(item.clientName || "—")}</td>
           <td>${escapeHtml(item.dossierTitle || "—")}</td>
           <td>${escapeHtml(item.status || "—")}</td>
-          <td class="num">${item.type === "AVOIR" ? "-" : ""}${formatMoney(item.amountTTC)}</td>
+          <td class="num">${item.type === "AVOIR" ? "-" : ""}${formatMoney(Math.abs(item.amountTTC))}</td>
         </tr>
       `).join("");
     }
