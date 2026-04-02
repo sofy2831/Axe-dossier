@@ -462,7 +462,7 @@
           </form>
 
           <div class="note">
-            Chaque document est rattaché à un dossier. Si un fichier est ajouté, il est stocké dans Firebase Storage. L’ajout d’un document crée automatiquement une ligne de suivi.
+            Chaque document est rattaché à un dossier. Si un fichier est ajouté, il est stocké dans Firebase Storage. L’ajout d’un document crée automatiquement une ligne dans le suivi client.
           </div>
         </article>
 
@@ -721,30 +721,31 @@
       };
     }
 
-    async function createFollowUpForDocument(documentPayload) {
+    async function createFollowUpForDocument(documentId, documentPayload) {
       await addDoc(followUpsRef, {
+        alertLevel: "",
+        assignedTo: "",
         clientId: documentPayload.clientIdSnapshot || "",
         clientNameSnapshot: documentPayload.clientNameSnapshot || "",
-        dossierId: documentPayload.dossierId || "",
-        dossierTitleSnapshot: documentPayload.dossierTitleSnapshot || "",
-        type: "DOCUMENTS_RECEIVED",
-        title: `Document ajouté : ${documentPayload.title || "Sans titre"}`,
+        createdAt: serverTimestamp(),
         details: [
           documentPayload.type ? `Type : ${documentPayload.type}` : "",
           documentPayload.fileName ? `Fichier : ${documentPayload.fileName}` : "",
+          documentPayload.url ? `Lien : ${documentPayload.url}` : "",
           documentPayload.notes ? `Notes : ${documentPayload.notes}` : ""
         ].filter(Boolean).join("\n"),
-        eventDate: documentPayload.date || todayStr(),
-        status: "DONE",
-        priority: "NORMAL",
-        sourceType: "DOCUMENT",
-        sourceId: "",
-        reminder: false,
-        alertLevel: "",
-        assignedTo: "",
-        scope: "DOSSIER",
         doneAt: serverTimestamp(),
-        createdAt: serverTimestamp(),
+        dossierId: documentPayload.dossierId || "",
+        dossierTitleSnapshot: documentPayload.dossierTitleSnapshot || "",
+        eventDate: documentPayload.date || todayStr(),
+        priority: "NORMAL",
+        reminder: false,
+        scope: "DOSSIER",
+        sourceId: documentId || "",
+        sourceType: "DOCUMENT",
+        status: "DONE",
+        title: `Document ajouté : ${documentPayload.title || "Sans titre"}`,
+        type: "DOCUMENTS_RECEIVED",
         updatedAt: serverTimestamp()
       });
     }
@@ -843,7 +844,7 @@
             };
           }
 
-          await createFollowUpForDocument(createdPayload);
+          await createFollowUpForDocument(docRef.id, createdPayload);
         }
 
         resetFormState();
