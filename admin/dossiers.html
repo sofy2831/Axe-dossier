@@ -120,6 +120,20 @@
       letter-spacing:-.02em;
     }
 
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -166,6 +180,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -303,6 +320,15 @@
       background:#fff;
       font:inherit;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    .mini-btn:hover{
+      border-color:var(--accent);
     }
 
     .note{
@@ -377,7 +403,9 @@
 
       <section class="grid">
         <article class="card">
-          <h2>Créer un dossier</h2>
+          <h2 id="formTitle">Créer un dossier</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
+
           <form id="dossierForm">
             <div class="field">
               <label for="dossierTitle">Titre du dossier</label>
@@ -438,8 +466,9 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="btn">Enregistrer</button>
+              <button id="submitBtn" type="submit" class="btn">Enregistrer</button>
               <button type="reset" class="btn btn-secondary">Vider</button>
+              <button id="cancelEditBtn" type="button" class="btn btn-secondary" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
@@ -511,6 +540,11 @@
     const totalAttente = document.getElementById("totalAttente");
     const totalClos = document.getElementById("totalClos");
 
+    const formTitle = document.getElementById("formTitle");
+    const formMode = document.getElementById("formMode");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+
     const clientsRef = collection(db, "clients");
     const dossiersRef = collection(db, "dossiers");
     const documentsRef = collection(db, "documents");
@@ -549,6 +583,17 @@
       return "";
     }
 
+    function resetFormState() {
+      editingDossierId = null;
+      form.reset();
+      document.getElementById("dossierType").value = "Succession";
+      document.getElementById("dossierStatus").value = "EN_COURS";
+      formTitle.textContent = "Créer un dossier";
+      formMode.style.display = "none";
+      submitBtn.textContent = "Enregistrer";
+      cancelEditBtn.style.display = "none";
+    }
+
     function fillClientSelect() {
       const current = clientSelect.value;
 
@@ -583,6 +628,11 @@
       document.getElementById("dossierReference").value = dossier.reference || "";
       document.getElementById("dossierSummary").value = dossier.summary || "";
       document.getElementById("dossierNotes").value = dossier.notes || "";
+
+      formTitle.textContent = "Modifier un dossier";
+      formMode.style.display = "";
+      submitBtn.textContent = "Mettre à jour";
+      cancelEditBtn.style.display = "";
     }
 
     function getDossierUsage(dossierId) {
@@ -629,6 +679,10 @@
         const usage = getDossierUsage(dossier.id);
         const usageLine = usage.total
           ? `<span><strong>Documents liés :</strong> ${usage.documentsCount}</span>`
+          : `<span><strong>Documents liés :</strong> aucun</span>`;
+
+        const clientLink = dossier.clientId
+          ? `client-suivi.html?id=${encodeURIComponent(dossier.clientId)}`
           : "";
 
         return `
@@ -653,6 +707,7 @@
             ${dossier.notes ? `<div class="dossier-notes"><strong>Notes :</strong><br>${escapeHtml(dossier.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
+              ${clientLink ? `<a class="mini-btn" href="${clientLink}">Suivi</a>` : ""}
               <button class="mini-btn" type="button" data-edit-id="${dossier.id}">Modifier</button>
               <button class="mini-btn" type="button" data-delete-id="${dossier.id}">Supprimer</button>
             </div>
@@ -661,7 +716,7 @@
       }).join("");
     }
 
-    function createDossier(data) {
+    function createDossierPayload(data) {
       const clientId = data.get("dossierClient") || "";
       const client = allClients.find(c => c.id === clientId);
 
@@ -674,9 +729,7 @@
         openedAt: data.get("dossierOpenedAt") || "",
         reference: normalizeText(data.get("dossierReference")),
         summary: normalizeText(data.get("dossierSummary")),
-        notes: normalizeText(data.get("dossierNotes")),
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        notes: normalizeText(data.get("dossierNotes"))
       };
     }
 
@@ -684,7 +737,7 @@
       e.preventDefault();
 
       const data = new FormData(form);
-      const payload = createDossier(data);
+      const payload = createDossierPayload(data);
 
       if (!payload.title || !payload.clientId) {
         alert("Titre et client obligatoires.");
@@ -693,13 +746,6 @@
 
       try {
         if (editingDossierId) {
-          const usage = getDossierUsage(editingDossierId);
-
-          if (usage.total > 0) {
-            alert("Modification bloquée : ce dossier est déjà utilisé par un ou plusieurs documents.");
-            return;
-          }
-
           await updateDoc(doc(db, "dossiers", editingDossierId), {
             title: payload.title,
             clientId: payload.clientId,
@@ -712,19 +758,33 @@
             notes: payload.notes,
             updatedAt: serverTimestamp()
           });
-
-          editingDossierId = null;
         } else {
-          await addDoc(dossiersRef, payload);
+          await addDoc(dossiersRef, {
+            ...payload,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
         }
 
-        form.reset();
-        document.getElementById("dossierType").value = "Succession";
-        document.getElementById("dossierStatus").value = "EN_COURS";
+        resetFormState();
       } catch (err) {
         console.error("Erreur enregistrement dossier :", err);
         alert("Impossible d’enregistrer le dossier.");
       }
+    });
+
+    form.addEventListener("reset", () => {
+      setTimeout(() => {
+        if (!editingDossierId) {
+          document.getElementById("dossierType").value = "Succession";
+          document.getElementById("dossierStatus").value = "EN_COURS";
+        }
+      }, 0);
+    });
+
+    cancelEditBtn.addEventListener("click", () => {
+      resetFormState();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     searchInput.addEventListener("input", renderDossiers);
@@ -736,12 +796,6 @@
         const id = editBtn.getAttribute("data-edit-id");
         const dossier = allDossiers.find(d => d.id === id);
         if (!dossier) return;
-
-        const usage = getDossierUsage(id);
-        if (usage.total > 0) {
-          alert("Modification bloquée : ce dossier est déjà utilisé par un ou plusieurs documents.");
-          return;
-        }
 
         editingDossierId = id;
         fillForm(dossier);
@@ -767,10 +821,7 @@
         await deleteDoc(doc(db, "dossiers", id));
 
         if (editingDossierId === id) {
-          editingDossierId = null;
-          form.reset();
-          document.getElementById("dossierType").value = "Succession";
-          document.getElementById("dossierStatus").value = "EN_COURS";
+          resetFormState();
         }
       } catch (err) {
         console.error("Erreur suppression dossier :", err);
@@ -821,6 +872,8 @@
       },
       (err) => console.error("Erreur chargement documents :", err)
     );
+
+    resetFormState();
   </script>
 </body>
 </html>
