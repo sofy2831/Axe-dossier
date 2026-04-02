@@ -124,6 +124,20 @@
       letter-spacing:-.02em;
     }
 
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -173,6 +187,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -394,6 +411,10 @@
       color:var(--text);
     }
 
+    .mini-btn:hover{
+      border-color:var(--accent);
+    }
+
     .amount{
       font-size:1.35rem;
       font-weight:800;
@@ -466,17 +487,17 @@
       <section class="hero">
         <div>
           <h1>Avoirs</h1>
-          <p>Création propre d’avoirs liés aux factures, avec lignes multiples et impact comptable exploitable ensuite dans les journaux et le recouvrement.</p>
+          <p>Création propre d’avoirs liés aux factures, avec lignes multiples et impact direct sur le recouvrement et les journaux.</p>
         </div>
       </section>
 
       <section class="grid">
         <article class="card">
-          <h2>Créer un avoir</h2>
+          <h2 id="formTitle">Créer un avoir</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
 
           <div class="auto-note">
-            L’avoir doit être rattaché à une facture.
-            Le numéro est généré automatiquement à l’enregistrement.
+            L’avoir doit être rattaché à une facture. Le numéro est généré automatiquement à l’enregistrement. Il est appliqué immédiatement à la facture liée.
           </div>
 
           <form id="form">
@@ -521,13 +542,14 @@
             </div>
 
             <div class="actions">
-              <button class="btn" type="submit">Enregistrer</button>
+              <button id="submitBtn" class="btn" type="submit">Enregistrer</button>
               <button id="resetBtn" class="btn btn-secondary" type="button">Vider</button>
+              <button id="cancelEditBtn" class="btn btn-secondary" type="button" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
           <div class="note">
-            Cet avoir sera utilisé dans le journal des ventes et déduit du recouvrement de la facture liée.
+            L’avoir est conservé dans l’historique. Il n’est pas supprimé : il peut être <strong>annulé</strong> si nécessaire.
           </div>
         </article>
 
@@ -535,7 +557,7 @@
           <div class="stats">
             <div class="stat">
               <strong id="totalCreditsCount">0</strong>
-              <span>Avoirs</span>
+              <span>Avoirs affichés</span>
             </div>
             <div class="stat">
               <strong id="totalCreditsAmount">0,00 €</strong>
@@ -543,11 +565,11 @@
             </div>
             <div class="stat">
               <strong id="totalAppliedCount">0</strong>
-              <span>Liés à une facture</span>
+              <span>Appliqués</span>
             </div>
             <div class="stat">
               <strong id="totalStatusCount">0</strong>
-              <span>Émis</span>
+              <span>Annulés</span>
             </div>
           </div>
 
@@ -555,7 +577,6 @@
             <input id="searchInput" class="search" type="text" placeholder="Rechercher un avoir..." />
             <select id="statusFilter" class="filter">
               <option value="">Tous les statuts</option>
-              <option value="EMIS">EMIS</option>
               <option value="APPLIQUE">APPLIQUE</option>
               <option value="ANNULE">ANNULE</option>
             </select>
@@ -573,21 +594,25 @@
   import {
     collection,
     addDoc,
-    deleteDoc,
     doc,
     getDoc,
     updateDoc,
-    setDoc,
     onSnapshot,
     orderBy,
     query,
-    serverTimestamp
+    serverTimestamp,
+    runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const linesEl = document.getElementById("lines");
   const addLineBtn = document.getElementById("addLine");
   const form = document.getElementById("form");
   const resetBtn = document.getElementById("resetBtn");
+  const cancelEditBtn = document.getElementById("cancelEditBtn");
+  const submitBtn = document.getElementById("submitBtn");
+  const formTitle = document.getElementById("formTitle");
+  const formMode = document.getElementById("formMode");
+
   const listEl = document.getElementById("list");
   const invoiceSelect = document.getElementById("invoiceSelect");
   const dateInput = document.getElementById("date");
@@ -607,6 +632,7 @@
   const avoirsRef = collection(db, "avoirs");
   const facturesRef = collection(db, "factures");
   const paiementsRef = collection(db, "paiements");
+  const followUpsRef = collection(db, "followUps");
   const countersRef = doc(db, "counters", "main");
 
   let allInvoices = [];
@@ -634,20 +660,34 @@
 
   function formatMoneyNegative(value) {
     const num = Math.abs(Number(value || 0));
-    return "-"+num.toLocaleString("fr-FR", {
+    return "-" + num.toLocaleString("fr-FR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }) + " €";
   }
 
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
   function ensureDate() {
     if (!dateInput.value) {
-      dateInput.value = new Date().toISOString().slice(0, 10);
+      dateInput.value = todayStr();
     }
   }
 
-  function getToday() {
-    return new Date().toISOString().slice(0, 10);
+  function setCreateMode() {
+    formTitle.textContent = "Créer un avoir";
+    formMode.style.display = "none";
+    submitBtn.textContent = "Enregistrer";
+    cancelEditBtn.style.display = "none";
+  }
+
+  function setEditMode() {
+    formTitle.textContent = "Modifier un avoir";
+    formMode.style.display = "";
+    submitBtn.textContent = "Mettre à jour";
+    cancelEditBtn.style.display = "";
   }
 
   function createLineElement(line = {}) {
@@ -773,7 +813,7 @@
 
   function getAppliedCreditsTotal(invoiceId, excludedCreditId = null) {
     return allAvoirs
-      .filter(a => a.invoiceId === invoiceId && a.id !== excludedCreditId && (a.status || "EMIS") !== "ANNULE")
+      .filter(a => a.invoiceId === invoiceId && a.id !== excludedCreditId && (a.status || "APPLIQUE") !== "ANNULE")
       .reduce((sum, a) => sum + Number(a.amountTTC ?? a.total ?? 0), 0);
   }
 
@@ -797,7 +837,7 @@
     const netAfterCredits = Math.max(0, Number((total - credits).toFixed(2)));
     const remaining = Math.max(0, Number((netAfterCredits - payments).toFixed(2)));
     const dueDate = String(invoice.dueDate || "");
-    const today = getToday();
+    const today = todayStr();
 
     let newStatus = "ENVOYEE";
     if (remaining <= 0) newStatus = "PAYEE";
@@ -822,14 +862,48 @@
   }
 
   async function getNextNumber() {
-    const snap = await getDoc(countersRef);
-    const data = snap.exists() ? snap.data() : { nextAvoirNumber: 1 };
+    return await runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(countersRef);
+      const data = snap.exists() ? snap.data() : { nextAvoirNumber: 1 };
 
-    const n = data.nextAvoirNumber || 1;
-    const number = `AV-${new Date().getFullYear()}-${String(n).padStart(3, "0")}`;
+      const n = Number(data.nextAvoirNumber || 1);
+      const number = `AV-${new Date().getFullYear()}-${String(n).padStart(3, "0")}`;
 
-    await setDoc(countersRef, { nextAvoirNumber: n + 1, updatedAt: serverTimestamp() }, { merge: true });
-    return number;
+      transaction.set(countersRef, {
+        nextAvoirNumber: n + 1,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      return number;
+    });
+  }
+
+  async function createFollowUpForCredit(payload, sourceId = "") {
+    await addDoc(followUpsRef, {
+      clientId: payload.clientId || "",
+      clientNameSnapshot: payload.clientSnapshot?.name || "",
+      dossierId: payload.dossierId || "",
+      dossierTitleSnapshot: payload.dossierTitleSnapshot || "",
+      type: "CREDIT_NOTE_CREATED",
+      title: `Avoir créé : ${payload.number || ""}`,
+      details: [
+        payload.invoiceNumberSnapshot ? `Facture liée : ${payload.invoiceNumberSnapshot}` : "",
+        `Montant TTC : ${formatMoney(payload.amountTTC)}`,
+        payload.notes ? `Notes : ${payload.notes}` : ""
+      ].filter(Boolean).join("\n"),
+      eventDate: payload.date || todayStr(),
+      status: "DONE",
+      priority: "NORMAL",
+      sourceType: "CREDIT_NOTE",
+      sourceId: sourceId || "",
+      reminder: false,
+      alertLevel: "",
+      assignedTo: "",
+      scope: payload.dossierId ? "DOSSIER" : "CLIENT",
+      doneAt: serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
   }
 
   function fillInvoiceSelect() {
@@ -846,7 +920,8 @@
         const clientName = inv.clientSnapshot?.name || "Client";
         const total = Number(inv.amountTTC ?? inv.amount ?? 0);
         const existingCredits = getAppliedCreditsTotal(inv.id, editingCreditId);
-        const remainingCreditCapacity = Math.max(0, Number((total - existingCredits).toFixed(2)));
+        const payments = getPaymentsTotal(inv.id);
+        const remainingCreditCapacity = Math.max(0, Number((total - existingCredits - payments).toFixed(2)));
 
         return `<option value="${inv.id}">${escapeHtml(inv.number || "")} — ${escapeHtml(clientName)} — crédit dispo ${formatMoney(remainingCreditCapacity)}</option>`;
       }).join("");
@@ -865,6 +940,7 @@
     ensureDate();
     fillInvoiceSelect();
     updateSummary();
+    setCreateMode();
   }
 
   function fillForm(item) {
@@ -885,6 +961,7 @@
     }
 
     updateSummary();
+    setEditMode();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -893,8 +970,8 @@
     totalCreditsAmount.textContent = formatMoney(
       items.reduce((acc, item) => acc + Number(item.amountTTC ?? item.total ?? 0), 0)
     );
-    totalAppliedCount.textContent = items.filter(item => !!item.invoiceId).length;
-    totalStatusCount.textContent = items.filter(item => (item.status || "EMIS") === "EMIS").length;
+    totalAppliedCount.textContent = items.filter(item => (item.status || "APPLIQUE") === "APPLIQUE").length;
+    totalStatusCount.textContent = items.filter(item => (item.status || "APPLIQUE") === "ANNULE").length;
   }
 
   function renderList() {
@@ -912,11 +989,11 @@
       ].join(" ").toLowerCase();
 
       const matchesSearch = blob.includes(q);
-      const matchesStatus = !status || (item.status || "EMIS") === status;
+      const matchesStatus = !status || (item.status || "APPLIQUE") === status;
       return matchesSearch && matchesStatus;
     });
 
-    renderStats(allAvoirs);
+    renderStats(filtered);
 
     if (!filtered.length) {
       listEl.innerHTML = '<div class="empty">Aucun avoir pour le moment.</div>';
@@ -926,8 +1003,9 @@
     listEl.innerHTML = filtered.map(item => {
       const amountTTC = Number(item.amountTTC ?? item.total ?? 0);
       const clientName = item.clientSnapshot?.name || "Client supprimé";
-      const statusValue = item.status || "EMIS";
-      const badgeClass = statusValue === "APPLIQUE" ? "applique" : (statusValue === "ANNULE" ? "annule" : "emis");
+      const statusValue = item.status || "APPLIQUE";
+      const badgeClass = statusValue === "ANNULE" ? "annule" : "applique";
+      const followLink = item.clientId ? `client-suivi.html?id=${encodeURIComponent(item.clientId)}` : "";
 
       return `
         <article class="credit-item">
@@ -954,9 +1032,10 @@
           ${item.notes ? `<div class="credit-notes">${escapeHtml(item.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
           <div class="mini-actions">
+            ${followLink ? `<a class="mini-btn" href="${followLink}">Suivi</a>` : ""}
             <a class="mini-btn" href="avoir-apercu.html?id=${item.id}" target="_blank" rel="noopener noreferrer">Aperçu</a>
-            <button class="mini-btn" type="button" data-edit-id="${item.id}">Modifier</button>
-            <button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>
+            ${statusValue !== "ANNULE" ? `<button class="mini-btn" type="button" data-edit-id="${item.id}">Modifier</button>` : ""}
+            ${statusValue !== "ANNULE" ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Annuler</button>` : ""}
           </div>
         </article>
       `;
@@ -973,6 +1052,7 @@
   searchInput.addEventListener("input", renderList);
   statusFilter.addEventListener("change", renderList);
   resetBtn.addEventListener("click", resetForm);
+  cancelEditBtn.addEventListener("click", resetForm);
 
   listEl.addEventListener("click", async (e) => {
     const editBtn = e.target.closest("[data-edit-id]");
@@ -991,11 +1071,16 @@
     const item = allAvoirs.find(a => a.id === id);
     if (!item) return;
 
-    const ok = confirm("Supprimer cet avoir ?");
+    const ok = confirm("Annuler cet avoir ?");
     if (!ok) return;
 
     try {
-      await deleteDoc(doc(db, "avoirs", id));
+      await updateDoc(doc(db, "avoirs", id), {
+        status: "ANNULE",
+        updatedAt: serverTimestamp(),
+        cancelledAt: serverTimestamp()
+      });
+
       if (item.invoiceId) {
         await syncInvoiceStatus(item.invoiceId, 0, id);
       }
@@ -1004,8 +1089,8 @@
         resetForm();
       }
     } catch (err) {
-      console.error("Erreur suppression avoir :", err);
-      alert("Impossible de supprimer l’avoir.");
+      console.error("Erreur annulation avoir :", err);
+      alert("Impossible d’annuler l’avoir.");
     }
   });
 
@@ -1037,7 +1122,8 @@
 
     const invoiceTotal = Number(invoice.amountTTC ?? invoice.amount ?? 0);
     const existingCredits = getAppliedCreditsTotal(invoice.id, editingCreditId);
-    const remainingCreditCapacity = Math.max(0, Number((invoiceTotal - existingCredits).toFixed(2)));
+    const payments = getPaymentsTotal(invoice.id);
+    const remainingCreditCapacity = Math.max(0, Number((invoiceTotal - existingCredits - payments).toFixed(2)));
 
     if (totalTTC > remainingCreditCapacity) {
       alert(`Avoir trop élevé. Maximum autorisé sur cette facture : ${formatMoney(remainingCreditCapacity)}.`);
@@ -1053,7 +1139,7 @@
         const oldInvoiceId = existing?.invoiceId || null;
 
         await updateDoc(doc(db, "avoirs", editingCreditId), {
-          date: dateInput.value || new Date().toISOString().slice(0, 10),
+          date: dateInput.value || todayStr(),
           invoiceId: invoice.id,
           invoiceNumberSnapshot: invoice.number || "",
           clientId: invoice.clientId || "",
@@ -1067,6 +1153,7 @@
           amountTTC: amounts.amountTTC,
           total: amounts.amountTTC,
           notes: notesInput.value || "",
+          status: "APPLIQUE",
           updatedAt: serverTimestamp()
         });
 
@@ -1075,9 +1162,9 @@
       } else {
         const number = await getNextNumber();
 
-        await addDoc(avoirsRef, {
+        const payload = {
           number,
-          date: dateInput.value || new Date().toISOString().slice(0, 10),
+          date: dateInput.value || todayStr(),
           invoiceId: invoice.id,
           invoiceNumberSnapshot: invoice.number || "",
           clientId: invoice.clientId || "",
@@ -1085,7 +1172,7 @@
           dossierId: invoice.dossierId || "",
           dossierTitleSnapshot: invoice.dossierTitleSnapshot || "",
           businessSnapshot,
-          status: "EMIS",
+          status: "APPLIQUE",
           lines,
           amountHT: amounts.amountHT,
           amountVAT: amounts.amountVAT,
@@ -1094,8 +1181,10 @@
           notes: notesInput.value || "",
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp()
-        });
+        };
 
+        const docRef = await addDoc(avoirsRef, payload);
+        await createFollowUpForCredit(payload, docRef.id);
         await syncInvoiceStatus(invoice.id, amounts.amountTTC);
       }
 
@@ -1148,6 +1237,7 @@
   ensureDate();
   createLineElement();
   updateSummary();
+  setCreateMode();
 </script>
 </body>
 </html>
