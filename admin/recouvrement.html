@@ -330,7 +330,7 @@
         <div class="stats">
           <div class="stat">
             <strong id="totalOpenCount">0</strong>
-            <span>Factures à suivre</span>
+            <span>Factures affichées</span>
           </div>
           <div class="stat">
             <strong id="totalRemaining">0,00 €</strong>
@@ -388,7 +388,7 @@
         </div>
 
         <div class="footer-note">
-          Calcul : <strong>facture TTC - avoirs liés - paiements reçus</strong>.
+          Calcul : <strong>facture TTC - avoirs appliqués - paiements reçus</strong>.
         </div>
       </section>
     </div>
@@ -468,7 +468,7 @@
         const invoiceId = a.invoiceId || "";
         if (!invoiceId) continue;
 
-        if ((a.status || "EMIS") === "ANNULE") continue;
+        if ((a.status || "APPLIQUE") === "ANNULE") continue;
 
         const amount = Number(a.amountTTC ?? a.total ?? 0);
         map[invoiceId] = Number((map[invoiceId] || 0) + amount);
