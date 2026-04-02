@@ -16,7 +16,9 @@
       --shadow:0 16px 40px rgba(0,0,0,0.06);
       --max:1200px;
     }
+
     *{box-sizing:border-box}
+
     body{
       margin:0;
       font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -377,7 +379,7 @@
 
         <div class="footer-note">
           Journal basé sur les règlements saisis dans <strong>paiements.html</strong>.
-          Si une facture disparaît, le règlement reste visible avec ses données propres.
+          Si une facture disparaît, le règlement reste visible avec ses snapshots.
         </div>
       </section>
     </div>
@@ -454,7 +456,7 @@
 
     function normalizeEntries() {
       const invoiceMap = Object.fromEntries(
-        allFactures.map(f => [f.id, f])
+        allFactures.map(invoice => [invoice.id, invoice])
       );
 
       return allPaiements.map(item => {
@@ -463,15 +465,9 @@
         return {
           id: item.id,
           date: safeDate(item.date || ""),
-          invoiceNumber:
-            item.invoiceNumberSnapshot ||
-            invoice.number ||
-            "",
-          clientName:
-            item.clientNameSnapshot ||
-            invoice.clientSnapshot?.name ||
-            "",
-          mode: item.mode || "",
+          invoiceNumber: item.invoiceNumberSnapshot || invoice.number || "",
+          clientName: item.clientNameSnapshot || invoice.clientSnapshot?.name || "",
+          mode: String(item.mode || "").trim().toUpperCase(),
           reference: item.reference || "",
           invoiceStatus: normalizeInvoiceStatus(invoice.status || item.invoiceStatusSnapshot || ""),
           amount: Number(item.amount || 0),
@@ -483,7 +479,6 @@
     function sortEntries(entries) {
       const sort = sortFilter.value || "DATE_DESC";
       const list = [...entries];
-
       const sortDate = (v) => String(v || "0000-00-00");
 
       if (sort === "DATE_ASC") {
@@ -541,11 +536,11 @@
 
       totalPayments.textContent = sorted.length;
       totalAmount.textContent = formatMoney(
-        sorted.reduce((acc, i) => acc + Number(i.amount || 0), 0)
+        sorted.reduce((acc, item) => acc + Number(item.amount || 0), 0)
       );
-      totalVirements.textContent = sorted.filter(i => i.mode === "VIREMENT").length;
-      totalCheques.textContent = sorted.filter(i => i.mode === "CHEQUE").length;
-      totalOthers.textContent = sorted.filter(i => i.mode === "ESPECES" || i.mode === "AUTRE").length;
+      totalVirements.textContent = sorted.filter(item => item.mode === "VIREMENT").length;
+      totalCheques.textContent = sorted.filter(item => item.mode === "CHEQUE").length;
+      totalOthers.textContent = sorted.filter(item => item.mode === "ESPECES" || item.mode === "AUTRE").length;
 
       if (!sorted.length) {
         journalBody.innerHTML = "";
