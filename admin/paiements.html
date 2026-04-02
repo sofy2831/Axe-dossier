@@ -120,6 +120,20 @@
       letter-spacing:-.02em;
     }
 
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -166,6 +180,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -303,6 +320,15 @@
       background:#fff;
       font:inherit;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    .mini-btn:hover{
+      border-color:var(--accent);
     }
 
     .amount{
@@ -377,13 +403,15 @@
       <section class="hero">
         <div>
           <h1>Paiements</h1>
-          <p>Tu enregistres ici les règlements reçus, avec lien vers la facture, date, mode et montant. Cela te permet d’avoir un suivi propre avant d’automatiser davantage.</p>
+          <p>Tu enregistres ici les règlements reçus, avec lien vers la facture, date, mode et montant. Chaque nouveau paiement alimente automatiquement le suivi du dossier.</p>
         </div>
       </section>
 
       <section class="grid">
         <article class="card">
-          <h2>Ajouter un paiement</h2>
+          <h2 id="formTitle">Ajouter un paiement</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
+
           <form id="paymentForm">
             <div class="field">
               <label for="paymentInvoice">Facture</label>
@@ -425,13 +453,14 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="btn">Enregistrer</button>
+              <button id="submitBtn" type="submit" class="btn">Enregistrer</button>
               <button type="button" id="resetBtn" class="btn btn-secondary">Vider</button>
+              <button id="cancelEditBtn" type="button" class="btn btn-secondary" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
           <div class="note">
-            Le paiement embarque ses snapshots facture/client/entreprise au moment de l’enregistrement. C’est plus propre pour les journaux et l’historique.
+            Le paiement embarque ses snapshots facture/client/entreprise au moment de l’enregistrement. Cela crée aussi une ligne de suivi.
           </div>
         </article>
 
@@ -500,9 +529,15 @@
     const totalVirements = document.getElementById("totalVirements");
     const totalCheques = document.getElementById("totalCheques");
 
+    const formTitle = document.getElementById("formTitle");
+    const formMode = document.getElementById("formMode");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+
     const invoicesRef = collection(db, "factures");
     const paymentsRef = collection(db, "paiements");
     const creditsRef = collection(db, "avoirs");
+    const followUpsRef = collection(db, "followUps");
 
     let allInvoices = [];
     let allPayments = [];
@@ -536,6 +571,18 @@
 
     function getToday() {
       return new Date().toISOString().slice(0, 10);
+    }
+
+    function resetFormClean() {
+      form.reset();
+      document.getElementById("paymentMode").value = "VIREMENT";
+      editingPaymentId = null;
+      editingOriginalInvoiceId = null;
+      formTitle.textContent = "Ajouter un paiement";
+      formMode.style.display = "none";
+      submitBtn.textContent = "Enregistrer";
+      cancelEditBtn.style.display = "none";
+      fillInvoiceSelect();
     }
 
     function getCreditsTotal(invoiceId) {
@@ -636,14 +683,11 @@
       document.getElementById("paymentMode").value = payment.mode || "VIREMENT";
       document.getElementById("paymentReference").value = payment.reference || "";
       document.getElementById("paymentNotes").value = payment.notes || "";
-    }
 
-    function resetFormClean() {
-      form.reset();
-      document.getElementById("paymentMode").value = "VIREMENT";
-      editingPaymentId = null;
-      editingOriginalInvoiceId = null;
-      fillInvoiceSelect();
+      formTitle.textContent = "Modifier un paiement";
+      formMode.style.display = "";
+      submitBtn.textContent = "Mettre à jour";
+      cancelEditBtn.style.display = "";
     }
 
     function renderStats(payments) {
@@ -730,6 +774,9 @@
           "";
 
         const remaining = computeInvoiceRemaining(payment.invoiceId);
+        const followLink = payment.clientIdSnapshot
+          ? `client-suivi.html?id=${encodeURIComponent(payment.clientIdSnapshot)}`
+          : "";
 
         return `
           <article class="payment-item">
@@ -757,12 +804,43 @@
             ${payment.notes ? `<div class="payment-notes">${escapeHtml(payment.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
+              ${followLink ? `<a class="mini-btn" href="${followLink}">Suivi</a>` : ""}
               <button class="mini-btn" type="button" data-edit-id="${payment.id}">Modifier</button>
               <button class="mini-btn" type="button" data-delete-id="${payment.id}">Supprimer</button>
             </div>
           </article>
         `;
       }).join("");
+    }
+
+    async function createFollowUpForPayment(paymentPayload) {
+      await addDoc(followUpsRef, {
+        clientId: paymentPayload.clientIdSnapshot || "",
+        clientNameSnapshot: paymentPayload.clientNameSnapshot || "",
+        dossierId: "",
+        dossierTitleSnapshot: "",
+        type: "PAYMENT_RECEIVED",
+        title: `Paiement reçu : ${paymentPayload.invoiceNumberSnapshot || "Facture"}`,
+        details: [
+          `Montant : ${formatMoney(paymentPayload.amount)}`,
+          paymentPayload.mode ? `Mode : ${paymentPayload.mode}` : "",
+          paymentPayload.reference ? `Référence : ${paymentPayload.reference}` : "",
+          paymentPayload.invoiceLabelSnapshot ? `Libellé : ${paymentPayload.invoiceLabelSnapshot}` : "",
+          paymentPayload.notes ? `Notes : ${paymentPayload.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        eventDate: paymentPayload.date || getToday(),
+        status: "DONE",
+        priority: "NORMAL",
+        sourceType: "PAYMENT",
+        sourceId: "",
+        reminder: false,
+        alertLevel: "",
+        assignedTo: "",
+        scope: "CLIENT",
+        doneAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
     }
 
     function buildPaymentPayload(data) {
@@ -785,9 +863,7 @@
         amount: Number(data.get("paymentAmount") || 0),
         mode: data.get("paymentMode") || "VIREMENT",
         reference: (data.get("paymentReference") || "").trim(),
-        notes: (data.get("paymentNotes") || "").trim(),
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        notes: (data.get("paymentNotes") || "").trim()
       };
     }
 
@@ -844,13 +920,22 @@
 
           if (oldInvoiceId) await syncInvoiceStatus(oldInvoiceId);
           await syncInvoiceStatus(payload.invoiceId);
-
-          resetFormClean();
         } else {
-          await addDoc(paymentsRef, payload);
+          const docRef = await addDoc(paymentsRef, {
+            ...payload,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+
+          await createFollowUpForPayment({
+            ...payload,
+            sourceId: docRef.id
+          });
+
           await syncInvoiceStatus(payload.invoiceId);
-          resetFormClean();
         }
+
+        resetFormClean();
       } catch (err) {
         console.error("Erreur enregistrement paiement :", err);
         alert("Impossible d’enregistrer le paiement.");
@@ -867,6 +952,10 @@
     searchInput.addEventListener("input", renderPayments);
     modeFilter.addEventListener("change", renderPayments);
     resetBtn.addEventListener("click", resetFormClean);
+    cancelEditBtn.addEventListener("click", () => {
+      resetFormClean();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 
     paymentList.addEventListener("click", async (e) => {
       const editBtn = e.target.closest("[data-edit-id]");
@@ -947,6 +1036,8 @@
         renderStats([]);
       }
     );
+
+    resetFormClean();
   </script>
 </body>
 </html>
