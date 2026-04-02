@@ -317,7 +317,7 @@
       <section class="hero">
         <div>
           <h1>Relances</h1>
-          <p>Préparation de 3 relances et d’une mise en demeure, avec sujet et corps de mail préremplis.</p>
+          <p>Préparation de 3 relances et d’une mise en demeure, avec sujet et corps de mail préremplis. Chaque relance enregistrée remonte aussi dans le suivi client.</p>
         </div>
       </section>
 
@@ -416,6 +416,10 @@
 
     function normalizeDate(dateStr = "") {
       return String(dateStr || "").trim();
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     function daysBetween(dateStr) {
@@ -583,8 +587,20 @@ ${commonFooter}`
       ];
     }
 
+    function followUpPriority(type = "") {
+      if (type === "MISE_EN_DEMEURE") return "URGENT";
+      if (type === "RELANCE_3") return "HIGH";
+      return "NORMAL";
+    }
+
+    function followUpAlertLevel(type = "") {
+      if (type === "MISE_EN_DEMEURE") return "CRITIQUE";
+      if (type === "RELANCE_3") return "ALERTE";
+      return "";
+    }
+
     async function saveRelance(entry, sent = false) {
-      await addDoc(collection(db, "relances"), {
+      const relanceRef = await addDoc(collection(db, "relances"), {
         invoiceId: entry.invoiceId,
         invoiceNumber: entry.invoiceNumber,
         clientId: entry.clientId,
@@ -607,6 +623,36 @@ ${commonFooter}`
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         sentAt: sent ? serverTimestamp() : null
+      });
+
+      await addDoc(collection(db, "followUps"), {
+        clientId: entry.clientId || "",
+        clientNameSnapshot: entry.clientName || "",
+        dossierId: entry.dossierId || "",
+        dossierTitleSnapshot: entry.dossierTitle || "",
+        type: entry.type,
+        title: sent
+          ? `Relance envoyée – ${entry.invoiceNumber}`
+          : `Relance préparée – ${entry.invoiceNumber}`,
+        details: [
+          `Sujet : ${entry.subject}`,
+          "",
+          entry.body,
+          "",
+          `Montant restant dû : ${formatMoney(entry.remainingTTC)}`
+        ].join("\n"),
+        eventDate: todayStr(),
+        status: sent ? "DONE" : "TODO",
+        priority: followUpPriority(entry.type),
+        sourceType: "RELANCE",
+        sourceId: relanceRef.id,
+        reminder: !sent,
+        alertLevel: followUpAlertLevel(entry.type),
+        assignedTo: "",
+        scope: entry.dossierId ? "DOSSIER" : "CLIENT",
+        doneAt: sent ? serverTimestamp() : null,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
       });
     }
 
@@ -686,7 +732,7 @@ ${commonFooter}`
             subject: tpl.subject,
             body: tpl.body
           }, false);
-          alert("Relance enregistrée comme PREPARED.");
+          alert("Relance enregistrée comme PREPARED et ajoutée au suivi.");
         } catch (err) {
           console.error(err);
           alert("Impossible d’enregistrer la relance.");
@@ -772,14 +818,19 @@ ${commonFooter}`
         document.getElementById("paidTTC").textContent = formatMoney(paidTTC);
         document.getElementById("remainingTTC").textContent = formatMoney(remainingTTC);
 
+        const warnings = [];
+
         if (!clientEmail) {
-          warningBox.style.display = "";
-          warningBox.textContent = "Aucun email client n’est présent dans le snapshot de la facture. Les modèles sont utilisables, mais le bouton “Envoyer par mail” sera bloqué.";
+          warnings.push("Aucun email client n’est présent dans le snapshot de la facture. Les modèles sont utilisables, mais le bouton “Envoyer par mail” sera bloqué.");
         }
 
         if (remainingTTC <= 0) {
+          warnings.push("Cette facture ne présente plus de reste dû. Les relances n’ont pas vraiment de sens ici.");
+        }
+
+        if (warnings.length) {
           warningBox.style.display = "";
-          warningBox.textContent = "Cette facture ne présente plus de reste dû. Les relances n’ont pas vraiment de sens ici.";
+          warningBox.innerHTML = warnings.map(w => escapeHtml(w)).join("<br><br>");
         }
 
         const baseData = {
