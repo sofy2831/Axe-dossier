@@ -120,6 +120,20 @@
       letter-spacing:-.02em;
     }
 
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -166,6 +180,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -321,6 +338,10 @@
       color:var(--text);
     }
 
+    .mini-btn:hover{
+      border-color:var(--accent);
+    }
+
     .amount{
       font-size:1.35rem;
       font-weight:800;
@@ -460,13 +481,14 @@
       <section class="hero">
         <div>
           <h1>Devis</h1>
-          <p>Création propre avec numéro chronologique automatique, lignes multiples, mode prévu et délai de validité.</p>
+          <p>Création propre avec numéro chronologique automatique, lignes multiples, mode prévu et délai de validité. Chaque nouveau devis alimente aussi le suivi.</p>
         </div>
       </section>
 
       <section class="grid">
         <article class="card">
-          <h2>Créer un devis</h2>
+          <h2 id="formTitle">Créer un devis</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
 
           <div class="auto-note">
             Le numéro de devis est généré automatiquement à l’enregistrement.
@@ -542,14 +564,14 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="btn">Enregistrer</button>
+              <button id="submitBtn" type="submit" class="btn">Enregistrer</button>
               <button type="reset" class="btn btn-secondary">Vider</button>
+              <button id="cancelEditBtn" type="button" class="btn btn-secondary" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
           <div class="note">
-            Le numéro chronologique est attribué automatiquement via <strong>counters/</strong>.
-            En création : <strong>ENVOYE</strong>. En modification : le statut existant est conservé.
+            Le numéro chronologique est attribué automatiquement via <strong>counters/</strong>. En création : <strong>ENVOYE</strong>. En modification : le statut existant est conservé. La suppression physique est bloquée : un devis est annulé, pas effacé.
           </div>
         </article>
 
@@ -557,7 +579,7 @@
           <div class="stats">
             <div class="stat">
               <strong id="totalQuotes">0</strong>
-              <span>Devis</span>
+              <span>Devis affichés</span>
             </div>
             <div class="stat">
               <strong id="totalSent">0</strong>
@@ -596,7 +618,6 @@
     import {
       collection,
       addDoc,
-      deleteDoc,
       doc,
       updateDoc,
       setDoc,
@@ -604,7 +625,8 @@
       onSnapshot,
       query,
       orderBy,
-      serverTimestamp
+      serverTimestamp,
+      runTransaction
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const form = document.getElementById("quoteForm");
@@ -625,9 +647,15 @@
     const summaryVAT = document.getElementById("summaryVAT");
     const summaryTTC = document.getElementById("summaryTTC");
 
+    const formTitle = document.getElementById("formTitle");
+    const formMode = document.getElementById("formMode");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+
     const clientsRef = collection(db, "clients");
     const dossiersRef = collection(db, "dossiers");
     const quotesRef = collection(db, "devis");
+    const followUpsRef = collection(db, "followUps");
 
     const settingsRef = doc(db, "settings", "main");
     const countersRef = doc(db, "counters", "main");
@@ -670,6 +698,10 @@
 
     function padNumber(n) {
       return String(Number(n || 1)).padStart(3, "0");
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     function defaultSettings() {
@@ -760,8 +792,25 @@
     function ensureQuoteDate() {
       const input = document.getElementById("quoteDate");
       if (!input.value) {
-        input.value = new Date().toISOString().slice(0, 10);
+        input.value = todayStr();
       }
+    }
+
+    function resetFormState() {
+      editingQuoteId = null;
+      form.reset();
+      ensureQuoteDate();
+      document.getElementById("quoteMode").value = "VIREMENT";
+      document.getElementById("quoteValidityDelay").value = "15_DAYS";
+      fillDossierSelect("");
+      quoteLines.innerHTML = "";
+      lineCounter = 0;
+      createLineElement();
+      updateQuoteSummary();
+      formTitle.textContent = "Créer un devis";
+      formMode.style.display = "none";
+      submitBtn.textContent = "Enregistrer";
+      cancelEditBtn.style.display = "none";
     }
 
     function createLineElement(line = {}) {
@@ -927,26 +976,29 @@
     }
 
     async function getNextQuoteNumber() {
-      const countersSnap = await getDoc(countersRef);
-      const counters = countersSnap.exists()
-        ? { ...defaultCounters(), ...countersSnap.data() }
-        : defaultCounters();
+      return await runTransaction(db, async (transaction) => {
+        const snap = await transaction.get(countersRef);
 
-      const nextNumber = counters.nextQuoteNumber || 1;
-      const prefix = counters.quotePrefix || "DEV";
-      const generated = `${prefix}-${currentYear()}-${padNumber(nextNumber)}`;
+        const counters = snap.exists()
+          ? { ...defaultCounters(), ...snap.data() }
+          : defaultCounters();
 
-      await setDoc(
-        countersRef,
-        {
-          quotePrefix: prefix,
-          nextQuoteNumber: nextNumber + 1,
-          updatedAt: serverTimestamp()
-        },
-        { merge: true }
-      );
+        const nextNumber = Number(counters.nextQuoteNumber || 1);
+        const prefix = counters.quotePrefix || "DEV";
+        const generated = `${prefix}-${currentYear()}-${padNumber(nextNumber)}`;
 
-      return generated;
+        transaction.set(
+          countersRef,
+          {
+            quotePrefix: prefix,
+            nextQuoteNumber: nextNumber + 1,
+            updatedAt: serverTimestamp()
+          },
+          { merge: true }
+        );
+
+        return generated;
+      });
     }
 
     function fillForm(quote) {
@@ -973,6 +1025,11 @@
       }
 
       updateQuoteSummary();
+
+      formTitle.textContent = "Modifier un devis";
+      formMode.style.display = "";
+      submitBtn.textContent = "Mettre à jour";
+      cancelEditBtn.style.display = "";
     }
 
     function renderStats(quotes) {
@@ -1025,7 +1082,7 @@
         return matchesSearch && matchesStatus;
       });
 
-      renderStats(allQuotes);
+      renderStats(filtered);
 
       if (!allClients.length) {
         quoteList.innerHTML = '<div class="empty">Ajoute d’abord au moins un client dans clients.html.</div>';
@@ -1060,6 +1117,11 @@
           ? ` (+${quote.lines.length - 1} ligne${quote.lines.length - 1 > 1 ? "s" : ""})`
           : "";
 
+        const followLink = quote.clientId
+          ? `client-suivi.html?id=${encodeURIComponent(quote.clientId)}`
+          : "";
+        const factureLink = `factures.html?fromQuote=${encodeURIComponent(quote.id)}`;
+
         return `
           <article class="quote-item">
             <div class="quote-top">
@@ -1089,13 +1151,45 @@
             ${quote.notes ? `<div class="quote-notes">${escapeHtml(quote.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
+              ${followLink ? `<a class="mini-btn" href="${followLink}">Suivi</a>` : ""}
+              <a class="mini-btn" href="${factureLink}">Facturer</a>
               <a class="mini-btn" href="devis-apercu.html?id=${quote.id}" target="_blank" rel="noopener noreferrer">Aperçu</a>
               <button class="mini-btn" type="button" data-edit-id="${quote.id}">Modifier</button>
-              <button class="mini-btn" type="button" data-delete-id="${quote.id}">Supprimer</button>
+              ${quote.status !== "ANNULE" ? `<button class="mini-btn" type="button" data-delete-id="${quote.id}">Annuler</button>` : ""}
             </div>
           </article>
         `;
       }).join("");
+    }
+
+    async function createFollowUpForQuote(quotePayload, sourceId = "") {
+      await addDoc(followUpsRef, {
+        clientId: quotePayload.clientId || "",
+        clientNameSnapshot: quotePayload.clientSnapshot?.name || "",
+        dossierId: quotePayload.dossierId || "",
+        dossierTitleSnapshot: quotePayload.dossierTitleSnapshot || "",
+        type: "QUOTE_SENT",
+        title: `Devis créé : ${quotePayload.number || ""}`,
+        details: [
+          quotePayload.labelSnapshot ? `Libellé : ${quotePayload.labelSnapshot}` : "",
+          `Montant TTC : ${formatMoney(quotePayload.amountTTC)}`,
+          quotePayload.validityDelayLabel ? `Validité : ${quotePayload.validityDelayLabel}` : "",
+          quotePayload.dueDate ? `Limite : ${quotePayload.dueDate}` : "",
+          quotePayload.notes ? `Notes : ${quotePayload.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        eventDate: quotePayload.date || todayStr(),
+        status: "DONE",
+        priority: "NORMAL",
+        sourceType: "QUOTE",
+        sourceId: sourceId || "",
+        reminder: false,
+        alertLevel: "",
+        assignedTo: "",
+        scope: quotePayload.dossierId ? "DOSSIER" : "CLIENT",
+        doneAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
     }
 
     async function buildQuotePayload(data, existingQuote = null) {
@@ -1121,7 +1215,7 @@
         number = await getNextQuoteNumber();
       }
 
-      const quoteDate = data.get("quoteDate") || new Date().toISOString().slice(0, 10);
+      const quoteDate = data.get("quoteDate") || todayStr();
       const validityDelay = data.get("quoteValidityDelay") || "15_DAYS";
       const validityDelayLabel = validityDelayToLabel(validityDelay);
       const dueDate = addDays(quoteDate, validityDelayToDays(validityDelay));
@@ -1198,22 +1292,13 @@
             businessSnapshot: payload.businessSnapshot,
             updatedAt: serverTimestamp()
           });
-
-          editingQuoteId = null;
         } else {
           const payload = await buildQuotePayload(data, null);
-          await addDoc(quotesRef, payload);
+          const docRef = await addDoc(quotesRef, payload);
+          await createFollowUpForQuote(payload, docRef.id);
         }
 
-        form.reset();
-        ensureQuoteDate();
-        document.getElementById("quoteMode").value = "VIREMENT";
-        document.getElementById("quoteValidityDelay").value = "15_DAYS";
-        fillDossierSelect("");
-        quoteLines.innerHTML = "";
-        lineCounter = 0;
-        createLineElement();
-        updateQuoteSummary();
+        resetFormState();
       } catch (err) {
         console.error("Erreur enregistrement devis :", err);
         alert("Impossible d’enregistrer le devis.");
@@ -1222,15 +1307,9 @@
 
     form.addEventListener("reset", () => {
       setTimeout(() => {
-        editingQuoteId = null;
-        ensureQuoteDate();
-        document.getElementById("quoteMode").value = "VIREMENT";
-        document.getElementById("quoteValidityDelay").value = "15_DAYS";
-        fillDossierSelect("");
-        quoteLines.innerHTML = "";
-        lineCounter = 0;
-        createLineElement();
-        updateQuoteSummary();
+        if (!editingQuoteId) {
+          resetFormState();
+        }
       }, 0);
     });
 
@@ -1246,6 +1325,11 @@
 
     searchInput.addEventListener("input", renderQuotes);
     statusFilter.addEventListener("change", renderQuotes);
+
+    cancelEditBtn.addEventListener("click", () => {
+      resetFormState();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 
     quoteList.addEventListener("click", async (e) => {
       const editBtn = e.target.closest("[data-edit-id]");
@@ -1264,19 +1348,22 @@
       if (!deleteBtn) return;
 
       const id = deleteBtn.getAttribute("data-delete-id");
-      const ok = confirm("Supprimer ce devis ?");
+      const ok = confirm("Annuler ce devis ?");
       if (!ok) return;
 
       try {
-        await deleteDoc(doc(db, "devis", id));
+        await updateDoc(doc(db, "devis", id), {
+          status: "ANNULE",
+          cancelledAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
 
         if (editingQuoteId === id) {
-          editingQuoteId = null;
-          form.reset();
+          resetFormState();
         }
       } catch (err) {
-        console.error("Erreur suppression devis :", err);
-        alert("Impossible de supprimer le devis.");
+        console.error("Erreur annulation devis :", err);
+        alert("Impossible d’annuler le devis.");
       }
     });
 
