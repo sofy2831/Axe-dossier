@@ -120,6 +120,20 @@
       letter-spacing:-.02em;
     }
 
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -166,6 +180,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -321,6 +338,10 @@
       color:var(--text);
     }
 
+    .mini-btn:hover{
+      border-color:var(--accent);
+    }
+
     .amount{
       font-size:1.35rem;
       font-weight:800;
@@ -460,13 +481,14 @@
       <section class="hero">
         <div>
           <h1>Factures</h1>
-          <p>Création propre avec numéro chronologique automatique, facture émise à l’enregistrement, lignes multiples et délai de règlement.</p>
+          <p>Création propre avec numéro chronologique automatique, facture émise à l’enregistrement, lignes multiples et délai de règlement. Chaque nouvelle facture alimente automatiquement le suivi.</p>
         </div>
       </section>
 
       <section class="grid">
         <article class="card">
-          <h2>Créer une facture</h2>
+          <h2 id="formTitle">Créer une facture</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
 
           <div class="auto-note">
             Le numéro de facture est généré automatiquement à l’enregistrement.
@@ -542,14 +564,14 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="btn">Enregistrer</button>
+              <button id="submitBtn" type="submit" class="btn">Enregistrer</button>
               <button type="reset" class="btn btn-secondary">Vider</button>
+              <button id="cancelEditBtn" type="button" class="btn btn-secondary" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
           <div class="note">
-            Le numéro chronologique est attribué automatiquement via <strong>counters/</strong>.
-            En création : <strong>ENVOYEE</strong>. En modification : le statut existant est conservé.
+            Le numéro chronologique est attribué automatiquement via <strong>counters/</strong>. En création : <strong>ENVOYEE</strong>. En modification : le statut existant est conservé.
           </div>
         </article>
 
@@ -625,9 +647,15 @@
     const summaryVAT = document.getElementById("summaryVAT");
     const summaryTTC = document.getElementById("summaryTTC");
 
+    const formTitle = document.getElementById("formTitle");
+    const formMode = document.getElementById("formMode");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+
     const clientsRef = collection(db, "clients");
     const dossiersRef = collection(db, "dossiers");
     const invoicesRef = collection(db, "factures");
+    const followUpsRef = collection(db, "followUps");
 
     const settingsRef = doc(db, "settings", "main");
     const countersRef = doc(db, "counters", "main");
@@ -670,6 +698,10 @@
 
     function padNumber(n) {
       return String(Number(n || 1)).padStart(3, "0");
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     function defaultSettings() {
@@ -760,8 +792,25 @@
     function ensureInvoiceDate() {
       const input = document.getElementById("invoiceDate");
       if (!input.value) {
-        input.value = new Date().toISOString().slice(0, 10);
+        input.value = todayStr();
       }
+    }
+
+    function resetFormState() {
+      editingInvoiceId = null;
+      form.reset();
+      ensureInvoiceDate();
+      document.getElementById("invoiceMode").value = "VIREMENT";
+      document.getElementById("invoicePaymentDelay").value = "A_RECEPTION";
+      fillDossierSelect("");
+      invoiceLines.innerHTML = "";
+      lineCounter = 0;
+      createLineElement();
+      updateInvoiceSummary();
+      formTitle.textContent = "Créer une facture";
+      formMode.style.display = "none";
+      submitBtn.textContent = "Enregistrer";
+      cancelEditBtn.style.display = "none";
     }
 
     function createLineElement(line = {}) {
@@ -973,6 +1022,11 @@
       }
 
       updateInvoiceSummary();
+
+      formTitle.textContent = "Modifier une facture";
+      formMode.style.display = "";
+      submitBtn.textContent = "Mettre à jour";
+      cancelEditBtn.style.display = "";
     }
 
     function renderStats(invoices) {
@@ -1060,6 +1114,10 @@
           ? ` (+${invoice.lines.length - 1} ligne${invoice.lines.length - 1 > 1 ? "s" : ""})`
           : "";
 
+        const followLink = invoice.clientId
+          ? `client-suivi.html?id=${encodeURIComponent(invoice.clientId)}`
+          : "";
+
         return `
           <article class="invoice-item">
             <div class="invoice-top">
@@ -1089,6 +1147,7 @@
             ${invoice.notes ? `<div class="invoice-notes">${escapeHtml(invoice.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
+              ${followLink ? `<a class="mini-btn" href="${followLink}">Suivi</a>` : ""}
               <a class="mini-btn" href="facture-apercu.html?id=${invoice.id}" target="_blank" rel="noopener noreferrer">Aperçu</a>
               <button class="mini-btn" type="button" data-edit-id="${invoice.id}">Modifier</button>
               <button class="mini-btn" type="button" data-delete-id="${invoice.id}">Supprimer</button>
@@ -1096,6 +1155,36 @@
           </article>
         `;
       }).join("");
+    }
+
+    async function createFollowUpForInvoice(invoicePayload, sourceId = "") {
+      await addDoc(followUpsRef, {
+        clientId: invoicePayload.clientId || "",
+        clientNameSnapshot: invoicePayload.clientSnapshot?.name || "",
+        dossierId: invoicePayload.dossierId || "",
+        dossierTitleSnapshot: invoicePayload.dossierTitleSnapshot || "",
+        type: "LETTER_SENT",
+        title: `Facture créée : ${invoicePayload.number || ""}`,
+        details: [
+          invoicePayload.labelSnapshot ? `Libellé : ${invoicePayload.labelSnapshot}` : "",
+          `Montant TTC : ${formatMoney(invoicePayload.amountTTC)}`,
+          invoicePayload.paymentDelayLabel ? `Délai : ${invoicePayload.paymentDelayLabel}` : "",
+          invoicePayload.dueDate ? `Échéance : ${invoicePayload.dueDate}` : "",
+          invoicePayload.notes ? `Notes : ${invoicePayload.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        eventDate: invoicePayload.date || todayStr(),
+        status: "DONE",
+        priority: "NORMAL",
+        sourceType: "INVOICE",
+        sourceId: sourceId || "",
+        reminder: false,
+        alertLevel: "",
+        assignedTo: "",
+        scope: invoicePayload.dossierId ? "DOSSIER" : "CLIENT",
+        doneAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
     }
 
     async function buildInvoicePayload(data, existingInvoice = null) {
@@ -1121,7 +1210,7 @@
         number = await getNextInvoiceNumber();
       }
 
-      const invoiceDate = data.get("invoiceDate") || new Date().toISOString().slice(0, 10);
+      const invoiceDate = data.get("invoiceDate") || todayStr();
       const paymentDelay = data.get("invoicePaymentDelay") || "A_RECEPTION";
       const paymentDelayLabel = paymentDelayToLabel(paymentDelay);
       const dueDate = addDays(invoiceDate, paymentDelayToDays(paymentDelay));
@@ -1198,22 +1287,13 @@
             businessSnapshot: payload.businessSnapshot,
             updatedAt: serverTimestamp()
           });
-
-          editingInvoiceId = null;
         } else {
           const payload = await buildInvoicePayload(data, null);
-          await addDoc(invoicesRef, payload);
+          const docRef = await addDoc(invoicesRef, payload);
+          await createFollowUpForInvoice(payload, docRef.id);
         }
 
-        form.reset();
-        ensureInvoiceDate();
-        document.getElementById("invoiceMode").value = "VIREMENT";
-        document.getElementById("invoicePaymentDelay").value = "A_RECEPTION";
-        fillDossierSelect("");
-        invoiceLines.innerHTML = "";
-        lineCounter = 0;
-        createLineElement();
-        updateInvoiceSummary();
+        resetFormState();
       } catch (err) {
         console.error("Erreur enregistrement facture :", err);
         alert("Impossible d’enregistrer la facture.");
@@ -1222,15 +1302,9 @@
 
     form.addEventListener("reset", () => {
       setTimeout(() => {
-        editingInvoiceId = null;
-        ensureInvoiceDate();
-        document.getElementById("invoiceMode").value = "VIREMENT";
-        document.getElementById("invoicePaymentDelay").value = "A_RECEPTION";
-        fillDossierSelect("");
-        invoiceLines.innerHTML = "";
-        lineCounter = 0;
-        createLineElement();
-        updateInvoiceSummary();
+        if (!editingInvoiceId) {
+          resetFormState();
+        }
       }, 0);
     });
 
@@ -1246,6 +1320,11 @@
 
     searchInput.addEventListener("input", renderInvoices);
     statusFilter.addEventListener("change", renderInvoices);
+
+    cancelEditBtn.addEventListener("click", () => {
+      resetFormState();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 
     invoiceList.addEventListener("click", async (e) => {
       const editBtn = e.target.closest("[data-edit-id]");
@@ -1271,8 +1350,7 @@
         await deleteDoc(doc(db, "factures", id));
 
         if (editingInvoiceId === id) {
-          editingInvoiceId = null;
-          form.reset();
+          resetFormState();
         }
       } catch (err) {
         console.error("Erreur suppression facture :", err);
