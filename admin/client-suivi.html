@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Axe Dossier — Suivi client</title>
+  <style>
+    :root{
+      --bg:#f3efe8;
+      --card:#ffffff;
+      --text:#171717;
+      --muted:#66615a;
+      --line:rgba(23,23,23,0.08);
+      --accent:#111111;
+      --soft:#faf7f1;
+      --soft2:#e9e1d4;
+      --ok:#e8efe4;
+      --warn:#f6edd8;
+      --danger:#f7e3df;
+      --shadow:0 16px 40px rgba(0,0,0,0.06);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(243,239,232,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+
+    .brand-logo{
+      height:94px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+      flex-shrink:0;
+    }
+
+    .brand-name{
+      font-size:1.8rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--text);
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.7);
+      border:1px solid var(--line);
+      font-size:.94rem;
+    }
+
+    main{padding:32px 0 56px}
+
+    h1,h2,h3,p{margin:0}
+    h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.05em}
+    h2{font-size:1.2rem;letter-spacing:-.02em}
+    h3{font-size:1rem;letter-spacing:-.02em}
+    p{color:var(--muted);line-height:1.55}
+
+    .hero{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .hero p{
+      margin-top:8px;
+      max-width:68ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    .stack{
+      display:grid;
+      gap:20px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .summary-box{
+      background:var(--soft);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    .summary-box strong{
+      display:block;
+      font-size:1.2rem;
+      letter-spacing:-.04em;
+      margin-bottom:4px;
+    }
+
+    .summary-box span{
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      font-size:.92rem;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select{
+      width:100%;
+      min-height:48px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 14px;
+      font:inherit;
+      color:var(--text);
+      background:#fff;
+    }
+
+    .field textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .row-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn{
+      min-height:48px;
+      padding:0 18px;
+      border-radius:999px;
+      border:1px solid var(--accent);
+      background:var(--accent);
+      color:#fff;
+      font:inherit;
+      font-weight:700;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--accent);
+      border-color:var(--line);
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:.94rem;
+    }
+
+    .status-note{
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.92rem;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .event-list{
+      display:grid;
+      gap:14px;
+    }
+
+    .empty{
+      padding:24px;
+      border:1px dashed var(--line);
+      border-radius:18px;
+      text-align:center;
+      color:var(--muted);
+      background:#fcfbf8;
+    }
+
+    .event-item{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      padding:18px;
+      display:grid;
+      gap:10px;
+    }
+
+    .event-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .event-title{
+      font-size:1.04rem;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .event-meta{
+      display:grid;
+      gap:6px;
+      color:#4f4942;
+      font-size:.94rem;
+      line-height:1.5;
+    }
+
+    .event-details{
+      color:var(--muted);
+      font-size:.94rem;
+      line-height:1.55;
+    }
+
+    .badges{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+      border:1px solid rgba(23,23,23,0.06);
+      background:var(--soft2);
+      color:#4f493f;
+    }
+
+    .badge.todo{background:var(--warn)}
+    .badge.done{background:var(--ok)}
+    .badge.cancelled{background:#ececec}
+    .badge.high{background:var(--danger)}
+    .badge.urgent{background:var(--danger)}
+
+    .mini-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+
+    .mini-btn{
+      min-height:36px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font:inherit;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .mini-btn:hover{
+      border-color:var(--accent);
+    }
+
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 720px){
+      .topbar-inner{
+        min-height:auto;
+        padding:14px 0;
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .brand,.nav{justify-content:center}
+      .brand{
+        flex-direction:column;
+        text-align:center;
+      }
+      .brand-logo{
+        height:46px;
+        margin:0 auto;
+      }
+      .hero{
+        flex-direction:column;
+        align-items:start;
+      }
+      .card{
+        padding:20px;
+      }
+      .summary-grid,
+      .row-2{
+        grid-template-columns:1fr;
+      }
+      .actions .btn{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="index.html" aria-label="Retour admin Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+
+      <nav class="nav" aria-label="Navigation admin">
+        <a class="pill" href="index.html">Admin</a>
+        <a class="pill" href="clients.html">Clients</a>
+        <a class="pill" href="dossiers.html">Dossiers</a>
+        <a class="pill" href="documents.html">Documents</a>
+        <a class="pill" href="factures.html">Factures</a>
+        <a class="pill" href="paiements.html">Paiements</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <h1>Suivi client</h1>
+          <p>Chronologie, rappels, prochaines actions et historique du dossier. Ici, tu pilotes le client sans oublier une date.</p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="stack">
+          <article class="card">
+            <div class="section-head">
+              <h2>Résumé client</h2>
+              <a class="btn btn-secondary" href="clients.html">Retour clients</a>
+            </div>
+
+            <div id="clientSummary" class="muted">Chargement...</div>
+
+            <div class="summary-grid">
+              <div class="summary-box">
+                <strong id="kpiTotal">0</strong>
+                <span>Événements</span>
+              </div>
+              <div class="summary-box">
+                <strong id="kpiTodo">0</strong>
+                <span>Actions à faire</span>
+              </div>
+              <div class="summary-box">
+                <strong id="kpiToday">0</strong>
+                <span>À traiter aujourd’hui</span>
+              </div>
+              <div class="summary-box">
+                <strong id="kpiLate">0</strong>
+                <span>En retard</span>
+              </div>
+            </div>
+
+            <div class="status-note">
+              Utilise cette page comme journal de bord : réception des documents, paiement, analyse, compte rendu, relance, courrier, réponse client, rappel.
+            </div>
+          </article>
+
+          <article class="card">
+            <h2 style="margin-bottom:14px;">Ajouter un suivi</h2>
+
+            <form id="followForm">
+              <div class="field">
+                <label for="title">Titre</label>
+                <input id="title" type="text" placeholder="Ex. Paiement analyse reçu" required />
+              </div>
+
+              <div class="field">
+                <label for="details">Détails</label>
+                <textarea id="details" placeholder="Ex. Virement reçu, documents complets, compte rendu envoyé..."></textarea>
+              </div>
+
+              <div class="row-2">
+                <div class="field">
+                  <label for="type">Type</label>
+                  <select id="type">
+                    <option value="NOTE">NOTE</option>
+                    <option value="DOCUMENTS_RECEIVED">DOCUMENTS_RECEIVED</option>
+                    <option value="PAYMENT_RECEIVED">PAYMENT_RECEIVED</option>
+                    <option value="ANALYSIS_STARTED">ANALYSIS_STARTED</option>
+                    <option value="ANALYSIS_DONE">ANALYSIS_DONE</option>
+                    <option value="REPORT_SENT">REPORT_SENT</option>
+                    <option value="FOLLOWUP_SENT">FOLLOWUP_SENT</option>
+                    <option value="LETTER_SENT">LETTER_SENT</option>
+                    <option value="CLIENT_RESPONSE">CLIENT_RESPONSE</option>
+                    <option value="REMINDER">REMINDER</option>
+                    <option value="DEADLINE">DEADLINE</option>
+                    <option value="DOSSIER_CLOSED">DOSSIER_CLOSED</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="eventDate">Date</label>
+                  <input id="eventDate" type="date" required />
+                </div>
+              </div>
+
+              <div class="row-2">
+                <div class="field">
+                  <label for="status">Statut</label>
+                  <select id="status">
+                    <option value="TODO">TODO</option>
+                    <option value="DONE">DONE</option>
+                    <option value="CANCELLED">CANCELLED</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="priority">Priorité</label>
+                  <select id="priority">
+                    <option value="NORMAL">NORMAL</option>
+                    <option value="LOW">LOW</option>
+                    <option value="HIGH">HIGH</option>
+                    <option value="URGENT">URGENT</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row-2">
+                <div class="field">
+                  <label for="scope">Portée</label>
+                  <select id="scope">
+                    <option value="CLIENT">CLIENT</option>
+                    <option value="DOSSIER">DOSSIER</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="reminder">Rappel</label>
+                  <select id="reminder">
+                    <option value="false">Non</option>
+                    <option value="true">Oui</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button type="submit" class="btn">Ajouter</button>
+                <button type="reset" class="btn btn-secondary">Vider</button>
+              </div>
+            </form>
+          </article>
+        </div>
+
+        <div class="stack">
+          <article class="card">
+            <div class="section-head">
+              <h2>Rappels à faire</h2>
+              <div class="muted">TODO uniquement</div>
+            </div>
+            <div id="todoList" class="event-list"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <h2>Chronologie</h2>
+              <div class="muted">Historique complet</div>
+            </div>
+            <div id="timelineList" class="event-list"></div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import "./auth-guard.js";
+    import { db } from "./firebase-config.js";
+    import {
+      collection,
+      addDoc,
+      deleteDoc,
+      doc,
+      getDoc,
+      onSnapshot,
+      query,
+      where,
+      orderBy,
+      updateDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const clientSummary = document.getElementById("clientSummary");
+    const timelineList = document.getElementById("timelineList");
+    const todoList = document.getElementById("todoList");
+
+    const kpiTotal = document.getElementById("kpiTotal");
+    const kpiTodo = document.getElementById("kpiTodo");
+    const kpiToday = document.getElementById("kpiToday");
+    const kpiLate = document.getElementById("kpiLate");
+
+    const followForm = document.getElementById("followForm");
+
+    const titleInput = document.getElementById("title");
+    const detailsInput = document.getElementById("details");
+    const typeInput = document.getElementById("type");
+    const eventDateInput = document.getElementById("eventDate");
+    const statusInput = document.getElementById("status");
+    const priorityInput = document.getElementById("priority");
+    const scopeInput = document.getElementById("scope");
+    const reminderInput = document.getElementById("reminder");
+
+    let clientId = "";
+    let clientData = null;
+    let allFollowUps = [];
+
+    function qs(name) {
+      return new URL(window.location.href).searchParams.get(name);
+    }
+
+    function escapeHtml(text = "") {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function normalizeDate(v = "") {
+      return String(v || "").trim();
+    }
+
+    function badgeStatus(status = "") {
+      const s = String(status || "").toUpperCase();
+      if (s === "DONE") return "done";
+      if (s === "CANCELLED") return "cancelled";
+      return "todo";
+    }
+
+    function formatStatus(status = "") {
+      const s = String(status || "").toUpperCase();
+      if (s === "DONE") return "FAIT";
+      if (s === "CANCELLED") return "ANNULÉ";
+      return "À FAIRE";
+    }
+
+    function badgePriority(priority = "") {
+      const p = String(priority || "").toUpperCase();
+      if (p === "URGENT") return "urgent";
+      if (p === "HIGH") return "high";
+      return "";
+    }
+
+    function formatPriority(priority = "") {
+      const p = String(priority || "").toUpperCase();
+      if (p === "LOW") return "Basse";
+      if (p === "HIGH") return "Haute";
+      if (p === "URGENT") return "Urgente";
+      return "Normale";
+    }
+
+    function getClientDisplay() {
+      if (!clientData) return "Client introuvable";
+      const parts = [
+        clientData.name || "",
+        clientData.type ? `Type : ${clientData.type}` : "",
+        clientData.email || "",
+        clientData.phone || ""
+      ].filter(Boolean);
+
+      if (clientData.address) {
+        parts.push(clientData.address);
+      }
+
+      return parts.map(v => `<div>${escapeHtml(v).replace(/\n/g, "<br>")}</div>`).join("");
+    }
+
+    function computeKPIs(items) {
+      const today = todayStr();
+      const todos = items.filter(i => (i.status || "TODO") === "TODO");
+      const todayItems = todos.filter(i => normalizeDate(i.eventDate) === today);
+      const lateItems = todos.filter(i => {
+        const d = normalizeDate(i.eventDate);
+        return d && d < today;
+      });
+
+      kpiTotal.textContent = items.length;
+      kpiTodo.textContent = todos.length;
+      kpiToday.textContent = todayItems.length;
+      kpiLate.textContent = lateItems.length;
+    }
+
+    function renderTodoList(items) {
+      const today = todayStr();
+
+      const todos = items
+        .filter(item => (item.status || "TODO") === "TODO")
+        .sort((a, b) => normalizeDate(a.eventDate).localeCompare(normalizeDate(b.eventDate)));
+
+      if (!todos.length) {
+        todoList.innerHTML = '<div class="empty">Aucun rappel à faire.</div>';
+        return;
+      }
+
+      todoList.innerHTML = todos.map(item => {
+        const d = normalizeDate(item.eventDate);
+        const late = d && d < today;
+        const todayBadge = d === today;
+
+        return `
+          <article class="event-item">
+            <div class="event-top">
+              <div>
+                <div class="event-title">${escapeHtml(item.title || "")}</div>
+                <div class="event-meta">
+                  <span><strong>Date :</strong> ${escapeHtml(d || "—")}</span>
+                  ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(item.type)}</span>` : ""}
+                </div>
+              </div>
+
+              <div class="badges">
+                <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
+                <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
+                ${late ? `<span class="badge urgent">En retard</span>` : ""}
+                ${todayBadge ? `<span class="badge todo">Aujourd’hui</span>` : ""}
+              </div>
+            </div>
+
+            ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
+
+            <div class="mini-actions">
+              <button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>
+              <button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderTimeline(items) {
+      const sorted = [...items].sort((a, b) => normalizeDate(b.eventDate).localeCompare(normalizeDate(a.eventDate)));
+
+      if (!sorted.length) {
+        timelineList.innerHTML = '<div class="empty">Aucun événement pour ce client.</div>';
+        return;
+      }
+
+      timelineList.innerHTML = sorted.map(item => `
+        <article class="event-item">
+          <div class="event-top">
+            <div>
+              <div class="event-title">${escapeHtml(item.title || "")}</div>
+              <div class="event-meta">
+                <span><strong>Date :</strong> ${escapeHtml(item.eventDate || "—")}</span>
+                ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(item.type)}</span>` : ""}
+                ${item.scope ? `<span><strong>Portée :</strong> ${escapeHtml(item.scope)}</span>` : ""}
+                ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
+              </div>
+            </div>
+
+            <div class="badges">
+              <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
+              <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
+            </div>
+          </div>
+
+          ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
+
+          <div class="mini-actions">
+            ${(item.status || "TODO") === "TODO"
+              ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>`
+              : ""
+            }
+            <button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    async function loadClient() {
+      const snap = await getDoc(doc(db, "clients", clientId));
+      if (!snap.exists()) {
+        clientSummary.innerHTML = '<div class="empty">Client introuvable.</div>';
+        return false;
+      }
+
+      clientData = { id: snap.id, ...snap.data() };
+      clientSummary.innerHTML = getClientDisplay();
+      document.title = `${clientData.name || "Client"} — Suivi Axe Dossier`;
+      return true;
+    }
+
+    async function addFollowUp(e) {
+      e.preventDefault();
+
+      if (!clientData) {
+        alert("Client introuvable.");
+        return;
+      }
+
+      const payload = {
+        clientId,
+        clientNameSnapshot: clientData.name || "",
+        dossierId: "",
+        dossierTitleSnapshot: "",
+        type: typeInput.value || "NOTE",
+        title: String(titleInput.value || "").trim(),
+        details: String(detailsInput.value || "").trim(),
+        eventDate: normalizeDate(eventDateInput.value),
+        status: statusInput.value || "TODO",
+        priority: priorityInput.value || "NORMAL",
+        sourceType: "",
+        sourceId: "",
+        reminder: reminderInput.value === "true",
+        alertLevel: "",
+        assignedTo: "",
+        scope: scopeInput.value || "CLIENT",
+        doneAt: (statusInput.value || "TODO") === "DONE" ? serverTimestamp() : null,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      };
+
+      if (!payload.title) {
+        alert("Titre obligatoire.");
+        return;
+      }
+
+      if (!payload.eventDate) {
+        alert("Date obligatoire.");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "followUps"), payload);
+        followForm.reset();
+        typeInput.value = "NOTE";
+        statusInput.value = "TODO";
+        priorityInput.value = "NORMAL";
+        scopeInput.value = "CLIENT";
+        reminderInput.value = "false";
+        eventDateInput.value = todayStr();
+      } catch (err) {
+        console.error(err);
+        alert("Impossible d’ajouter le suivi.");
+      }
+    }
+
+    async function markDone(id) {
+      try {
+        await updateDoc(doc(db, "followUps", id), {
+          status: "DONE",
+          doneAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+      } catch (err) {
+        console.error(err);
+        alert("Impossible de marquer comme fait.");
+      }
+    }
+
+    async function removeFollowUp(id) {
+      const ok = confirm("Supprimer cette ligne de suivi ?");
+      if (!ok) return;
+
+      try {
+        await deleteDoc(doc(db, "followUps", id));
+      } catch (err) {
+        console.error(err);
+        alert("Impossible de supprimer cette ligne.");
+      }
+    }
+
+    function bindLists() {
+      document.addEventListener("click", async (e) => {
+        const doneBtn = e.target.closest("[data-done-id]");
+        if (doneBtn) {
+          const id = doneBtn.getAttribute("data-done-id");
+          if (id) await markDone(id);
+          return;
+        }
+
+        const deleteBtn = e.target.closest("[data-delete-id]");
+        if (deleteBtn) {
+          const id = deleteBtn.getAttribute("data-delete-id");
+          if (id) await removeFollowUp(id);
+        }
+      });
+    }
+
+    async function init() {
+      clientId = qs("id") || "";
+      if (!clientId) {
+        clientSummary.innerHTML = '<div class="empty">Aucun identifiant client dans l’URL.</div>';
+        timelineList.innerHTML = '<div class="empty">Impossible de charger le suivi.</div>';
+        todoList.innerHTML = '<div class="empty">Impossible de charger le suivi.</div>';
+        return;
+      }
+
+      eventDateInput.value = todayStr();
+
+      const ok = await loadClient();
+      if (!ok) {
+        timelineList.innerHTML = '<div class="empty">Impossible de charger le suivi.</div>';
+        todoList.innerHTML = '<div class="empty">Impossible de charger le suivi.</div>';
+        return;
+      }
+
+      onSnapshot(
+        query(collection(db, "followUps"), where("clientId", "==", clientId), orderBy("eventDate", "desc")),
+        (snapshot) => {
+          allFollowUps = snapshot.docs.map(docSnap => ({
+            id: docSnap.id,
+            ...docSnap.data()
+          }));
+
+          computeKPIs(allFollowUps);
+          renderTodoList(allFollowUps);
+          renderTimeline(allFollowUps);
+        },
+        (err) => {
+          console.error("Erreur chargement suivi :", err);
+          todoList.innerHTML = '<div class="empty">Erreur de chargement.</div>';
+          timelineList.innerHTML = '<div class="empty">Erreur de chargement.</div>';
+        }
+      );
+    }
+
+    followForm.addEventListener("submit", addFollowUp);
+    bindLists();
+    init();
+  </script>
+</body>
+</html>
