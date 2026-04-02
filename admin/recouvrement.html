@@ -221,6 +221,8 @@
       color:var(--text);
       text-decoration:none;
       cursor:pointer;
+      margin-right:6px;
+      margin-bottom:6px;
     }
 
     .badge.action:hover{
@@ -348,7 +350,7 @@
           <input id="searchInput" type="text" placeholder="Rechercher numéro, client, dossier..." />
           <select id="statusFilter">
             <option value="">Tous</option>
-            <option value="OPEN">Non réglées</option>
+            <option value="OPEN">À relancer</option>
             <option value="PARTIAL">Partielles</option>
             <option value="LATE">En retard</option>
           </select>
@@ -378,7 +380,7 @@
                 <th class="num" style="width:8%;">Encaissé</th>
                 <th class="num" style="width:8%;">Reste dû</th>
                 <th style="width:9%;">Situation</th>
-                <th class="action-col" style="width:8%;">Action</th>
+                <th class="action-col" style="width:12%;">Action</th>
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
@@ -505,6 +507,7 @@
 
           return {
             id: inv.id,
+            clientId: inv.clientId || "",
             invoiceNumber: inv.number || "",
             clientName: inv.clientSnapshot?.name || "",
             dossierTitle: inv.dossierTitleSnapshot || "",
@@ -573,10 +576,10 @@
 
         const matchesSearch = blob.includes(q);
 
-        const matchesStatus =
-          !filter ||
-          (filter === "OPEN" && (row.recoveryStatus === "OPEN" || row.recoveryStatus === "PARTIAL" || row.recoveryStatus === "LATE")) ||
-          row.recoveryStatus === filter;
+        let matchesStatus = true;
+        if (filter === "OPEN") matchesStatus = row.recoveryStatus === "OPEN";
+        else if (filter === "PARTIAL") matchesStatus = row.recoveryStatus === "PARTIAL";
+        else if (filter === "LATE") matchesStatus = row.recoveryStatus === "LATE";
 
         const due = row.dueDate || "";
         const matchesFrom = !from || (due && due >= from);
@@ -602,26 +605,34 @@
 
       emptyState.style.display = "none";
 
-      tableBody.innerHTML = sorted.map(row => `
-        <tr>
-          <td>${escapeHtml(row.dueDate || "—")}</td>
-          <td>${escapeHtml(row.invoiceNumber || "—")}</td>
-          <td>${escapeHtml(row.clientName || "—")}</td>
-          <td>${escapeHtml(row.dossierTitle || "—")}</td>
-          <td class="num">${formatMoney(row.total)}</td>
-          <td class="num">${formatMoney(row.credits)}</td>
-          <td class="num">${formatMoney(row.paid)}</td>
-          <td class="num">${formatMoney(row.remaining)}</td>
-          <td>
-            <span class="badge ${badgeClass(row.recoveryStatus)}">
-              ${statusLabel(row.recoveryStatus)}
-            </span>
-          </td>
-          <td class="action-col">
-            <a class="badge action" href="relance.html?id=${row.id}">Relancer</a>
-          </td>
-        </tr>
-      `).join("");
+      tableBody.innerHTML = sorted.map(row => {
+        const relanceLink = `relance.html?id=${encodeURIComponent(row.id)}`;
+        const suiviLink = row.clientId
+          ? `client-suivi.html?id=${encodeURIComponent(row.clientId)}`
+          : "";
+
+        return `
+          <tr>
+            <td>${escapeHtml(row.dueDate || "—")}</td>
+            <td>${escapeHtml(row.invoiceNumber || "—")}</td>
+            <td>${escapeHtml(row.clientName || "—")}</td>
+            <td>${escapeHtml(row.dossierTitle || "—")}</td>
+            <td class="num">${formatMoney(row.total)}</td>
+            <td class="num">${formatMoney(row.credits)}</td>
+            <td class="num">${formatMoney(row.paid)}</td>
+            <td class="num">${formatMoney(row.remaining)}</td>
+            <td>
+              <span class="badge ${badgeClass(row.recoveryStatus)}">
+                ${statusLabel(row.recoveryStatus)}
+              </span>
+            </td>
+            <td class="action-col">
+              <a class="badge action" href="${relanceLink}">Relancer</a>
+              ${suiviLink ? `<a class="badge action" href="${suiviLink}">Suivi</a>` : ""}
+            </td>
+          </tr>
+        `;
+      }).join("");
     }
 
     searchInput.addEventListener("input", render);
