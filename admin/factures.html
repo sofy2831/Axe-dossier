@@ -134,6 +134,29 @@
       margin-bottom:14px;
     }
 
+    .auto-note{
+      margin-bottom:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.92rem;
+      line-height:1.5;
+    }
+
+    .from-quote-box{
+      margin-bottom:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:#f3eee6;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.92rem;
+      line-height:1.5;
+      display:none;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -358,17 +381,6 @@
       font-size:.92rem;
     }
 
-    .auto-note{
-      margin-bottom:14px;
-      padding:12px 14px;
-      border-radius:14px;
-      background:#faf7f1;
-      border:1px solid var(--line);
-      color:#4f4942;
-      font-size:.92rem;
-      line-height:1.5;
-    }
-
     .lines-wrap{
       display:grid;
       gap:12px;
@@ -495,6 +507,8 @@
             La facture est créée directement au statut <strong>ENVOYEE</strong>.
           </div>
 
+          <div id="fromQuoteBox" class="from-quote-box"></div>
+
           <form id="invoiceForm">
             <div class="field">
               <label for="invoiceDate">Date</label>
@@ -571,7 +585,7 @@
           </form>
 
           <div class="note">
-            Le numéro chronologique est attribué automatiquement via <strong>counters/</strong>. En création : <strong>ENVOYEE</strong>. En modification : le statut existant est conservé.
+            Le numéro chronologique est attribué automatiquement via <strong>counters/</strong>. En création : <strong>ENVOYEE</strong>. En modification : le statut existant est conservé. Si la facture provient d’un devis, ce devis passe automatiquement en <strong>SIGNE</strong>.
           </div>
         </article>
 
@@ -579,7 +593,7 @@
           <div class="stats">
             <div class="stat">
               <strong id="totalInvoices">0</strong>
-              <span>Factures</span>
+              <span>Factures affichées</span>
             </div>
             <div class="stat">
               <strong id="totalOpen">0</strong>
@@ -618,7 +632,6 @@
     import {
       collection,
       addDoc,
-      deleteDoc,
       doc,
       updateDoc,
       setDoc,
@@ -626,7 +639,8 @@
       onSnapshot,
       query,
       orderBy,
-      serverTimestamp
+      serverTimestamp,
+      runTransaction
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const form = document.getElementById("invoiceForm");
@@ -637,6 +651,7 @@
     const statusFilter = document.getElementById("statusFilter");
     const addLineBtn = document.getElementById("addLineBtn");
     const invoiceLines = document.getElementById("invoiceLines");
+    const fromQuoteBox = document.getElementById("fromQuoteBox");
 
     const totalInvoices = document.getElementById("totalInvoices");
     const totalOpen = document.getElementById("totalOpen");
@@ -655,6 +670,7 @@
     const clientsRef = collection(db, "clients");
     const dossiersRef = collection(db, "dossiers");
     const invoicesRef = collection(db, "factures");
+    const quotesRef = collection(db, "devis");
     const followUpsRef = collection(db, "followUps");
 
     const settingsRef = doc(db, "settings", "main");
@@ -666,6 +682,11 @@
     let currentSettings = {};
     let editingInvoiceId = null;
     let lineCounter = 0;
+    let sourceQuote = null;
+
+    function qs(name) {
+      return new URL(window.location.href).searchParams.get(name);
+    }
 
     function escapeHtml(text = "") {
       return String(text)
@@ -796,6 +817,20 @@
       }
     }
 
+    function clearSourceQuote() {
+      sourceQuote = null;
+      fromQuoteBox.style.display = "none";
+      fromQuoteBox.innerHTML = "";
+    }
+
+    function showSourceQuoteBox(quote) {
+      fromQuoteBox.style.display = "";
+      fromQuoteBox.innerHTML = `
+        <strong>Prérempli depuis le devis :</strong> ${escapeHtml(quote.number || "—")}<br>
+        <span>Le devis passera automatiquement en <strong>SIGNE</strong> à la création de la facture.</span>
+      `;
+    }
+
     function resetFormState() {
       editingInvoiceId = null;
       form.reset();
@@ -811,6 +846,7 @@
       formMode.style.display = "none";
       submitBtn.textContent = "Enregistrer";
       cancelEditBtn.style.display = "none";
+      clearSourceQuote();
     }
 
     function createLineElement(line = {}) {
@@ -976,26 +1012,29 @@
     }
 
     async function getNextInvoiceNumber() {
-      const countersSnap = await getDoc(countersRef);
-      const counters = countersSnap.exists()
-        ? { ...defaultCounters(), ...countersSnap.data() }
-        : defaultCounters();
+      return await runTransaction(db, async (transaction) => {
+        const snap = await transaction.get(countersRef);
 
-      const nextNumber = counters.nextInvoiceNumber || 1;
-      const prefix = counters.invoicePrefix || "FAC";
-      const generated = `${prefix}-${currentYear()}-${padNumber(nextNumber)}`;
+        const counters = snap.exists()
+          ? { ...defaultCounters(), ...snap.data() }
+          : defaultCounters();
 
-      await setDoc(
-        countersRef,
-        {
-          invoicePrefix: prefix,
-          nextInvoiceNumber: nextNumber + 1,
-          updatedAt: serverTimestamp()
-        },
-        { merge: true }
-      );
+        const nextNumber = Number(counters.nextInvoiceNumber || 1);
+        const prefix = counters.invoicePrefix || "FAC";
+        const generated = `${prefix}-${currentYear()}-${padNumber(nextNumber)}`;
 
-      return generated;
+        transaction.set(
+          countersRef,
+          {
+            invoicePrefix: prefix,
+            nextInvoiceNumber: nextNumber + 1,
+            updatedAt: serverTimestamp()
+          },
+          { merge: true }
+        );
+
+        return generated;
+      });
     }
 
     function fillForm(invoice) {
@@ -1027,6 +1066,7 @@
       formMode.style.display = "";
       submitBtn.textContent = "Mettre à jour";
       cancelEditBtn.style.display = "";
+      clearSourceQuote();
     }
 
     function renderStats(invoices) {
@@ -1079,7 +1119,7 @@
         return matchesSearch && matchesStatus;
       });
 
-      renderStats(allInvoices);
+      renderStats(filtered);
 
       if (!allClients.length) {
         invoiceList.innerHTML = '<div class="empty">Ajoute d’abord au moins un client dans clients.html.</div>';
@@ -1129,6 +1169,7 @@
                   ${invoice.date ? `<span><strong>Date :</strong> ${escapeHtml(invoice.date)}</span>` : ""}
                   ${invoice.paymentDelayLabel ? `<span><strong>Délai :</strong> ${escapeHtml(invoice.paymentDelayLabel)}</span>` : ""}
                   ${invoice.dueDate ? `<span><strong>Échéance :</strong> ${escapeHtml(invoice.dueDate)}</span>` : ""}
+                  ${invoice.sourceQuoteNumber ? `<span><strong>Issu du devis :</strong> ${escapeHtml(invoice.sourceQuoteNumber)}</span>` : ""}
                 </div>
               </div>
               <div class="badges">
@@ -1150,7 +1191,7 @@
               ${followLink ? `<a class="mini-btn" href="${followLink}">Suivi</a>` : ""}
               <a class="mini-btn" href="facture-apercu.html?id=${invoice.id}" target="_blank" rel="noopener noreferrer">Aperçu</a>
               <button class="mini-btn" type="button" data-edit-id="${invoice.id}">Modifier</button>
-              <button class="mini-btn" type="button" data-delete-id="${invoice.id}">Supprimer</button>
+              ${invoice.status !== "ANNULEE" ? `<button class="mini-btn" type="button" data-delete-id="${invoice.id}">Annuler</button>` : ""}
             </div>
           </article>
         `;
@@ -1163,13 +1204,14 @@
         clientNameSnapshot: invoicePayload.clientSnapshot?.name || "",
         dossierId: invoicePayload.dossierId || "",
         dossierTitleSnapshot: invoicePayload.dossierTitleSnapshot || "",
-        type: "LETTER_SENT",
+        type: "INVOICE_CREATED",
         title: `Facture créée : ${invoicePayload.number || ""}`,
         details: [
           invoicePayload.labelSnapshot ? `Libellé : ${invoicePayload.labelSnapshot}` : "",
           `Montant TTC : ${formatMoney(invoicePayload.amountTTC)}`,
           invoicePayload.paymentDelayLabel ? `Délai : ${invoicePayload.paymentDelayLabel}` : "",
           invoicePayload.dueDate ? `Échéance : ${invoicePayload.dueDate}` : "",
+          invoicePayload.sourceQuoteNumber ? `Issue du devis : ${invoicePayload.sourceQuoteNumber}` : "",
           invoicePayload.notes ? `Notes : ${invoicePayload.notes}` : ""
         ].filter(Boolean).join("\n"),
         eventDate: invoicePayload.date || todayStr(),
@@ -1185,6 +1227,41 @@
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
+    }
+
+    async function prefillFromQuoteIfNeeded() {
+      const quoteId = qs("fromQuote");
+      if (!quoteId || editingInvoiceId) return;
+
+      try {
+        const snap = await getDoc(doc(db, "devis", quoteId));
+        if (!snap.exists()) return;
+
+        const quote = { id: snap.id, ...snap.data() };
+        sourceQuote = quote;
+
+        document.getElementById("invoiceDate").value = todayStr();
+        document.getElementById("invoiceClient").value = quote.clientId || "";
+        fillDossierSelect(quote.clientId || "");
+        document.getElementById("invoiceDossier").value = quote.dossierId || "";
+        document.getElementById("invoiceMode").value = quote.mode || "VIREMENT";
+        document.getElementById("invoiceNotes").value = quote.notes || "";
+
+        invoiceLines.innerHTML = "";
+        lineCounter = 0;
+
+        const lines = Array.isArray(quote.lines) && quote.lines.length
+          ? quote.lines
+          : [{ designation: quote.labelSnapshot || quote.label || "", quantity: 1, unitPriceTTC: quote.amountTTC ?? quote.amount ?? "" }];
+
+        lines.forEach(line => createLineElement(line));
+        if (!invoiceLines.children.length) createLineElement();
+
+        updateInvoiceSummary();
+        showSourceQuoteBox(quote);
+      } catch (err) {
+        console.error("Erreur préremplissage devis :", err);
+      }
     }
 
     async function buildInvoicePayload(data, existingInvoice = null) {
@@ -1237,6 +1314,8 @@
         amountTTC: amounts.amountTTC,
         clientSnapshot,
         businessSnapshot,
+        sourceQuoteId: existingInvoice?.sourceQuoteId || sourceQuote?.id || "",
+        sourceQuoteNumber: existingInvoice?.sourceQuoteNumber || sourceQuote?.number || "",
         createdAt: existingInvoice?.createdAt || serverTimestamp(),
         updatedAt: serverTimestamp()
       };
@@ -1285,12 +1364,22 @@
             amountTTC: payload.amountTTC,
             clientSnapshot: payload.clientSnapshot,
             businessSnapshot: payload.businessSnapshot,
+            sourceQuoteId: payload.sourceQuoteId,
+            sourceQuoteNumber: payload.sourceQuoteNumber,
             updatedAt: serverTimestamp()
           });
         } else {
           const payload = await buildInvoicePayload(data, null);
           const docRef = await addDoc(invoicesRef, payload);
           await createFollowUpForInvoice(payload, docRef.id);
+
+          if (payload.sourceQuoteId) {
+            await updateDoc(doc(db, "devis", payload.sourceQuoteId), {
+              status: "SIGNE",
+              signedAt: serverTimestamp(),
+              updatedAt: serverTimestamp()
+            });
+          }
         }
 
         resetFormState();
@@ -1343,30 +1432,35 @@
       if (!deleteBtn) return;
 
       const id = deleteBtn.getAttribute("data-delete-id");
-      const ok = confirm("Supprimer cette facture ?");
+      const ok = confirm("Annuler cette facture ?");
       if (!ok) return;
 
       try {
-        await deleteDoc(doc(db, "factures", id));
+        await updateDoc(doc(db, "factures", id), {
+          status: "ANNULEE",
+          cancelledAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
 
         if (editingInvoiceId === id) {
           resetFormState();
         }
       } catch (err) {
-        console.error("Erreur suppression facture :", err);
-        alert("Impossible de supprimer la facture.");
+        console.error("Erreur annulation facture :", err);
+        alert("Impossible d’annuler la facture.");
       }
     });
 
     onSnapshot(
       query(clientsRef, orderBy("createdAt", "desc")),
-      (snapshot) => {
+      async (snapshot) => {
         allClients = snapshot.docs.map(docSnap => ({
           id: docSnap.id,
           ...docSnap.data()
         }));
         fillClientSelect();
         renderInvoices();
+        await prefillFromQuoteIfNeeded();
       },
       (err) => {
         console.error("Erreur chargement clients :", err);
@@ -1375,13 +1469,14 @@
 
     onSnapshot(
       query(dossiersRef, orderBy("createdAt", "desc")),
-      (snapshot) => {
+      async (snapshot) => {
         allDossiers = snapshot.docs.map(docSnap => ({
           id: docSnap.id,
           ...docSnap.data()
         }));
         fillDossierSelect(invoiceClient.value || "");
         renderInvoices();
+        await prefillFromQuoteIfNeeded();
       },
       (err) => {
         console.error("Erreur chargement dossiers :", err);
