@@ -13,6 +13,9 @@
       --line:rgba(23,23,23,0.08);
       --accent:#111111;
       --soft:#faf7f1;
+      --ok:#e8efe4;
+      --warn:#f6edd8;
+      --danger:#f7e3df;
       --shadow:0 16px 40px rgba(0,0,0,0.06);
       --max:1080px;
     }
@@ -266,6 +269,101 @@
       border-color:var(--accent);
     }
 
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .todo-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .todo-item{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      background:#fff;
+      display:grid;
+      gap:8px;
+    }
+
+    .todo-item.today{
+      background:var(--warn);
+    }
+
+    .todo-item.late{
+      background:var(--danger);
+    }
+
+    .todo-top{
+      display:flex;
+      align-items:start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .todo-title{
+      font-size:1rem;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .todo-meta{
+      display:grid;
+      gap:4px;
+      color:#4f4942;
+      font-size:.93rem;
+      line-height:1.45;
+    }
+
+    .todo-badges{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+      border:1px solid rgba(23,23,23,.06);
+      background:#ece7dc;
+      color:#4f493f;
+    }
+
+    .badge.today{
+      background:var(--warn);
+    }
+
+    .badge.late{
+      background:var(--danger);
+    }
+
+    .badge.urgent{
+      background:var(--danger);
+    }
+
+    .badge.high{
+      background:var(--danger);
+    }
+
+    .empty{
+      padding:24px;
+      border:1px dashed var(--line);
+      border-radius:18px;
+      color:var(--muted);
+      text-align:center;
+      background:#fcfbf8;
+    }
+
     @media (max-width: 900px){
       .admin-grid{
         grid-template-columns:1fr;
@@ -356,6 +454,22 @@
           <button id="logoutBtn" class="btn btn-secondary" type="button">Déconnexion</button>
         </div>
 
+        <div class="dashboard-grid">
+          <div class="admin-block">
+            <div class="topline" style="margin-bottom:12px;">
+              <div>
+                <h3 style="margin-bottom:4px;">Rappels à faire</h3>
+                <div class="muted">Suivis à traiter en priorité</div>
+              </div>
+              <a class="btn btn-secondary" href="clients.html">Voir clients</a>
+            </div>
+
+            <div id="todoList" class="todo-list">
+              <div class="empty">Chargement des rappels...</div>
+            </div>
+          </div>
+        </div>
+
         <div class="admin-grid">
           <div class="admin-block">
             <h3>Structure du dossier</h3>
@@ -401,6 +515,14 @@
 
   <script type="module">
     import { login, logout, watchAuth } from "./firebase-auth.js";
+    import { db } from "./firebase-config.js";
+    import {
+      collection,
+      onSnapshot,
+      query,
+      where,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const loginCard = document.getElementById("loginCard");
     const adminCard = document.getElementById("adminCard");
@@ -411,6 +533,7 @@
     const logoutBtn = document.getElementById("logoutBtn");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
+    const todoList = document.getElementById("todoList");
 
     function showStatus(el, message, type = "ok") {
       el.className = `status show ${type}`;
@@ -427,12 +550,95 @@
       passwordInput.value = "";
     }
 
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function normalizeDate(v = "") {
+      return String(v || "").trim();
+    }
+
+    function escapeHtml(text = "") {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function priorityLabel(priority = "") {
+      const p = String(priority || "").toUpperCase();
+      if (p === "LOW") return "Basse";
+      if (p === "HIGH") return "Haute";
+      if (p === "URGENT") return "Urgente";
+      return "Normale";
+    }
+
+    function priorityClass(priority = "") {
+      const p = String(priority || "").toUpperCase();
+      if (p === "URGENT") return "urgent";
+      if (p === "HIGH") return "high";
+      return "";
+    }
+
+    function renderTodoItems(items) {
+      const today = todayStr();
+
+      if (!items.length) {
+        todoList.innerHTML = '<div class="empty">Aucun rappel à faire.</div>';
+        return;
+      }
+
+      const sorted = [...items]
+        .filter(item => (item.status || "TODO") === "TODO")
+        .sort((a, b) => normalizeDate(a.eventDate).localeCompare(normalizeDate(b.eventDate)))
+        .slice(0, 8);
+
+      if (!sorted.length) {
+        todoList.innerHTML = '<div class="empty">Aucun rappel à faire.</div>';
+        return;
+      }
+
+      todoList.innerHTML = sorted.map(item => {
+        const d = normalizeDate(item.eventDate);
+        const isLate = d && d < today;
+        const isToday = d === today;
+
+        let cardClass = "todo-item";
+        if (isLate) cardClass += " late";
+        else if (isToday) cardClass += " today";
+
+        return `
+          <article class="${cardClass}">
+            <div class="todo-top">
+              <div>
+                <div class="todo-title">${escapeHtml(item.title || "")}</div>
+                <div class="todo-meta">
+                  <span><strong>Date :</strong> ${escapeHtml(d || "—")}</span>
+                  ${item.clientNameSnapshot ? `<span><strong>Client :</strong> ${escapeHtml(item.clientNameSnapshot)}</span>` : ""}
+                  ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
+                </div>
+              </div>
+
+              <div class="todo-badges">
+                <span class="badge ${priorityClass(item.priority)}">${priorityLabel(item.priority)}</span>
+                ${isLate ? `<span class="badge late">En retard</span>` : ""}
+                ${isToday ? `<span class="badge today">Aujourd’hui</span>` : ""}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
     function setLoggedOut(message = "") {
       loginCard.classList.remove("hidden");
       adminCard.classList.add("hidden");
       userInfo.textContent = "";
       clearStatus(adminStatus);
       passwordInput.value = "";
+      todoList.innerHTML = '<div class="empty">Connecte-toi pour voir les rappels.</div>';
 
       if (message) {
         showStatus(loginStatus, message, "ok");
@@ -481,6 +687,21 @@
         showStatus(adminStatus, "Impossible de se déconnecter.", "error");
       }
     });
+
+    onSnapshot(
+      query(collection(db, "followUps"), where("status", "==", "TODO"), orderBy("eventDate", "asc")),
+      (snapshot) => {
+        const rows = snapshot.docs.map(docSnap => ({
+          id: docSnap.id,
+          ...docSnap.data()
+        }));
+        renderTodoItems(rows);
+      },
+      (err) => {
+        console.error("Erreur chargement rappels :", err);
+        todoList.innerHTML = '<div class="empty">Erreur de chargement des rappels.</div>';
+      }
+    );
   </script>
 </body>
 </html>
