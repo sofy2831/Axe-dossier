@@ -491,6 +491,7 @@
     const dossiersRef = collection(db, "dossiers");
     const invoicesRef = collection(db, "factures");
     const quotesRef = collection(db, "devis");
+    const followUpsRef = collection(db, "followUps");
 
     let allClients = [];
     let allDossiers = [];
@@ -509,6 +510,10 @@
 
     function normalizeText(value = "") {
       return String(value || "").trim();
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     function resetFormState() {
@@ -621,6 +626,36 @@
       };
     }
 
+    async function createFollowUpForClient(clientId, payload) {
+      await addDoc(followUpsRef, {
+        alertLevel: "",
+        assignedTo: "",
+        clientId: clientId || "",
+        clientNameSnapshot: payload.name || "",
+        createdAt: serverTimestamp(),
+        details: [
+          payload.type ? `Type : ${payload.type}` : "",
+          payload.email ? `Email : ${payload.email}` : "",
+          payload.phone ? `Téléphone : ${payload.phone}` : "",
+          payload.address ? `Adresse : ${payload.address}` : "",
+          payload.notes ? `Notes : ${payload.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        doneAt: serverTimestamp(),
+        dossierId: "",
+        dossierTitleSnapshot: "",
+        eventDate: todayStr(),
+        priority: "NORMAL",
+        reminder: false,
+        scope: "CLIENT",
+        sourceId: clientId || "",
+        sourceType: "CLIENT",
+        status: "DONE",
+        title: `Client créé : ${payload.name || ""}`,
+        type: "CLIENT_CREATED",
+        updatedAt: serverTimestamp()
+      });
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -644,11 +679,13 @@
             updatedAt: serverTimestamp()
           });
         } else {
-          await addDoc(clientsRef, {
+          const docRef = await addDoc(clientsRef, {
             ...payload,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
           });
+
+          await createFollowUpForClient(docRef.id, payload);
         }
 
         resetFormState();
