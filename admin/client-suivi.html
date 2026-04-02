@@ -406,7 +406,7 @@
       <section class="hero">
         <div>
           <h1>Suivi client</h1>
-          <p>Chronologie, rappels, prochaines actions et historique du dossier. Ici, tu pilotes le client sans oublier une date.</p>
+          <p>Chronologie, rappels, actions à faire et historique réel du dossier. Ici, tu vois enfin ce qui a été créé, reçu, envoyé et traité.</p>
         </div>
       </section>
 
@@ -440,7 +440,10 @@
             </div>
 
             <div class="status-note">
-              Utilise cette page comme journal de bord : réception des documents, paiement, analyse, compte rendu, relance, courrier, réponse client, rappel.
+              Le suivi mélange :
+              <br>— les rappels manuels
+              <br>— l’historique automatique du dossier
+              <br>— les documents déjà enregistrés
             </div>
           </article>
 
@@ -510,6 +513,11 @@
                   <select id="scope">
                     <option value="CLIENT">CLIENT</option>
                     <option value="DOSSIER">DOSSIER</option>
+                    <option value="DOCUMENT">DOCUMENT</option>
+                    <option value="INVOICE">INVOICE</option>
+                    <option value="PAYMENT">PAYMENT</option>
+                    <option value="QUOTE">QUOTE</option>
+                    <option value="CREDIT">CREDIT</option>
                   </select>
                 </div>
 
@@ -560,6 +568,7 @@
       deleteDoc,
       doc,
       getDoc,
+      getDocs,
       onSnapshot,
       query,
       where,
@@ -590,7 +599,11 @@
 
     let clientId = "";
     let clientData = null;
-    let allFollowUps = [];
+
+    let liveFollowUps = [];
+    let clientDossiers = [];
+    let clientDocuments = [];
+    let unsubFollowUps = null;
 
     function qs(name) {
       return new URL(window.location.href).searchParams.get(name);
@@ -611,6 +624,14 @@
 
     function normalizeDate(v = "") {
       return String(v || "").trim();
+    }
+
+    function normalizeTs(ts) {
+      if (!ts) return "";
+      if (typeof ts?.toDate === "function") {
+        return ts.toDate().toISOString();
+      }
+      return "";
     }
 
     function badgeStatus(status = "") {
@@ -644,6 +665,7 @@
 
     function getClientDisplay() {
       if (!clientData) return "Client introuvable";
+
       const parts = [
         clientData.name || "",
         clientData.type ? `Type : ${clientData.type}` : "",
@@ -651,11 +673,90 @@
         clientData.phone || ""
       ].filter(Boolean);
 
-      if (clientData.address) {
-        parts.push(clientData.address);
-      }
+      if (clientData.address) parts.push(clientData.address);
 
       return parts.map(v => `<div>${escapeHtml(v).replace(/\n/g, "<br>")}</div>`).join("");
+    }
+
+    function mapFollowUpToTimeline(item) {
+      return {
+        id: item.id,
+        sourceKind: "FOLLOWUP",
+        eventDate: normalizeDate(item.eventDate),
+        createdAtIso: normalizeTs(item.createdAt),
+        title: item.title || "",
+        details: item.details || "",
+        type: item.type || "",
+        status: item.status || "TODO",
+        priority: item.priority || "NORMAL",
+        scope: item.scope || "CLIENT",
+        dossierTitleSnapshot: item.dossierTitleSnapshot || "",
+        canMarkDone: (item.status || "TODO") === "TODO",
+        canDelete: true
+      };
+    }
+
+    function mapDossierToTimeline(dossier) {
+      return {
+        id: `dossier_${dossier.id}`,
+        sourceKind: "AUTO",
+        eventDate: normalizeDate(dossier.openedAt || ""),
+        createdAtIso: normalizeTs(dossier.createdAt),
+        title: `Dossier créé : ${dossier.title || "Sans titre"}`,
+        details: [
+          dossier.type ? `Type : ${dossier.type}` : "",
+          dossier.reference ? `Référence : ${dossier.reference}` : "",
+          dossier.summary ? `Résumé : ${dossier.summary}` : "",
+          dossier.notes ? `Notes : ${dossier.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        type: "DOSSIER_CREATED",
+        status: "DONE",
+        priority: "NORMAL",
+        scope: "DOSSIER",
+        dossierTitleSnapshot: dossier.title || "",
+        canMarkDone: false,
+        canDelete: false
+      };
+    }
+
+    function mapDocumentToTimeline(docItem) {
+      return {
+        id: `document_${docItem.id}`,
+        sourceKind: "AUTO",
+        eventDate: normalizeDate(docItem.date || ""),
+        createdAtIso: normalizeTs(docItem.createdAt),
+        title: `Document ajouté : ${docItem.title || "Sans titre"}`,
+        details: [
+          docItem.type ? `Type : ${docItem.type}` : "",
+          docItem.fileName ? `Fichier : ${docItem.fileName}` : "",
+          docItem.url ? `Lien enregistré` : "",
+          docItem.notes ? `Notes : ${docItem.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        type: "DOCUMENT_ADDED",
+        status: "DONE",
+        priority: "NORMAL",
+        scope: "DOCUMENT",
+        dossierTitleSnapshot: docItem.dossierTitleSnapshot || "",
+        canMarkDone: false,
+        canDelete: false
+      };
+    }
+
+    function buildTimelineItems() {
+      const followUpsPart = liveFollowUps.map(mapFollowUpToTimeline);
+      const dossiersPart = clientDossiers.map(mapDossierToTimeline);
+      const documentsPart = clientDocuments.map(mapDocumentToTimeline);
+
+      return [...followUpsPart, ...dossiersPart, ...documentsPart].sort((a, b) => {
+        const da = normalizeDate(a.eventDate || "");
+        const db = normalizeDate(b.eventDate || "");
+
+        if (da !== db) return db.localeCompare(da);
+
+        const ca = String(a.createdAtIso || "");
+        const cb = String(b.createdAtIso || "");
+        return cb.localeCompare(ca);
+      });
     }
 
     function computeKPIs(items) {
@@ -698,6 +799,7 @@
                 <div class="event-meta">
                   <span><strong>Date :</strong> ${escapeHtml(d || "—")}</span>
                   ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(item.type)}</span>` : ""}
+                  ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
                 </div>
               </div>
 
@@ -712,8 +814,8 @@
             ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
-              <button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>
-              <button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>
+              ${item.sourceKind === "FOLLOWUP" && item.canMarkDone ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>` : ""}
+              ${item.sourceKind === "FOLLOWUP" && item.canDelete ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>` : ""}
             </div>
           </article>
         `;
@@ -721,14 +823,12 @@
     }
 
     function renderTimeline(items) {
-      const sorted = [...items].sort((a, b) => normalizeDate(b.eventDate).localeCompare(normalizeDate(a.eventDate)));
-
-      if (!sorted.length) {
+      if (!items.length) {
         timelineList.innerHTML = '<div class="empty">Aucun événement pour ce client.</div>';
         return;
       }
 
-      timelineList.innerHTML = sorted.map(item => `
+      timelineList.innerHTML = items.map(item => `
         <article class="event-item">
           <div class="event-top">
             <div>
@@ -750,11 +850,8 @@
           ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
 
           <div class="mini-actions">
-            ${(item.status || "TODO") === "TODO"
-              ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>`
-              : ""
-            }
-            <button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>
+            ${item.sourceKind === "FOLLOWUP" && item.canMarkDone ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>` : ""}
+            ${item.sourceKind === "FOLLOWUP" && item.canDelete ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>` : ""}
           </div>
         </article>
       `).join("");
@@ -771,6 +868,33 @@
       clientSummary.innerHTML = getClientDisplay();
       document.title = `${clientData.name || "Client"} — Suivi Axe Dossier`;
       return true;
+    }
+
+    async function loadDossiersAndDocuments() {
+      const dossiersSnap = await getDocs(
+        query(collection(db, "dossiers"), where("clientId", "==", clientId))
+      );
+
+      clientDossiers = dossiersSnap.docs.map(docSnap => ({
+        id: docSnap.id,
+        ...docSnap.data()
+      }));
+
+      const dossierIds = clientDossiers.map(d => d.id);
+      clientDocuments = [];
+
+      if (!dossierIds.length) return;
+
+      const docsSnap = await getDocs(
+        query(collection(db, "documents"), orderBy("createdAt", "desc"))
+      );
+
+      clientDocuments = docsSnap.docs
+        .map(docSnap => ({
+          id: docSnap.id,
+          ...docSnap.data()
+        }))
+        .filter(item => dossierIds.includes(item.dossierId));
     }
 
     async function addFollowUp(e) {
@@ -792,7 +916,7 @@
         eventDate: normalizeDate(eventDateInput.value),
         status: statusInput.value || "TODO",
         priority: priorityInput.value || "NORMAL",
-        sourceType: "",
+        sourceType: "MANUAL",
         sourceId: "",
         reminder: reminderInput.value === "true",
         alertLevel: "",
@@ -870,6 +994,14 @@
       });
     }
 
+    async function refreshStaticHistoryAndRender() {
+      await loadDossiersAndDocuments();
+      const items = buildTimelineItems();
+      computeKPIs(items);
+      renderTodoList(items);
+      renderTimeline(items);
+    }
+
     async function init() {
       clientId = qs("id") || "";
       if (!clientId) {
@@ -888,17 +1020,16 @@
         return;
       }
 
-      onSnapshot(
+      await loadDossiersAndDocuments();
+
+      unsubFollowUps = onSnapshot(
         query(collection(db, "followUps"), where("clientId", "==", clientId), orderBy("eventDate", "desc")),
-        (snapshot) => {
-          allFollowUps = snapshot.docs.map(docSnap => ({
+        async (snapshot) => {
+          liveFollowUps = snapshot.docs.map(docSnap => ({
             id: docSnap.id,
             ...docSnap.data()
           }));
-
-          computeKPIs(allFollowUps);
-          renderTodoList(allFollowUps);
-          renderTimeline(allFollowUps);
+          await refreshStaticHistoryAndRender();
         },
         (err) => {
           console.error("Erreur chargement suivi :", err);
