@@ -120,6 +120,20 @@
       letter-spacing:-.02em;
     }
 
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
     .field{margin-bottom:14px}
     .field label{
       display:block;
@@ -166,6 +180,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -298,6 +315,15 @@
       background:#fff;
       font:inherit;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    .mini-btn:hover{
+      border-color:var(--accent);
     }
 
     .note{
@@ -372,7 +398,9 @@
 
       <section class="grid">
         <article class="card">
-          <h2>Ajouter un document</h2>
+          <h2 id="formTitle">Ajouter un document</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
+
           <form id="documentForm">
             <div class="field">
               <label for="documentTitle">Titre du document</label>
@@ -427,13 +455,14 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="btn">Enregistrer</button>
+              <button id="submitBtn" type="submit" class="btn">Enregistrer</button>
               <button type="reset" class="btn btn-secondary">Vider</button>
+              <button id="cancelEditBtn" type="button" class="btn btn-secondary" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
           <div class="note">
-            Chaque document est rattaché à un dossier. Si un fichier est ajouté, il est stocké dans Firebase Storage.
+            Chaque document est rattaché à un dossier. Si un fichier est ajouté, il est stocké dans Firebase Storage. L’ajout d’un document crée automatiquement une ligne de suivi.
           </div>
         </article>
 
@@ -511,9 +540,15 @@
     const totalEmails = document.getElementById("totalEmails");
     const totalPieces = document.getElementById("totalPieces");
 
+    const formTitle = document.getElementById("formTitle");
+    const formMode = document.getElementById("formMode");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+
     const clientsRef = collection(db, "clients");
     const dossiersRef = collection(db, "dossiers");
     const documentsRef = collection(db, "documents");
+    const followUpsRef = collection(db, "followUps");
 
     let allClients = [];
     let allDossiers = [];
@@ -531,6 +566,21 @@
 
     function normalizeText(value = "") {
       return String(value || "").trim();
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function resetFormState() {
+      editingDocumentId = null;
+      form.reset();
+      if (documentFileInput) documentFileInput.value = "";
+      document.getElementById("documentType").value = "Courrier";
+      formTitle.textContent = "Ajouter un document";
+      formMode.style.display = "none";
+      submitBtn.textContent = "Enregistrer";
+      cancelEditBtn.style.display = "none";
     }
 
     function fillDossierSelect() {
@@ -562,6 +612,11 @@
       document.getElementById("documentUrl").value = item.url || "";
       document.getElementById("documentNotes").value = item.notes || "";
       if (documentFileInput) documentFileInput.value = "";
+
+      formTitle.textContent = "Modifier un document";
+      formMode.style.display = "";
+      submitBtn.textContent = "Mettre à jour";
+      cancelEditBtn.style.display = "";
     }
 
     function renderStats(documents) {
@@ -612,6 +667,7 @@
         const dossier = dossierMap[item.dossierId];
         const clientName = item.clientNameSnapshot || (dossier ? (clientMap[dossier.clientId]?.name || "Client supprimé") : "Dossier supprimé");
         const dossierTitle = item.dossierTitleSnapshot || dossier?.title || "Dossier supprimé";
+        const followLink = item.clientIdSnapshot ? `client-suivi.html?id=${encodeURIComponent(item.clientIdSnapshot)}` : "";
 
         return `
           <article class="doc-item">
@@ -634,6 +690,7 @@
             ${item.notes ? `<div class="doc-notes">${escapeHtml(item.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
+              ${followLink ? `<a class="mini-btn" href="${followLink}">Suivi</a>` : ""}
               <button class="mini-btn" type="button" data-edit-id="${item.id}">Modifier</button>
               <button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>
             </div>
@@ -664,7 +721,35 @@
       };
     }
 
-    function createDocument(data) {
+    async function createFollowUpForDocument(documentPayload) {
+      await addDoc(followUpsRef, {
+        clientId: documentPayload.clientIdSnapshot || "",
+        clientNameSnapshot: documentPayload.clientNameSnapshot || "",
+        dossierId: documentPayload.dossierId || "",
+        dossierTitleSnapshot: documentPayload.dossierTitleSnapshot || "",
+        type: "DOCUMENTS_RECEIVED",
+        title: `Document ajouté : ${documentPayload.title || "Sans titre"}`,
+        details: [
+          documentPayload.type ? `Type : ${documentPayload.type}` : "",
+          documentPayload.fileName ? `Fichier : ${documentPayload.fileName}` : "",
+          documentPayload.notes ? `Notes : ${documentPayload.notes}` : ""
+        ].filter(Boolean).join("\n"),
+        eventDate: documentPayload.date || todayStr(),
+        status: "DONE",
+        priority: "NORMAL",
+        sourceType: "DOCUMENT",
+        sourceId: "",
+        reminder: false,
+        alertLevel: "",
+        assignedTo: "",
+        scope: "DOSSIER",
+        doneAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+    }
+
+    function createDocumentPayload(data) {
       const dossierId = data.get("documentDossier") || "";
       const dossier = allDossiers.find(d => d.id === dossierId);
       const client = allClients.find(c => c.id === dossier?.clientId);
@@ -680,9 +765,7 @@
         url: normalizeText(data.get("documentUrl")),
         notes: normalizeText(data.get("documentNotes")),
         fileName: "",
-        filePath: "",
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        filePath: ""
       };
     }
 
@@ -690,7 +773,7 @@
       e.preventDefault();
 
       const data = new FormData(form);
-      const payload = createDocument(data);
+      const payload = createDocumentPayload(data);
       const file = documentFileInput?.files?.[0] || null;
 
       if (!payload.title || !payload.dossierId) {
@@ -734,9 +817,14 @@
           }
 
           await updateDoc(doc(db, "documents", editingDocumentId), updatePayload);
-          editingDocumentId = null;
         } else {
-          const docRef = await addDoc(documentsRef, payload);
+          const docRef = await addDoc(documentsRef, {
+            ...payload,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+
+          let createdPayload = { ...payload };
 
           if (file) {
             const uploaded = await uploadDocumentFile(file, payload.dossierId, docRef.id);
@@ -746,16 +834,36 @@
               url: uploaded.url,
               updatedAt: serverTimestamp()
             });
+
+            createdPayload = {
+              ...createdPayload,
+              fileName: uploaded.fileName,
+              filePath: uploaded.filePath,
+              url: uploaded.url
+            };
           }
+
+          await createFollowUpForDocument(createdPayload);
         }
 
-        form.reset();
-        if (documentFileInput) documentFileInput.value = "";
-        document.getElementById("documentType").value = "Courrier";
+        resetFormState();
       } catch (err) {
         console.error("Erreur enregistrement document :", err);
         alert("Impossible d’enregistrer le document.");
       }
+    });
+
+    form.addEventListener("reset", () => {
+      setTimeout(() => {
+        if (!editingDocumentId) {
+          document.getElementById("documentType").value = "Courrier";
+        }
+      }, 0);
+    });
+
+    cancelEditBtn.addEventListener("click", () => {
+      resetFormState();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     searchInput.addEventListener("input", renderDocuments);
@@ -795,10 +903,7 @@
         await deleteDoc(doc(db, "documents", id));
 
         if (editingDocumentId === id) {
-          editingDocumentId = null;
-          form.reset();
-          if (documentFileInput) documentFileInput.value = "";
-          document.getElementById("documentType").value = "Courrier";
+          resetFormState();
         }
       } catch (err) {
         console.error("Erreur suppression document :", err);
@@ -850,6 +955,8 @@
         renderStats([]);
       }
     );
+
+    resetFormState();
   </script>
 </body>
 </html>
