@@ -163,6 +163,9 @@
       font:inherit;
       font-weight:700;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .btn-secondary{
@@ -288,6 +291,15 @@
       background:#fff;
       font:inherit;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    .mini-btn:hover{
+      border-color:var(--accent);
     }
 
     .note{
@@ -298,6 +310,20 @@
       border:1px solid var(--line);
       color:#4f4942;
       font-size:.92rem;
+    }
+
+    .form-mode{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#faf7f1;
+      border:1px solid var(--line);
+      color:#4f4942;
+      font-size:.82rem;
+      font-weight:700;
+      margin-bottom:14px;
     }
 
     @media (max-width: 920px){
@@ -360,7 +386,9 @@
 
       <section class="grid">
         <article class="card">
-          <h2>Ajouter un client</h2>
+          <h2 id="formTitle">Ajouter un client</h2>
+          <div id="formMode" class="form-mode" style="display:none;">Mode modification</div>
+
           <form id="clientForm">
             <div class="field">
               <label for="clientName">Nom / prénom ou raison sociale</label>
@@ -396,8 +424,9 @@
             </div>
 
             <div class="actions">
-              <button type="submit" class="btn">Enregistrer</button>
+              <button id="submitBtn" type="submit" class="btn">Enregistrer</button>
               <button type="reset" class="btn btn-secondary">Vider</button>
+              <button id="cancelEditBtn" type="button" class="btn btn-secondary" style="display:none;">Annuler modification</button>
             </div>
           </form>
 
@@ -453,6 +482,10 @@
     const totalClients = document.getElementById("totalClients");
     const totalParticuliers = document.getElementById("totalParticuliers");
     const totalPros = document.getElementById("totalPros");
+    const formTitle = document.getElementById("formTitle");
+    const formMode = document.getElementById("formMode");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
 
     const clientsRef = collection(db, "clients");
     const dossiersRef = collection(db, "dossiers");
@@ -478,6 +511,16 @@
       return String(value || "").trim();
     }
 
+    function resetFormState() {
+      editingClientId = null;
+      form.reset();
+      document.getElementById("clientType").value = "Particulier";
+      formTitle.textContent = "Ajouter un client";
+      formMode.style.display = "none";
+      submitBtn.textContent = "Enregistrer";
+      cancelEditBtn.style.display = "none";
+    }
+
     function renderStats(clients) {
       totalClients.textContent = clients.length;
       totalParticuliers.textContent = clients.filter(c => c.type === "Particulier").length;
@@ -491,6 +534,11 @@
       document.getElementById("clientPhone").value = client.phone || "";
       document.getElementById("clientAddress").value = client.address || "";
       document.getElementById("clientNotes").value = client.notes || "";
+
+      formTitle.textContent = "Modifier un client";
+      formMode.style.display = "";
+      submitBtn.textContent = "Mettre à jour";
+      cancelEditBtn.style.display = "";
     }
 
     function getClientUsage(clientId) {
@@ -533,7 +581,7 @@
         const usage = getClientUsage(client.id);
         const usageLine = usage.total
           ? `<span><strong>Utilisation :</strong> ${usage.dossiersCount} dossier(s), ${usage.invoicesCount} facture(s), ${usage.quotesCount} devis</span>`
-          : "";
+          : `<span><strong>Utilisation :</strong> aucune</span>`;
 
         return `
           <article class="client-item">
@@ -553,6 +601,7 @@
             ${client.notes ? `<div class="client-notes">${escapeHtml(client.notes).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
+              <a class="mini-btn" href="client-suivi.html?id=${encodeURIComponent(client.id)}">Suivi</a>
               <button class="mini-btn" type="button" data-edit-id="${client.id}">Modifier</button>
               <button class="mini-btn" type="button" data-delete-id="${client.id}">Supprimer</button>
             </div>
@@ -561,16 +610,14 @@
       }).join("");
     }
 
-    function createClient(data) {
+    function createClientPayload(data) {
       return {
         name: normalizeText(data.get("clientName")),
         type: data.get("clientType") || "Particulier",
         email: normalizeText(data.get("clientEmail")),
         phone: normalizeText(data.get("clientPhone")),
         address: normalizeText(data.get("clientAddress")),
-        notes: normalizeText(data.get("clientNotes")),
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        notes: normalizeText(data.get("clientNotes"))
       };
     }
 
@@ -578,7 +625,7 @@
       e.preventDefault();
 
       const data = new FormData(form);
-      const payload = createClient(data);
+      const payload = createClientPayload(data);
 
       if (!payload.name) {
         alert("Nom obligatoire.");
@@ -587,13 +634,6 @@
 
       try {
         if (editingClientId) {
-          const usage = getClientUsage(editingClientId);
-
-          if (usage.total > 0) {
-            alert("Modification bloquée : ce client est déjà utilisé par un dossier, un devis ou une facture.");
-            return;
-          }
-
           await updateDoc(doc(db, "clients", editingClientId), {
             name: payload.name,
             type: payload.type,
@@ -603,17 +643,32 @@
             notes: payload.notes,
             updatedAt: serverTimestamp()
           });
-          editingClientId = null;
         } else {
-          await addDoc(clientsRef, payload);
+          await addDoc(clientsRef, {
+            ...payload,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
         }
 
-        form.reset();
-        document.getElementById("clientType").value = "Particulier";
+        resetFormState();
       } catch (err) {
         console.error("Erreur enregistrement client :", err);
         alert("Impossible d’enregistrer le client.");
       }
+    });
+
+    form.addEventListener("reset", () => {
+      setTimeout(() => {
+        if (!editingClientId) {
+          document.getElementById("clientType").value = "Particulier";
+        }
+      }, 0);
+    });
+
+    cancelEditBtn.addEventListener("click", () => {
+      resetFormState();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     searchInput.addEventListener("input", renderClients);
@@ -624,12 +679,6 @@
         const id = editBtn.getAttribute("data-edit-id");
         const client = allClients.find(c => c.id === id);
         if (!client) return;
-
-        const usage = getClientUsage(id);
-        if (usage.total > 0) {
-          alert("Modification bloquée : ce client est déjà utilisé par un dossier, un devis ou une facture.");
-          return;
-        }
 
         editingClientId = id;
         fillForm(client);
@@ -644,7 +693,7 @@
       const usage = getClientUsage(id);
 
       if (usage.total > 0) {
-        alert("Suppression bloquée : ce client est déjà utilisé.");
+        alert("Suppression bloquée : ce client est déjà utilisé par un dossier, un devis ou une facture.");
         return;
       }
 
@@ -655,9 +704,7 @@
         await deleteDoc(doc(db, "clients", id));
 
         if (editingClientId === id) {
-          editingClientId = null;
-          form.reset();
-          document.getElementById("clientType").value = "Particulier";
+          resetFormState();
         }
       } catch (err) {
         console.error("Erreur suppression client :", err);
@@ -716,6 +763,8 @@
       },
       (err) => console.error("Erreur chargement devis :", err)
     );
+
+    resetFormState();
   </script>
 </body>
 </html>
