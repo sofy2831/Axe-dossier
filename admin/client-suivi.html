@@ -981,12 +981,13 @@
     function renderActionButtons(item) {
   const actions = [];
 
-  const isManualLink =
+  const isDocumentWithLink =
     item.sourceKind === "FOLLOWUP" &&
+    String(item.type || "").toUpperCase() === "DOCUMENTS_RECEIVED" &&
     item.url &&
     String(item.url).trim();
 
-  if (isManualLink) {
+  if (isDocumentWithLink) {
     actions.push(`
       <a class="mini-btn dark link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Voir</a>
     `);
