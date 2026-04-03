@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /administrateur/
+
+Sitemap: https://axe-dossier.fr/sitemap.xml
