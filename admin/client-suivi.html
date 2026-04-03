@@ -262,45 +262,64 @@
 
     .event-item{
       border:1px solid var(--line);
-      border-radius:18px;
+      border-radius:20px;
       background:#fff;
       padding:18px;
       display:grid;
-      gap:10px;
+      gap:12px;
     }
 
     .event-top{
       display:flex;
       justify-content:space-between;
-      align-items:start;
-      gap:12px;
+      align-items:flex-start;
+      gap:14px;
       flex-wrap:wrap;
     }
 
-    .event-title{
-      font-size:1.04rem;
-      font-weight:800;
-      letter-spacing:-.02em;
-    }
-
-    .event-meta{
+    .event-head{
       display:grid;
       gap:6px;
-      color:#4f4942;
-      font-size:.94rem;
-      line-height:1.5;
+      min-width:0;
     }
 
-    .event-details{
+    .event-title{
+      font-size:1.06rem;
+      font-weight:800;
+      letter-spacing:-.02em;
+      line-height:1.3;
+      color:var(--text);
+    }
+
+    .event-subline{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 14px;
       color:var(--muted);
-      font-size:.94rem;
-      line-height:1.55;
+      font-size:.93rem;
+      line-height:1.45;
+    }
+
+    .event-date-wrap{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .event-date{
+      font-size:.95rem;
+      font-weight:700;
+      color:#3e3933;
+      white-space:nowrap;
     }
 
     .badges{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
     .badge{
@@ -322,11 +341,21 @@
     .badge.high{background:var(--danger)}
     .badge.urgent{background:var(--danger)}
 
+    .event-details{
+      color:var(--muted);
+      font-size:.94rem;
+      line-height:1.55;
+      background:#fcfbf8;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 14px;
+    }
+
     .mini-actions{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
-      margin-top:4px;
+      margin-top:2px;
     }
 
     .mini-btn{
@@ -344,6 +373,16 @@
 
     .mini-btn:hover{
       border-color:var(--accent);
+    }
+
+    .mini-btn.dark{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+
+    .mini-btn.link{
+      text-decoration:none;
     }
 
     @media (max-width: 980px){
@@ -379,6 +418,14 @@
       }
       .actions .btn{
         width:100%;
+      }
+      .event-top{
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .event-date-wrap,
+      .badges{
+        justify-content:flex-start;
       }
     }
   </style>
@@ -466,18 +513,18 @@
                 <div class="field">
                   <label for="type">Type</label>
                   <select id="type">
-                    <option value="NOTE">NOTE</option>
-                    <option value="DOCUMENTS_RECEIVED">DOCUMENTS_RECEIVED</option>
-                    <option value="PAYMENT_RECEIVED">PAYMENT_RECEIVED</option>
-                    <option value="ANALYSIS_STARTED">ANALYSIS_STARTED</option>
-                    <option value="ANALYSIS_DONE">ANALYSIS_DONE</option>
-                    <option value="REPORT_SENT">REPORT_SENT</option>
-                    <option value="FOLLOWUP_SENT">FOLLOWUP_SENT</option>
-                    <option value="LETTER_SENT">LETTER_SENT</option>
-                    <option value="CLIENT_RESPONSE">CLIENT_RESPONSE</option>
-                    <option value="REMINDER">REMINDER</option>
-                    <option value="DEADLINE">DEADLINE</option>
-                    <option value="DOSSIER_CLOSED">DOSSIER_CLOSED</option>
+                    <option value="NOTE">Note</option>
+                    <option value="DOCUMENTS_RECEIVED">Document reçu</option>
+                    <option value="PAYMENT_RECEIVED">Paiement reçu</option>
+                    <option value="ANALYSIS_STARTED">Analyse commencée</option>
+                    <option value="ANALYSIS_DONE">Analyse terminée</option>
+                    <option value="REPORT_SENT">Compte rendu envoyé</option>
+                    <option value="FOLLOWUP_SENT">Relance envoyée</option>
+                    <option value="LETTER_SENT">Courrier envoyé</option>
+                    <option value="CLIENT_RESPONSE">Réponse client</option>
+                    <option value="REMINDER">Rappel</option>
+                    <option value="DEADLINE">Échéance</option>
+                    <option value="DOSSIER_CLOSED">Dossier clôturé</option>
                   </select>
                 </div>
 
@@ -491,19 +538,19 @@
                 <div class="field">
                   <label for="status">Statut</label>
                   <select id="status">
-                    <option value="TODO">TODO</option>
-                    <option value="DONE">DONE</option>
-                    <option value="CANCELLED">CANCELLED</option>
+                    <option value="TODO">À faire</option>
+                    <option value="DONE">Fait</option>
+                    <option value="CANCELLED">Annulé</option>
                   </select>
                 </div>
 
                 <div class="field">
                   <label for="priority">Priorité</label>
                   <select id="priority">
-                    <option value="NORMAL">NORMAL</option>
-                    <option value="LOW">LOW</option>
-                    <option value="HIGH">HIGH</option>
-                    <option value="URGENT">URGENT</option>
+                    <option value="NORMAL">Normale</option>
+                    <option value="LOW">Basse</option>
+                    <option value="HIGH">Haute</option>
+                    <option value="URGENT">Urgente</option>
                   </select>
                 </div>
               </div>
@@ -512,13 +559,13 @@
                 <div class="field">
                   <label for="scope">Portée</label>
                   <select id="scope">
-                    <option value="CLIENT">CLIENT</option>
-                    <option value="DOSSIER">DOSSIER</option>
-                    <option value="DOCUMENT">DOCUMENT</option>
-                    <option value="INVOICE">INVOICE</option>
-                    <option value="PAYMENT">PAYMENT</option>
-                    <option value="QUOTE">QUOTE</option>
-                    <option value="CREDIT">CREDIT</option>
+                    <option value="CLIENT">Client</option>
+                    <option value="DOSSIER">Dossier</option>
+                    <option value="DOCUMENT">Document</option>
+                    <option value="INVOICE">Facture</option>
+                    <option value="PAYMENT">Paiement</option>
+                    <option value="QUOTE">Devis</option>
+                    <option value="CREDIT">Avoir</option>
                   </select>
                 </div>
 
@@ -711,28 +758,41 @@
 
     function buildFriendlyTitle(item) {
       const type = String(item.type || "").toUpperCase();
+      const rawTitle = String(item.rawTitle || item.title || "").trim();
 
       if (type === "CLIENT_CREATED") {
-        return `Client créé : ${item.clientNameSnapshot || item.title || "Client"}`;
+        return `Client créé : ${item.clientNameSnapshot || rawTitle || "Client"}`;
       }
 
       if (type === "DOSSIER_CREATED") {
-        return `Dossier créé : ${item.dossierTitleSnapshot || item.title || "Sans titre"}`;
+        return `Dossier créé : ${item.dossierTitleSnapshot || rawTitle || "Sans titre"}`;
       }
 
       if (type === "DOCUMENTS_RECEIVED") {
-        return `Document reçu : ${item.title || "Sans titre"}`;
+        const cleanTitle = rawTitle
+          .replace(/^Document ajouté\s*:\s*/i, "")
+          .replace(/^Document reçu\s*:\s*/i, "")
+          .trim();
+        return `Document reçu : ${cleanTitle || "Sans titre"}`;
       }
 
       if (type === "PAYMENT_RECEIVED") {
-        return `Paiement reçu : ${item.title || "Règlement"}`;
+        return `Paiement reçu : ${rawTitle || "Règlement"}`;
       }
 
       if (type === "REPORT_SENT") {
-        return `Compte rendu envoyé : ${item.title || "Audit"}`;
+        return `Compte rendu envoyé${rawTitle ? ` : ${rawTitle}` : ""}`;
       }
 
-      return item.title || formatType(item.type);
+      if (type === "FOLLOWUP_SENT") {
+        return `Relance envoyée${rawTitle ? ` : ${rawTitle}` : ""}`;
+      }
+
+      if (type === "LETTER_SENT") {
+        return `Courrier envoyé${rawTitle ? ` : ${rawTitle}` : ""}`;
+      }
+
+      return rawTitle || formatType(item.type);
     }
 
     function getSortDate(item) {
@@ -770,15 +830,17 @@
         sourceKind: "FOLLOWUP",
         eventDate: normalizeDate(item.eventDate),
         createdAtIso: normalizeTs(item.createdAt),
-        title: buildFriendlyTitle(item),
         rawTitle: item.title || "",
+        title: buildFriendlyTitle(item),
         details: item.details || "",
         type: item.type || "",
         status: item.status || "TODO",
         priority: item.priority || "NORMAL",
         scope: item.scope || "CLIENT",
         dossierTitleSnapshot: item.dossierTitleSnapshot || "",
+        dossierId: item.dossierId || "",
         clientNameSnapshot: item.clientNameSnapshot || "",
+        url: item.url || item.link || "",
         canMarkDone: (item.status || "TODO") === "TODO",
         canDelete: true
       };
@@ -790,18 +852,21 @@
         sourceKind: "AUTO",
         eventDate: normalizeDate(dossier.openedAt || ""),
         createdAtIso: normalizeTs(dossier.createdAt),
+        rawTitle: dossier.title || "",
         title: `Dossier créé : ${dossier.title || "Sans titre"}`,
-        details: [
-          dossier.type ? `Type : ${dossier.type}` : "",
-          dossier.reference ? `Référence : ${dossier.reference}` : "",
-          dossier.summary ? `Résumé : ${dossier.summary}` : "",
-          dossier.notes ? `Notes : ${dossier.notes}` : ""
-        ].filter(Boolean).join("\n"),
+        details: "",
+        metaShort: [
+          dossier.type || "",
+          dossier.reference ? `Réf. ${dossier.reference}` : ""
+        ].filter(Boolean).join(" · "),
         type: "DOSSIER_CREATED",
         status: "DONE",
         priority: "NORMAL",
         scope: "DOSSIER",
         dossierTitleSnapshot: dossier.title || "",
+        dossierId: dossier.id,
+        clientNameSnapshot: clientData?.name || "",
+        url: "",
         canMarkDone: false,
         canDelete: false
       };
@@ -813,18 +878,21 @@
         sourceKind: "AUTO",
         eventDate: normalizeDate(docItem.date || ""),
         createdAtIso: normalizeTs(docItem.createdAt),
-        title: `Document ajouté : ${docItem.title || "Sans titre"}`,
-        details: [
-          docItem.type ? `Type : ${docItem.type}` : "",
-          docItem.fileName ? `Fichier : ${docItem.fileName}` : "",
-          docItem.url ? `Lien enregistré` : "",
-          docItem.notes ? `Notes : ${docItem.notes}` : ""
-        ].filter(Boolean).join("\n"),
-        type: "DOCUMENT_ADDED",
+        rawTitle: docItem.title || "",
+        title: `Document reçu : ${docItem.title || "Sans titre"}`,
+        details: "",
+        metaShort: [
+          docItem.type || "",
+          docItem.fileName || ""
+        ].filter(Boolean).join(" · "),
+        type: "DOCUMENTS_RECEIVED",
         status: "DONE",
         priority: "NORMAL",
         scope: "DOCUMENT",
         dossierTitleSnapshot: docItem.dossierTitleSnapshot || "",
+        dossierId: docItem.dossierId || "",
+        clientNameSnapshot: clientData?.name || "",
+        url: docItem.url || "",
         canMarkDone: false,
         canDelete: false
       };
@@ -876,6 +944,60 @@
       kpiLate.textContent = lateItems.length;
     }
 
+    function getCompactMeta(item) {
+      const parts = [];
+
+      if (item.type === "CLIENT_CREATED") {
+        if (item.metaShort) parts.push(item.metaShort);
+        return parts.join(" · ");
+      }
+
+      if (item.dossierTitleSnapshot) {
+        parts.push(`Dossier : ${item.dossierTitleSnapshot}`);
+      } else if (item.scope && formatScope(item.scope) !== "Client") {
+        parts.push(formatScope(item.scope));
+      }
+
+      if (item.metaShort) {
+        parts.push(item.metaShort);
+      }
+
+      return parts.join(" · ");
+    }
+
+    function getCleanDetails(item) {
+      const raw = String(item.details || "").trim();
+      if (!raw) return "";
+
+      let clean = raw
+        .replace(/\bLien\s*:\s*https?:\/\/\S+/gi, "")
+        .replace(/\burl\s*:\s*https?:\/\/\S+/gi, "")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+      return clean;
+    }
+
+    function renderActionButtons(item) {
+      const actions = [];
+
+      if (item.url) {
+        actions.push(`
+          <a class="mini-btn dark link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Voir</a>
+        `);
+      }
+
+      if (item.sourceKind === "FOLLOWUP" && item.canMarkDone) {
+        actions.push(`<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>`);
+      }
+
+      if (item.sourceKind === "FOLLOWUP" && item.canDelete) {
+        actions.push(`<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>`);
+      }
+
+      return actions.join("");
+    }
+
     function renderTodoList(items) {
       const today = todayStr();
 
@@ -892,32 +1014,32 @@
         const d = getSortDate(item);
         const late = d && d < today;
         const todayBadge = d === today;
+        const meta = getCompactMeta(item);
+        const cleanDetails = getCleanDetails(item);
 
         return `
           <article class="event-item">
             <div class="event-top">
-              <div>
+              <div class="event-head">
                 <div class="event-title">${escapeHtml(item.title || "")}</div>
-                <div class="event-meta">
-                  <span><strong>Date :</strong> ${escapeHtml(formatDateFr(d))}</span>
-                  ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(formatType(item.type))}</span>` : ""}
-                  ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
-                </div>
+                ${meta ? `<div class="event-subline"><span>${escapeHtml(meta)}</span></div>` : ""}
               </div>
 
-              <div class="badges">
-                <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
-                <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
-                ${late ? `<span class="badge urgent">En retard</span>` : ""}
-                ${todayBadge ? `<span class="badge todo">Aujourd’hui</span>` : ""}
+              <div class="event-date-wrap">
+                <span class="event-date">${escapeHtml(formatDateFr(d))}</span>
+                <div class="badges">
+                  <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
+                  <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
+                  ${late ? `<span class="badge urgent">En retard</span>` : ""}
+                  ${todayBadge ? `<span class="badge todo">Aujourd’hui</span>` : ""}
+                </div>
               </div>
             </div>
 
-            ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
+            ${cleanDetails ? `<div class="event-details">${escapeHtml(cleanDetails).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
-              ${item.sourceKind === "FOLLOWUP" && item.canMarkDone ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>` : ""}
-              ${item.sourceKind === "FOLLOWUP" && item.canDelete ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>` : ""}
+              ${renderActionButtons(item)}
             </div>
           </article>
         `;
@@ -932,31 +1054,30 @@
 
       timelineList.innerHTML = items.map(item => {
         const d = getSortDate(item);
+        const meta = getCompactMeta(item);
+        const cleanDetails = getCleanDetails(item);
 
         return `
           <article class="event-item">
             <div class="event-top">
-              <div>
+              <div class="event-head">
                 <div class="event-title">${escapeHtml(item.title || "")}</div>
-                <div class="event-meta">
-                  <span><strong>Date :</strong> ${escapeHtml(formatDateFr(d))}</span>
-                  ${item.type ? `<span><strong>Nature :</strong> ${escapeHtml(formatType(item.type))}</span>` : ""}
-                  ${item.scope ? `<span><strong>Portée :</strong> ${escapeHtml(formatScope(item.scope))}</span>` : ""}
-                  ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
-                </div>
+                ${meta ? `<div class="event-subline"><span>${escapeHtml(meta)}</span></div>` : ""}
               </div>
 
-              <div class="badges">
-                <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
-                <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
+              <div class="event-date-wrap">
+                <span class="event-date">${escapeHtml(formatDateFr(d))}</span>
+                <div class="badges">
+                  <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
+                  <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
+                </div>
               </div>
             </div>
 
-            ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
+            ${cleanDetails ? `<div class="event-details">${escapeHtml(cleanDetails).replace(/\n/g, "<br>")}</div>` : ""}
 
             <div class="mini-actions">
-              ${item.sourceKind === "FOLLOWUP" && item.canMarkDone ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>` : ""}
-              ${item.sourceKind === "FOLLOWUP" && item.canDelete ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>` : ""}
+              ${renderActionButtons(item)}
             </div>
           </article>
         `;
