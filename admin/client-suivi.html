@@ -979,26 +979,31 @@
     }
 
     function renderActionButtons(item) {
-      const actions = [];
+  const actions = [];
 
-      if (item.url) {
-        actions.push(`
-          <a class="mini-btn dark link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Voir</a>
-        `);
-      }
+  const isManualLink =
+    item.sourceKind === "FOLLOWUP" &&
+    item.url &&
+    String(item.url).trim();
 
-      if (item.sourceKind === "FOLLOWUP" && item.canMarkDone) {
-        actions.push(`<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>`);
-      }
+  if (isManualLink) {
+    actions.push(`
+      <a class="mini-btn dark link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Voir</a>
+    `);
+  }
 
-      if (item.sourceKind === "FOLLOWUP" && item.canDelete) {
-        actions.push(`<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>`);
-      }
+  if (item.sourceKind === "FOLLOWUP" && item.canMarkDone) {
+    actions.push(`<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>`);
+  }
 
-      return actions.join("");
-    }
+  if (item.sourceKind === "FOLLOWUP" && item.canDelete) {
+    actions.push(`<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>`);
+  }
 
-    function renderTodoList(items) {
+  return actions.join("");
+}
+
+      function renderTodoList(items) {
       const today = todayStr();
 
       const todos = items
