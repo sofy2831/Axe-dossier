@@ -573,7 +573,6 @@
       onSnapshot,
       query,
       where,
-      orderBy,
       updateDoc,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -635,6 +634,14 @@
       return "";
     }
 
+    function formatDateFr(value = "") {
+      const v = String(value || "").trim();
+      if (!v) return "—";
+      const parts = v.split("-");
+      if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      return v;
+    }
+
     function badgeStatus(status = "") {
       const s = String(status || "").toUpperCase();
       if (s === "DONE") return "done";
@@ -664,6 +671,84 @@
       return "Normale";
     }
 
+    function formatScope(scope = "") {
+      const s = String(scope || "").toUpperCase();
+      if (s === "CLIENT") return "Client";
+      if (s === "DOSSIER") return "Dossier";
+      if (s === "DOCUMENT") return "Document";
+      if (s === "INVOICE") return "Facture";
+      if (s === "PAYMENT") return "Paiement";
+      if (s === "QUOTE") return "Devis";
+      if (s === "CREDIT") return "Avoir";
+      return "Client";
+    }
+
+    function formatType(type = "") {
+      const t = String(type || "").toUpperCase();
+
+      const map = {
+        NOTE: "Note",
+        DOCUMENTS_RECEIVED: "Document reçu",
+        PAYMENT_RECEIVED: "Paiement reçu",
+        ANALYSIS_STARTED: "Analyse commencée",
+        ANALYSIS_DONE: "Analyse terminée",
+        REPORT_SENT: "Compte rendu envoyé",
+        FOLLOWUP_SENT: "Relance envoyée",
+        LETTER_SENT: "Courrier envoyé",
+        CLIENT_RESPONSE: "Réponse client",
+        REMINDER: "Rappel",
+        DEADLINE: "Échéance",
+        DOSSIER_CLOSED: "Dossier clôturé",
+        CLIENT_CREATED: "Client créé",
+        DOSSIER_CREATED: "Dossier créé",
+        DOCUMENT_ADDED: "Document ajouté",
+        DOCUMENT_CREATED: "Document ajouté",
+        DOCUMENT_UPLOADED: "Document ajouté"
+      };
+
+      return map[t] || t || "Suivi";
+    }
+
+    function buildFriendlyTitle(item) {
+      const type = String(item.type || "").toUpperCase();
+
+      if (type === "CLIENT_CREATED") {
+        return `Client créé : ${item.clientNameSnapshot || item.title || "Client"}`;
+      }
+
+      if (type === "DOSSIER_CREATED") {
+        return `Dossier créé : ${item.dossierTitleSnapshot || item.title || "Sans titre"}`;
+      }
+
+      if (type === "DOCUMENTS_RECEIVED") {
+        return `Document reçu : ${item.title || "Sans titre"}`;
+      }
+
+      if (type === "PAYMENT_RECEIVED") {
+        return `Paiement reçu : ${item.title || "Règlement"}`;
+      }
+
+      if (type === "REPORT_SENT") {
+        return `Compte rendu envoyé : ${item.title || "Audit"}`;
+      }
+
+      return item.title || formatType(item.type);
+    }
+
+    function getSortDate(item) {
+      const eventDate = String(item.eventDate || "").trim();
+      if (eventDate) return eventDate;
+
+      if (typeof item.createdAt?.toDate === "function") {
+        return item.createdAt.toDate().toISOString().slice(0, 10);
+      }
+
+      const createdAtIso = String(item.createdAtIso || "").trim();
+      if (createdAtIso) return createdAtIso.slice(0, 10);
+
+      return "";
+    }
+
     function getClientDisplay() {
       if (!clientData) return "Client introuvable";
 
@@ -685,13 +770,15 @@
         sourceKind: "FOLLOWUP",
         eventDate: normalizeDate(item.eventDate),
         createdAtIso: normalizeTs(item.createdAt),
-        title: item.title || "",
+        title: buildFriendlyTitle(item),
+        rawTitle: item.title || "",
         details: item.details || "",
         type: item.type || "",
         status: item.status || "TODO",
         priority: item.priority || "NORMAL",
         scope: item.scope || "CLIENT",
         dossierTitleSnapshot: item.dossierTitleSnapshot || "",
+        clientNameSnapshot: item.clientNameSnapshot || "",
         canMarkDone: (item.status || "TODO") === "TODO",
         canDelete: true
       };
@@ -745,12 +832,26 @@
 
     function buildTimelineItems() {
       const followUpsPart = liveFollowUps.map(mapFollowUpToTimeline);
+
+      if (followUpsPart.length) {
+        return followUpsPart.sort((a, b) => {
+          const da = getSortDate(a);
+          const db = getSortDate(b);
+
+          if (da !== db) return db.localeCompare(da);
+
+          const ca = String(a.createdAtIso || "");
+          const cb = String(b.createdAtIso || "");
+          return cb.localeCompare(ca);
+        });
+      }
+
       const dossiersPart = clientDossiers.map(mapDossierToTimeline);
       const documentsPart = clientDocuments.map(mapDocumentToTimeline);
 
-      return [...followUpsPart, ...dossiersPart, ...documentsPart].sort((a, b) => {
-        const da = normalizeDate(a.eventDate || "");
-        const db = normalizeDate(b.eventDate || "");
+      return [...dossiersPart, ...documentsPart].sort((a, b) => {
+        const da = getSortDate(a);
+        const db = getSortDate(b);
 
         if (da !== db) return db.localeCompare(da);
 
@@ -763,9 +864,9 @@
     function computeKPIs(items) {
       const today = todayStr();
       const todos = items.filter(i => (i.status || "TODO") === "TODO");
-      const todayItems = todos.filter(i => normalizeDate(i.eventDate) === today);
+      const todayItems = todos.filter(i => getSortDate(i) === today);
       const lateItems = todos.filter(i => {
-        const d = normalizeDate(i.eventDate);
+        const d = getSortDate(i);
         return d && d < today;
       });
 
@@ -780,7 +881,7 @@
 
       const todos = items
         .filter(item => (item.status || "TODO") === "TODO")
-        .sort((a, b) => normalizeDate(a.eventDate).localeCompare(normalizeDate(b.eventDate)));
+        .sort((a, b) => getSortDate(a).localeCompare(getSortDate(b)));
 
       if (!todos.length) {
         todoList.innerHTML = '<div class="empty">Aucun rappel à faire.</div>';
@@ -788,7 +889,7 @@
       }
 
       todoList.innerHTML = todos.map(item => {
-        const d = normalizeDate(item.eventDate);
+        const d = getSortDate(item);
         const late = d && d < today;
         const todayBadge = d === today;
 
@@ -798,8 +899,8 @@
               <div>
                 <div class="event-title">${escapeHtml(item.title || "")}</div>
                 <div class="event-meta">
-                  <span><strong>Date :</strong> ${escapeHtml(d || "—")}</span>
-                  ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(item.type)}</span>` : ""}
+                  <span><strong>Date :</strong> ${escapeHtml(formatDateFr(d))}</span>
+                  ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(formatType(item.type))}</span>` : ""}
                   ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
                 </div>
               </div>
@@ -829,33 +930,37 @@
         return;
       }
 
-      timelineList.innerHTML = items.map(item => `
-        <article class="event-item">
-          <div class="event-top">
-            <div>
-              <div class="event-title">${escapeHtml(item.title || "")}</div>
-              <div class="event-meta">
-                <span><strong>Date :</strong> ${escapeHtml(item.eventDate || "—")}</span>
-                ${item.type ? `<span><strong>Type :</strong> ${escapeHtml(item.type)}</span>` : ""}
-                ${item.scope ? `<span><strong>Portée :</strong> ${escapeHtml(item.scope)}</span>` : ""}
-                ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
+      timelineList.innerHTML = items.map(item => {
+        const d = getSortDate(item);
+
+        return `
+          <article class="event-item">
+            <div class="event-top">
+              <div>
+                <div class="event-title">${escapeHtml(item.title || "")}</div>
+                <div class="event-meta">
+                  <span><strong>Date :</strong> ${escapeHtml(formatDateFr(d))}</span>
+                  ${item.type ? `<span><strong>Nature :</strong> ${escapeHtml(formatType(item.type))}</span>` : ""}
+                  ${item.scope ? `<span><strong>Portée :</strong> ${escapeHtml(formatScope(item.scope))}</span>` : ""}
+                  ${item.dossierTitleSnapshot ? `<span><strong>Dossier :</strong> ${escapeHtml(item.dossierTitleSnapshot)}</span>` : ""}
+                </div>
+              </div>
+
+              <div class="badges">
+                <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
+                <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
               </div>
             </div>
 
-            <div class="badges">
-              <span class="badge ${badgeStatus(item.status)}">${formatStatus(item.status)}</span>
-              <span class="badge ${badgePriority(item.priority)}">${formatPriority(item.priority)}</span>
+            ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
+
+            <div class="mini-actions">
+              ${item.sourceKind === "FOLLOWUP" && item.canMarkDone ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>` : ""}
+              ${item.sourceKind === "FOLLOWUP" && item.canDelete ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>` : ""}
             </div>
-          </div>
-
-          ${item.details ? `<div class="event-details">${escapeHtml(item.details).replace(/\n/g, "<br>")}</div>` : ""}
-
-          <div class="mini-actions">
-            ${item.sourceKind === "FOLLOWUP" && item.canMarkDone ? `<button class="mini-btn" type="button" data-done-id="${item.id}">Marquer comme fait</button>` : ""}
-            ${item.sourceKind === "FOLLOWUP" && item.canDelete ? `<button class="mini-btn" type="button" data-delete-id="${item.id}">Supprimer</button>` : ""}
-          </div>
-        </article>
-      `).join("");
+          </article>
+        `;
+      }).join("");
     }
 
     async function loadClient() {
@@ -886,9 +991,7 @@
 
       if (!dossierIds.length) return;
 
-      const docsSnap = await getDocs(
-        query(collection(db, "documents"), orderBy("createdAt", "desc"))
-      );
+      const docsSnap = await getDocs(collection(db, "documents"));
 
       clientDocuments = docsSnap.docs
         .map(docSnap => ({
@@ -1024,12 +1127,13 @@
       await loadDossiersAndDocuments();
 
       unsubFollowUps = onSnapshot(
-        query(collection(db, "followUps"), where("clientId", "==", clientId), orderBy("eventDate", "desc")),
+        query(collection(db, "followUps"), where("clientId", "==", clientId)),
         async (snapshot) => {
           liveFollowUps = snapshot.docs.map(docSnap => ({
             id: docSnap.id,
             ...docSnap.data()
           }));
+
           await refreshStaticHistoryAndRender();
         },
         (err) => {
