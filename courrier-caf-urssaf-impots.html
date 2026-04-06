@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courrier CAF, URSSAF, impôts : comment répondre ? | Axe Dossier</title>
+  <meta name="description" content="Comment répondre à un courrier CAF, URSSAF ou impôts : mise en demeure, demande de justificatifs, relance, trop-perçu, dette ou blocage administratif." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root{
+      --bg:#f3efe8;
+      --surface:rgba(255,255,255,0.88);
+      --text:#171717;
+      --muted:#5f5952;
+      --line:rgba(23,23,23,0.08);
+      --accent:#111111;
+      --accent-soft:#e9e1d4;
+      --radius-xl:30px;
+      --radius-lg:22px;
+      --shadow:0 20px 60px rgba(0,0,0,0.07);
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      line-height:1.6;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.92), transparent 28%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.75), transparent 20%),
+        var(--bg);
+    }
+
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(243,239,232,0.78);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(23,23,23,0.05);
+    }
+
+    .topbar-inner{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .brand-logo{height:94px}
+    .brand-name{
+      font-size:1.8rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.7);
+      border:1px solid rgba(23,23,23,0.07);
+      font-size:.94rem;
+    }
+
+    .hero{padding:54px 0 24px}
+
+    .hero-main,.content-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-main{padding:42px}
+
+    h1,h2,h3,p{margin:0}
+
+    h1{
+      font-size:clamp(2.2rem,4vw,4.5rem);
+      line-height:1.02;
+      letter-spacing:-.055em;
+      margin-bottom:18px;
+      max-width:11ch;
+    }
+
+    h2{
+      font-size:clamp(1.6rem,2.5vw,2.5rem);
+      letter-spacing:-.04em;
+      margin-bottom:14px;
+    }
+
+    h3{
+      font-size:1.08rem;
+      margin-bottom:10px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      font-size:.88rem;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .lead{
+      max-width:68ch;
+      color:#4b4640;
+      font-size:1.08rem;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      margin-top:26px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      min-height:52px;
+      padding:0 20px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--accent);
+      font-weight:700;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    section{padding:20px 0}
+
+    .grid-3,.grid-2{
+      display:grid;
+      gap:18px;
+    }
+
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+
+    .content-card{
+      padding:26px;
+      border-radius:var(--radius-lg);
+    }
+
+    .content-card p{color:#4f4942}
+
+    .footer{
+      padding:30px 0 64px;
+    }
+
+    .footer-box{
+      padding:22px 24px;
+      border-radius:var(--radius-lg);
+      background:rgba(255,255,255,0.72);
+      border:1px solid var(--line);
+      color:#605951;
+    }
+
+    @media (max-width:980px){
+      .grid-2,.grid-3{grid-template-columns:1fr}
+    }
+
+    @media (max-width:720px){
+      .topbar-inner{
+        flex-direction:column;
+        padding:14px 0;
+      }
+
+      .hero-main,.content-card,.footer-box{
+        padding:20px;
+      }
+
+      .actions{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .brand-logo{height:72px}
+      .brand-name{font-size:1.35rem}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand">
+        <img src="images/axe-dossier.png" alt="Logo Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+
+      <nav class="nav">
+        <a class="pill" href="index.html">Accueil</a>
+        <a class="pill" href="#caf">CAF</a>
+        <a class="pill" href="#urssaf">URSSAF</a>
+        <a class="pill" href="#impots">Impôts</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-main">
+          <div class="eyebrow">CAF · URSSAF · Impôts · Courrier</div>
+          <h1>Comment répondre à un courrier CAF, URSSAF ou impôts ?</h1>
+          <p class="lead">
+            Trop-perçu, dette, relance, justificatifs demandés, mise en demeure, blocage de dossier :
+            ces courriers provoquent souvent du stress, alors qu’ils demandent surtout une réponse structurée.
+          </p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Courrier%20CAF%20URSSAF%20Impots">
+              Envoyer mon courrier
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="caf">
+      <div class="wrap">
+        <h2>Courrier CAF</h2>
+
+        <div class="grid-3">
+          <article class="content-card">
+            <h3>Trop-perçu</h3>
+            <p>Montant réclamé, période concernée, justificatifs à vérifier et possibilité de contestation ou d’échelonnement.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Dossier suspendu</h3>
+            <p>Prestations bloquées, absence de versement, justificatifs non pris en compte.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Réponse à préparer</h3>
+            <p>Chronologie, pièces, revenus, situation familiale et courrier clair.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="urssaf">
+      <div class="wrap">
+        <h2>Courrier URSSAF</h2>
+
+        <div class="grid-2">
+          <article class="content-card">
+            <h3>Mise en demeure</h3>
+            <p>Vérifier la période, les cotisations, les paiements déjà effectués et l’éventuelle erreur d’imputation.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Relance ou dette</h3>
+            <p>Le plus fréquent : montant erroné, paiement non affecté ou incompréhension du calcul.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="impots">
+      <div class="wrap">
+        <h2>Courrier des impôts</h2>
+
+        <div class="grid-3">
+          <article class="content-card">
+            <h3>Réclamation</h3>
+            <p>Montant contesté, erreur de calcul, taxe, impôt sur le revenu ou taxe foncière.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Demande de justificatifs</h3>
+            <p>Préparer une réponse propre avec uniquement les pièces utiles.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Échéancier</h3>
+            <p>Possibilité de demander un délai ou un paiement échelonné selon la situation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>La méthode Axe Dossier</h2>
+
+        <div class="grid-3">
+          <article class="content-card">
+            <h3>Lecture du courrier</h3>
+            <p>Comprendre exactement ce qui est demandé et les délais.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Analyse des pièces</h3>
+            <p>Revenus, justificatifs, paiements, échanges précédents.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Rédaction</h3>
+            <p>Préparation d’un courrier de réponse clair, structuré et exploitable.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <h2>Envoyer le courrier reçu</h2>
+
+        <div class="grid-2">
+          <article class="content-card">
+            <h3>À transmettre</h3>
+            <p>Courrier reçu, justificatifs, échanges précédents, objectif souhaité.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Objectif</h3>
+            <p>Comprendre, répondre proprement et éviter qu’un simple courrier ne dégénère.</p>
+          </article>
+        </div>
+
+        <div class="actions" style="margin-top:24px;">
+          <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Courrier%20CAF%20URSSAF%20Impots">
+            Envoyer mon dossier
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      © 2026 Axe Dossier — Analyse · Structure · Rédaction
+    </div>
+  </footer>
+</body>
+</html>
