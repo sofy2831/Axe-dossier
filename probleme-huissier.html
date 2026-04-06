@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problème huissier : que faire ? | Axe Dossier</title>
+  <meta name="description" content="Problème avec un huissier, saisie, signification, paiement non imputé, erreur de dossier : que faire et comment remettre la situation dans l’axe." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root{
+      --bg:#f3efe8;
+      --surface:rgba(255,255,255,0.88);
+      --text:#171717;
+      --muted:#5f5952;
+      --line:rgba(23,23,23,0.08);
+      --accent:#111111;
+      --accent-soft:#e9e1d4;
+      --radius-xl:30px;
+      --radius-lg:22px;
+      --shadow:0 20px 60px rgba(0,0,0,0.07);
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      line-height:1.6;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.92), transparent 28%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.75), transparent 20%),
+        var(--bg);
+    }
+
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(243,239,232,0.78);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(23,23,23,0.05);
+    }
+
+    .topbar-inner{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .brand-logo{height:94px}
+    .brand-name{
+      font-size:1.8rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.7);
+      border:1px solid rgba(23,23,23,0.07);
+      font-size:.94rem;
+    }
+
+    .hero{padding:54px 0 24px}
+
+    .hero-main,.card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-main{padding:42px}
+
+    h1,h2,h3,p{margin:0}
+
+    h1{
+      font-size:clamp(2.2rem,4vw,4.5rem);
+      line-height:1.02;
+      letter-spacing:-.055em;
+      margin-bottom:18px;
+      max-width:10ch;
+    }
+
+    h2{
+      font-size:clamp(1.6rem,2.5vw,2.5rem);
+      letter-spacing:-.04em;
+      margin-bottom:14px;
+    }
+
+    h3{
+      font-size:1.08rem;
+      margin-bottom:10px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      font-size:.88rem;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .lead{
+      max-width:65ch;
+      color:#4b4640;
+      font-size:1.08rem;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      margin-top:26px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      min-height:52px;
+      padding:0 20px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--accent);
+      font-weight:700;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    section{padding:20px 0}
+
+    .grid-3,.grid-2{
+      display:grid;
+      gap:18px;
+    }
+
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+
+    .content-card{
+      padding:26px;
+      border-radius:var(--radius-lg);
+      background:rgba(255,255,255,0.82);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .content-card p{color:#4f4942}
+
+    .footer{
+      padding:30px 0 64px;
+    }
+
+    .footer-box{
+      padding:22px 24px;
+      border-radius:var(--radius-lg);
+      background:rgba(255,255,255,0.72);
+      border:1px solid var(--line);
+      color:#605951;
+    }
+
+    @media (max-width:980px){
+      .grid-2,.grid-3{grid-template-columns:1fr}
+    }
+
+    @media (max-width:720px){
+      .topbar-inner{
+        flex-direction:column;
+        padding:14px 0;
+      }
+
+      .hero-main,.content-card,.footer-box{
+        padding:20px;
+      }
+
+      .actions{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .brand-logo{height:72px}
+      .brand-name{font-size:1.35rem}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand">
+        <img src="images/axe-dossier.png" alt="Logo Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+
+      <nav class="nav">
+        <a class="pill" href="index.html">Accueil</a>
+        <a class="pill" href="#problemes">Situations</a>
+        <a class="pill" href="#solutions">Que faire</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-main">
+          <div class="eyebrow">Huissier · Commissaire de justice · Saisie</div>
+          <h1>Problème avec un huissier : que faire ?</h1>
+          <p class="lead">
+            Paiement non imputé, signification jamais reçue, saisie contestée, décompte incohérent, procédure incomprise :
+            les dossiers liés aux huissiers sont souvent plus confus que réellement insolubles.
+          </p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Probl%C3%A8me%20huissier">
+              Envoyer mon dossier
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="problemes">
+      <div class="wrap">
+        <h2>Les problèmes les plus fréquents</h2>
+
+        <div class="grid-3">
+          <article class="content-card">
+            <h3>Paiement non pris en compte</h3>
+            <p>Tu as payé mais le créancier ou l’agence dit ne rien avoir reçu. Il faut reprendre les dates, références et imputations.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Décompte incompréhensible</h3>
+            <p>Frais doublés, intérêts, actes répétés, montants qui ne correspondent plus à la dette d’origine.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Procédure mal comprise</h3>
+            <p>Saisie, signification, opposition, commandement : le vocabulaire masque souvent un simple problème documentaire.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="solutions">
+      <div class="wrap">
+        <h2>Ce qu’il faut faire</h2>
+
+        <div class="grid-2">
+          <article class="content-card">
+            <h3>1. Reprendre la chronologie</h3>
+            <p>Jugement, courrier, date de signification, paiements effectués, échanges mails et relevés bancaires.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>2. Pointer ligne par ligne</h3>
+            <p>Montant initial, frais, règlements, reste dû. C’est souvent là que l’erreur apparaît.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>3. Préparer un courrier clair</h3>
+            <p>Un message structuré avec pièces jointes vaut mieux que plusieurs appels émotionnels.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>4. Préparer la suite</h3>
+            <p>Contestations, demande d’explications, régularisation ou suite judiciaire si nécessaire.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Comment Axe Dossier intervient</h2>
+
+        <div class="grid-3">
+          <article class="content-card">
+            <h3>Analyse du décompte</h3>
+            <p>Lecture ligne par ligne du dossier, des frais et des règlements.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Synthèse</h3>
+            <p>Chronologie claire avec points de blocage et incohérences.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Courrier</h3>
+            <p>Préparation d’un courrier exploitable à l’huissier, au créancier ou à l’agence.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <h2>Envoyer le dossier</h2>
+
+        <div class="grid-2">
+          <article class="content-card">
+            <h3>À transmettre</h3>
+            <p>Jugement, décompte, preuves de paiement, mails, courriers reçus.</p>
+          </article>
+
+          <article class="content-card">
+            <h3>Objectif</h3>
+            <p>Comprendre si le montant est juste et remettre le dossier dans l’axe.</p>
+          </article>
+        </div>
+
+        <div class="actions" style="margin-top:24px;">
+          <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Probl%C3%A8me%20huissier">
+            Envoyer mon dossier
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      © 2026 Axe Dossier — Analyse · Structure · Rédaction
+    </div>
+  </footer>
+</body>
+</html>
