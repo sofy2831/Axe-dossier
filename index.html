@@ -4,14 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="google-site-verification" content="IfcyRjoiTZSDTpOFl08nLktH8HWznrqE0YFar0m2ZCs" />
   <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
-<link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
-<meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
-<meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Axe Dossier — Analyse et structuration de dossiers complexes</title>
   <meta name="description" content="Axe Dossier accompagne les dossiers complexes : analyse, synthèse, rédaction administrative et accompagnement structuré." />
+
   <style>
     :root {
       --bg: #f3efe8;
@@ -72,7 +73,7 @@
       align-items: center;
       gap: 16px;
       font-weight: 700;
-      letter-spacing:0.02em;
+      letter-spacing: 0.02em;
     }
 
     .brand-logo {
@@ -90,14 +91,14 @@
       white-space: nowrap;
       color: var(--text);
     }
- .brand-name {
+
+    .brand-name {
       font-size: 1.8rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-   text-transform: uppercase;
+      text-transform: uppercase;
     }
 
-    
     .nav {
       display: flex;
       gap: 10px;
@@ -166,6 +167,16 @@
       font-size: 0.88rem;
       font-weight: 700;
       margin-bottom: 18px;
+    }
+
+    .hero-proof {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f;
+      font-size: 0.96rem;
     }
 
     h1, h2, h3, p { margin: 0; }
@@ -369,6 +380,48 @@
       margin-bottom: 12px;
     }
 
+    .case-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-card::after {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.55), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+
+    .case-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4d463e;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .case-block {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(23,23,23,0.07);
+    }
+
+    .case-block strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+      letter-spacing: -0.01em;
+    }
+
     .price {
       display: block;
       margin: 10px 0 12px;
@@ -426,8 +479,22 @@
         align-items: stretch;
       }
 
-      .brand, .nav { justify-content: center; }
-      .hero-main, .mini-card, .feature, .step, .price-card, .contact-card, .disclaimer, .footer-box { padding: 20px; }
+      .brand,
+      .nav {
+        justify-content: center;
+      }
+
+      .hero-main,
+      .mini-card,
+      .feature,
+      .step,
+      .price-card,
+      .contact-card,
+      .disclaimer,
+      .footer-box {
+        padding: 20px;
+      }
+
       .hero { padding-top: 36px; }
       .hero-actions { flex-direction: column; }
       .btn { width: 100%; }
@@ -460,13 +527,14 @@
       </a>
 
       <nav class="nav" aria-label="Navigation principale">
-  <a class="pill" href="#services">Services</a>
-  <a class="pill" href="#situations">Situations</a>
-  <a class="pill" href="#guides">Guides</a>
-  <a class="pill" href="#methode">Méthode</a>
-  <a class="pill" href="#tarifs">Tarifs</a>
-  <a class="pill" href="#contact">Contact</a>
-</nav>
+        <a class="pill" href="#services">Services</a>
+        <a class="pill" href="#situations">Situations</a>
+        <a class="pill" href="#guides">Guides</a>
+        <a class="pill" href="#methode">Méthode</a>
+        <a class="pill" href="#cas-concrets">Cas concrets</a>
+        <a class="pill" href="#tarifs">Tarifs</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
 
@@ -480,6 +548,10 @@
             Analyse, synthèse, structuration documentaire et rédaction administrative pour les situations
             bloquées, confuses ou sensibles.
           </p>
+
+          <div class="hero-proof">
+            Dossiers déjà accompagnés : blocages Banque de France, successions figées, litiges avec huissier, organismes qui ne répondent plus.
+          </div>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Transmission%20de%20dossier&body=Bonjour,%0A%0AJe%20souhaite%20vous%20transmettre%20mon%20dossier.%0A%0AType%20de%20situation%20:%0A%0ADocuments%20disponibles%20:%0A">Envoyer mon dossier</a>
@@ -554,111 +626,104 @@
         </div>
 
         <div class="grid-3">
-  <article class="feature">
-    <h3>Successions</h3>
-    <p>Échanges difficiles, inventaire, notaire, généalogiste, blocages entre héritiers.</p>
-    <p style="margin-top:14px;">
-      <a href="succession-bloquee.html"
-         style="font-weight:700; text-decoration:underline;">
-        Voir la page
-      </a>
-    </p>
-  </article>
+          <article class="feature">
+            <h3>Successions</h3>
+            <p>Échanges difficiles, inventaire, notaire, généalogiste, blocages entre héritiers.</p>
+            <p style="margin-top:14px;">
+              <a href="succession-bloquee.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
 
-  <article class="feature">
-    <h3>Litiges</h3>
-    <p>Assurance, voisinage, prestataire, relance, mise en demeure, dossier incompris.</p>
-    <p style="margin-top:14px;">
-      <a href="litige-assurance-banque.html"
-         style="font-weight:700; text-decoration:underline;">
-        Voir la page
-      </a>
-    </p>
-  </article>
+          <article class="feature">
+            <h3>Litiges</h3>
+            <p>Assurance, voisinage, prestataire, relance, mise en demeure, dossier incompris.</p>
+            <p style="margin-top:14px;">
+              <a href="litige-assurance-banque.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
 
-  <article class="feature">
-    <h3>Administratif</h3>
-    <p>Réponse à un organisme, clarification d’une situation et remise à plat du dossier.</p>
-    <p style="margin-top:14px;">
-      <a href="organisme-ne-repond-pas.html"
-         style="font-weight:700; text-decoration:underline;">
-        Voir la page
-      </a>
-    </p>
-  </article>
+          <article class="feature">
+            <h3>Administratif</h3>
+            <p>Réponse à un organisme, clarification d’une situation et remise à plat du dossier.</p>
+            <p style="margin-top:14px;">
+              <a href="organisme-ne-repond-pas.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
 
-  <article class="feature">
-    <h3>Dossier bloqué</h3>
-    <p>Quand plus rien n’avance : silence, refus, pièces contradictoires ou dossier qui tourne en rond.</p>
-    <p style="margin-top:14px;">
-      <a href="dossier-bloque-que-faire.html"
-         style="font-weight:700; text-decoration:underline;">
-        Voir la page
-      </a>
-    </p>
-  </article>
-</div>
+          <article class="feature">
+            <h3>Dossier bloqué</h3>
+            <p>Quand plus rien n’avance : silence, refus, pièces contradictoires ou dossier qui tourne en rond.</p>
+            <p style="margin-top:14px;">
+              <a href="dossier-bloque-que-faire.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
+        </div>
       </div>
     </section>
 
     <section id="guides">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <h2>Guides utiles</h2>
-        <p>
-          Des pages ciblées pour les situations fréquentes :
-          mise en demeure, courrier administratif ou difficulté avec un huissier.
-        </p>
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Guides utiles</h2>
+            <p>
+              Des pages ciblées pour les situations fréquentes :
+              mise en demeure, courrier administratif ou difficulté avec un huissier.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature">
+            <h3>Comment faire une mise en demeure</h3>
+            <p>
+              Structure du courrier, mentions obligatoires,
+              erreurs à éviter et rédaction d’un courrier exploitable.
+            </p>
+            <p style="margin-top:14px;">
+              <a href="comment-faire-une-mise-en-demeure.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
+
+          <article class="feature">
+            <h3>Répondre à un courrier CAF, URSSAF ou impôts</h3>
+            <p>
+              Comment répondre proprement à une demande de justificatifs,
+              une relance administrative ou un courrier d’organisme.
+            </p>
+            <p style="margin-top:14px;">
+              <a href="courrier-caf-urssaf-impots.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
+
+          <article class="feature">
+            <h3>Problème avec un huissier : que faire</h3>
+            <p>
+              Saisie, signification, paiement non imputé,
+              erreur de dossier ou procédure incomprise.
+            </p>
+            <p style="margin-top:14px;">
+              <a href="probleme-huissier.html" style="font-weight:700; text-decoration:underline;">
+                Voir la page
+              </a>
+            </p>
+          </article>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="grid-3">
-      <article class="feature">
-        <h3>Comment faire une mise en demeure</h3>
-        <p>
-          Structure du courrier, mentions obligatoires,
-          erreurs à éviter et rédaction d’un courrier exploitable.
-        </p>
-        <p style="margin-top:14px;">
-          <a href="comment-faire-une-mise-en-demeure.html"
-             style="font-weight:700; text-decoration:underline;">
-            Voir la page
-          </a>
-        </p>
-      </article>
-
-      <article class="feature">
-        <h3>Répondre à un courrier CAF, URSSAF ou impôts</h3>
-        <p>
-          Comment répondre proprement à une demande de justificatifs,
-          une relance administrative ou un courrier d’organisme.
-        </p>
-        <p style="margin-top:14px;">
-          <a href="courrier-caf-urssaf-impots.html"
-             style="font-weight:700; text-decoration:underline;">
-            Voir la page
-          </a>
-        </p>
-      </article>
-
-      <article class="feature">
-        <h3>Problème avec un huissier : que faire</h3>
-        <p>
-          Saisie, signification, paiement non imputé,
-          erreur de dossier ou procédure incomprise.
-        </p>
-        <p style="margin-top:14px;">
-          <a href="probleme-huissier.html"
-             style="font-weight:700; text-decoration:underline;">
-            Voir la page
-          </a>
-        </p>
-      </article>
-    </div>
-  </div>
-</section>
-    
     <section id="methode">
       <div class="wrap">
         <div class="section-head">
@@ -688,6 +753,76 @@
             <div class="step-no">4</div>
             <h3>Suite</h3>
             <p>Échange complémentaire si la situation le justifie.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cas-concrets">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Cas concrets accompagnés</h2>
+            <p>Des situations réelles, anonymisées, pour montrer le type de dossiers déjà repris et la manière de travailler.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature case-card">
+            <div class="case-tag">Blocage Banque de France</div>
+            <h3>Fichage persistant malgré une régularisation annoncée</h3>
+            <p>
+              Cliente confrontée à une situation confuse entre plusieurs établissements, avec impossibilité de comprendre
+              l’origine exacte du blocage encore actif.
+            </p>
+
+            <div class="case-block">
+              <strong>Intervention</strong>
+              <p>Analyse des pièces, reprise chronologique du dossier, identification des points encore ouverts, préparation des courriers utiles et clarification des demandes à adresser aux interlocuteurs concernés.</p>
+            </div>
+
+            <div class="case-block">
+              <strong>Résultat</strong>
+              <p>Origine du blocage isolée, dossier remis à plat et procédure de régularisation relancée sur une base claire.</p>
+            </div>
+          </article>
+
+          <article class="feature case-card">
+            <div class="case-tag">Succession complexe</div>
+            <h3>Succession bloquée avec plusieurs intervenants et créance à faire valoir</h3>
+            <p>
+              Dossier successoral devenu illisible au fil des échanges, avec tensions entre intervenants,
+              pièces dispersées et nécessité de remettre de l’ordre avant toute action utile.
+            </p>
+
+            <div class="case-block">
+              <strong>Intervention</strong>
+              <p>Reconstitution chronologique complète, analyse des mandats et des échanges, courriers structurés aux intervenants, préparation documentaire en vue d’une action de recouvrement.</p>
+            </div>
+
+            <div class="case-block">
+              <strong>Résultat</strong>
+              <p>Dossier clarifié, créance structurée et procédure engagée sur une base beaucoup plus solide.</p>
+            </div>
+          </article>
+
+          <article class="feature case-card">
+            <div class="case-tag">Litige huissier / décompte</div>
+            <h3>Décompte confus avec risque de doublons et frais qui s’accumulent</h3>
+            <p>
+              Situation de paiement dégradée avec plusieurs montants, plusieurs versions du dossier
+              et une difficulté à savoir ce qui restait réellement dû.
+            </p>
+
+            <div class="case-block">
+              <strong>Intervention</strong>
+              <p>Audit du décompte, tri des postes facturés, repérage des incohérences, proposition d’échéancier réaliste et rédaction d’un courrier de négociation exploitable.</p>
+            </div>
+
+            <div class="case-block">
+              <strong>Résultat</strong>
+              <p>Base de règlement assainie, visibilité retrouvée sur la dette utile et réduction du risque de frais supplémentaires.</p>
+            </div>
           </article>
         </div>
       </div>
