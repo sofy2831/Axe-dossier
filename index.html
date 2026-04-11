@@ -26,6 +26,7 @@
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 18px;
+      --radius-sm: 14px;
       --shadow: 0 20px 60px rgba(0,0,0,0.08);
       --max: 1180px;
     }
@@ -339,11 +340,19 @@
       grid-template-columns: 1.1fr 0.9fr;
     }
 
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+    }
+
     .feature,
     .step,
     .price-card,
     .contact-card,
-    .disclaimer {
+    .disclaimer,
+    .assistant-card,
+    .hub-card {
       padding: 26px;
       border-radius: var(--radius-lg);
       background: rgba(255,255,255,0.8);
@@ -355,7 +364,9 @@
     .step h3,
     .price-card h3,
     .contact-card h3,
-    .disclaimer h3 {
+    .disclaimer h3,
+    .assistant-card h3,
+    .hub-card h3 {
       font-size: 1.08rem;
       margin-bottom: 10px;
       letter-spacing: -0.02em;
@@ -365,7 +376,9 @@
     .step p,
     .price-card p,
     .contact-card p,
-    .disclaimer p {
+    .disclaimer p,
+    .assistant-card p,
+    .hub-card p {
       color: #4f4942;
     }
 
@@ -438,6 +451,92 @@
       letter-spacing: -0.02em;
     }
 
+    .assistant-box {
+      margin-top: 24px;
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(23,23,23,0.08);
+    }
+
+    .assistant-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4b453d;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .assistant-box h3 {
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .assistant-box p {
+      color: #514a42;
+      margin-bottom: 14px;
+    }
+
+    .assistant-input {
+      width: 100%;
+      min-height: 58px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(23,23,23,0.12);
+      background: #fff;
+      color: #232323;
+      font: inherit;
+      resize: vertical;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .assistant-input:focus {
+      outline: none;
+      border-color: rgba(23,23,23,0.28);
+    }
+
+    .assistant-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .assistant-note {
+      margin-top: 10px;
+      color: #6b655d;
+      font-size: 0.92rem;
+    }
+
+    .hub-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hub-list a {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .hub-list a:hover {
+      transform: translateY(-1px);
+      background: #f2ece2;
+    }
+
     .footer {
       padding: 28px 0 64px;
     }
@@ -461,7 +560,8 @@
       .grid-3,
       .steps,
       .pricing,
-      .contact-grid {
+      .contact-grid,
+      .grid-2 {
         grid-template-columns: 1fr;
       }
 
@@ -491,12 +591,15 @@
       .price-card,
       .contact-card,
       .disclaimer,
-      .footer-box {
+      .footer-box,
+      .assistant-card,
+      .hub-card {
         padding: 20px;
       }
 
       .hero { padding-top: 36px; }
-      .hero-actions { flex-direction: column; }
+      .hero-actions,
+      .assistant-actions { flex-direction: column; }
       .btn { width: 100%; }
       .metrics { grid-template-columns: 1fr; }
       h1 { max-width: none; }
@@ -529,6 +632,7 @@
       <nav class="nav" aria-label="Navigation principale">
         <a class="pill" href="#services">Services</a>
         <a class="pill" href="#situations">Situations</a>
+        <a class="pill" href="#questions">Questions</a>
         <a class="pill" href="#guides">Guides</a>
         <a class="pill" href="#methode">Méthode</a>
         <a class="pill" href="#cas-concrets">Cas concrets</a>
@@ -556,6 +660,20 @@
           <div class="hero-actions">
             <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Transmission%20de%20dossier&body=Bonjour,%0A%0AJe%20souhaite%20vous%20transmettre%20mon%20dossier.%0A%0AType%20de%20situation%20:%0A%0ADocuments%20disponibles%20:%0A">Envoyer mon dossier</a>
             <a class="btn btn-secondary" href="#methode">Voir la méthode</a>
+          </div>
+
+          <div class="assistant-box">
+            <div class="assistant-label">Assistant de premier tri</div>
+            <h3>Un dossier bloque ?</h3>
+            <p>Decris la situation en quelques mots et accede a une premiere orientation claire.</p>
+            <textarea class="assistant-input" id="assistantInput" placeholder="Ex : mon notaire ne repond plus depuis plusieurs mois dans une succession bloquee"></textarea>
+            <div class="assistant-actions">
+              <a class="btn btn-primary" id="assistantLink" href="notaire-succession-bloquee.html">Obtenir une premiere orientation</a>
+              <a class="btn btn-secondary" href="#questions">Voir les questions frequentes</a>
+            </div>
+            <div class="assistant-note">
+              Orientation initiale a partir des situations les plus frequentes. Pour un dossier reel, l’analyse se fait sur pieces.
+            </div>
           </div>
         </article>
 
@@ -585,6 +703,38 @@
                 <span>discours inutile</span>
               </div>
             </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Questions frequentes</h2>
+            <p>Des pages ciblees pour les problemes concrets tapes sur Google, avec un point d’entree simple avant transmission du dossier.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="assistant-card">
+            <h3>Question test en ligne</h3>
+            <p>Premiere page ciblee en cours : succession bloquee, notaire qui ne repond plus, dossier qui s’enlise et absence de vision claire sur la suite.</p>
+            <div class="hero-actions" style="margin-top:18px;">
+              <a class="btn btn-primary" href="notaire-succession-bloquee.html">Mon notaire ne repond plus</a>
+            </div>
+          </article>
+
+          <article class="hub-card">
+            <h3>Autres situations traitees</h3>
+            <p>Le hub va s’etoffer progressivement avec les requetes les plus utiles.</p>
+            <ul class="hub-list">
+              <li><a href="notaire-succession-bloquee.html">Mon notaire ne repond plus dans une succession</a></li>
+              <li><a href="succession-bloquee.html">Succession bloquee</a></li>
+              <li><a href="organisme-ne-repond-pas.html">Organisme qui ne repond pas</a></li>
+              <li><a href="probleme-huissier.html">Probleme avec un huissier</a></li>
+            </ul>
           </article>
         </div>
       </div>
@@ -788,33 +938,33 @@
           </article>
 
           <article class="feature case-card">
-  <div class="case-tag">Succession complexe</div>
-  <h3>Succession bloquée entre notaire, généalogiste et héritiers</h3>
-  <p>
-    Dossier successoral devenu illisible au fil des mois :
-    absence de suivi réel du notaire, interventions multiples d’un généalogiste,
-    échanges contradictoires entre héritiers et aucune vision claire de l’avancement.
-  </p>
+            <div class="case-tag">Succession complexe</div>
+            <h3>Succession bloquée entre notaire, généalogiste et héritiers</h3>
+            <p>
+              Dossier successoral devenu illisible au fil des mois :
+              absence de suivi réel du notaire, interventions multiples d’un généalogiste,
+              échanges contradictoires entre héritiers et aucune vision claire de l’avancement.
+            </p>
 
-  <div class="case-block">
-    <strong>Intervention</strong>
-    <p>
-      Reprise complète de la chronologie, tri des échanges,
-      clarification des rôles de chaque intervenant,
-      remise en ordre des pièces et préparation d’un dossier propre
-      pour relancer efficacement la succession et le changement de notaire.
-    </p>
-  </div>
+            <div class="case-block">
+              <strong>Intervention</strong>
+              <p>
+                Reprise complète de la chronologie, tri des échanges,
+                clarification des rôles de chaque intervenant,
+                remise en ordre des pièces et préparation d’un dossier propre
+                pour relancer efficacement la succession et le changement de notaire.
+              </p>
+            </div>
 
-  <div class="case-block">
-    <strong>Résultat</strong>
-    <p>
-      Dossier clarifié, pièces centralisées, historique reconstitué
-      et transmission d’un dossier structuré permettant la reprise
-      du suivi dans de meilleures conditions.
-    </p>
-  </div>
-</article>
+            <div class="case-block">
+              <strong>Résultat</strong>
+              <p>
+                Dossier clarifié, pièces centralisées, historique reconstitué
+                et transmission d’un dossier structuré permettant la reprise
+                du suivi dans de meilleures conditions.
+              </p>
+            </div>
+          </article>
 
           <article class="feature case-card">
             <div class="case-tag">Litige huissier / décompte</div>
@@ -952,5 +1102,26 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const input = document.getElementById('assistantInput');
+      const link = document.getElementById('assistantLink');
+      if (!input || !link) return;
+
+      function updateLink() {
+        const text = input.value.trim();
+        const base = 'notaire-succession-bloquee.html';
+        if (!text) {
+          link.href = base;
+          return;
+        }
+        link.href = base + '?q=' + encodeURIComponent(text);
+      }
+
+      input.addEventListener('input', updateLink);
+      updateLink();
+    })();
+  </script>
 </body>
 </html>
