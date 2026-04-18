@@ -85,14 +85,6 @@
       flex-shrink: 0;
     }
 
-    .brand-text {
-      font-weight: 800;
-      font-size: 1.02rem;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-      color: var(--text);
-    }
-
     .brand-name {
       font-size: 1.8rem;
       font-weight: 700;
@@ -180,6 +172,41 @@
       font-size: 0.96rem;
     }
 
+    .offer-highlight {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid rgba(23,23,23,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+
+    .offer-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4e473e;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .offer-price {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      margin-bottom: 8px;
+    }
+
+    .offer-text {
+      color: #4c473f;
+      font-size: 0.98rem;
+    }
+
     h1, h2, h3, p { margin: 0; }
 
     h1 {
@@ -213,6 +240,7 @@
       border: 1px solid var(--accent);
       font-weight: 700;
       transition: transform 0.2s ease, opacity 0.2s ease;
+      text-align: center;
     }
 
     .btn:hover { transform: translateY(-1px); }
@@ -226,6 +254,12 @@
       background: rgba(255,255,255,0.7);
       color: var(--accent);
       border-color: rgba(23,23,23,0.1);
+    }
+
+    .hero-subnote {
+      margin-top: 14px;
+      color: #6a645d;
+      font-size: 0.93rem;
     }
 
     .hero-side {
@@ -614,10 +648,6 @@
         height: 46px;
         margin: 0 auto;
       }
-
-      .brand-text {
-        white-space: normal;
-      }
     }
   </style>
 </head>
@@ -630,11 +660,7 @@
       </a>
 
       <nav class="nav" aria-label="Navigation principale">
-        <a class="pill" href="#services">Services</a>
         <a class="pill" href="#situations">Situations</a>
-        <a class="pill" href="#questions">Questions</a>
-        <a class="pill" href="#guides">Guides</a>
-        <a class="pill" href="#methode">Méthode</a>
         <a class="pill" href="#cas-concrets">Cas concrets</a>
         <a class="pill" href="#tarifs">Tarifs</a>
         <a class="pill" href="#contact">Contact</a>
@@ -649,30 +675,44 @@
           <div class="eyebrow">Dossiers complexes · Litiges · Successions</div>
           <h1>Remettre un dossier dans l’axe.</h1>
           <p class="lead">
-            Analyse, synthèse, structuration documentaire et rédaction administrative pour les situations
-            bloquées, confuses ou sensibles.
+            Quand un dossier devient illisible, bloqué ou contradictoire, Axe Dossier reprend les pièces,
+            clarifie la situation et structure la suite de manière exploitable.
           </p>
 
           <div class="hero-proof">
-            Dossiers déjà accompagnés : blocages Banque de France, successions figées, litiges avec huissier, organismes qui ne répondent plus.
+            Cas déjà accompagnés : blocages Banque de France, successions figées, litiges avec huissier, organismes qui ne répondent plus.
+          </div>
+
+          <div class="offer-highlight">
+            <div class="offer-label">Offre d’entrée</div>
+            <span class="offer-price">Première lecture — 90 €</span>
+            <p class="offer-text">
+              Lecture initiale du dossier, premier cadrage, repérage des points de blocage et orientation claire sur la suite utile.
+            </p>
           </div>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Transmission%20de%20dossier&body=Bonjour,%0A%0AJe%20souhaite%20vous%20transmettre%20mon%20dossier.%0A%0AType%20de%20situation%20:%0A%0ADocuments%20disponibles%20:%0A">Envoyer mon dossier</a>
-            <a class="btn btn-secondary" href="#methode">Voir la méthode</a>
+            <!-- REMPLACER # par ton lien Stripe test puis ton lien Stripe live -->
+            <a class="btn btn-primary" id="stripeCheckoutLink" href="#">Lancer la première lecture</a>
+
+            <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=Premi%C3%A8re%20prise%20de%20contact&body=Bonjour,%0A%0AJe%20vous%20contacte%20pour%20la%20situation%20suivante%20:%0A%0AType%20de%20dossier%20:%0A%0ADocuments%20disponibles%20:%0A%0AObjectif%20de%20ma%20demande%20:%0A">Envoyer un premier mail</a>
+          </div>
+
+          <div class="hero-subnote">
+            Paiement en ligne sécurisé pour la première lecture, ou premier contact par mail si tu préfères exposer la situation avant.
           </div>
 
           <div class="assistant-box">
-            <div class="assistant-label">Assistant de premier tri</div>
+            <div class="assistant-label">Premier tri des situations</div>
             <h3>Un dossier bloque ?</h3>
-            <p>Decris la situation en quelques mots et accede a une premiere orientation claire.</p>
+            <p>Décris la situation en quelques mots pour accéder à une première page utile.</p>
             <textarea class="assistant-input" id="assistantInput" placeholder="Ex : mon notaire ne repond plus depuis plusieurs mois dans une succession bloquee"></textarea>
             <div class="assistant-actions">
-              <a class="btn btn-primary" id="assistantLink" href="notaire-succession-bloquee.html">Obtenir une premiere orientation</a>
-              <a class="btn btn-secondary" href="#questions">Voir les questions frequentes</a>
+              <a class="btn btn-primary" id="assistantLink" href="notaire-succession-bloquee.html">Obtenir une première orientation</a>
+              <a class="btn btn-secondary" href="#questions">Voir les questions fréquentes</a>
             </div>
             <div class="assistant-note">
-              Orientation initiale a partir des situations les plus frequentes. Pour un dossier reel, l’analyse se fait sur pieces.
+              Orientation initiale à partir des situations les plus fréquentes. Pour un dossier réel, l’analyse se fait sur pièces.
             </div>
           </div>
         </article>
@@ -691,16 +731,16 @@
           <article class="mini-card">
             <div class="metrics">
               <div class="metric">
-                <strong>1</strong>
-                <span>mail pour démarrer</span>
+                <strong>90 €</strong>
+                <span>première lecture</span>
               </div>
               <div class="metric">
-                <strong>4</strong>
-                <span>étapes simples</span>
+                <strong>24–72 h</strong>
+                <span>pour une réponse</span>
               </div>
               <div class="metric">
-                <strong>0</strong>
-                <span>discours inutile</span>
+                <strong>Écrit</strong>
+                <span>retour exploitable</span>
               </div>
             </div>
           </article>
@@ -712,28 +752,28 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <h2>Questions frequentes</h2>
-            <p>Des pages ciblees pour les problemes concrets tapes sur Google, avec un point d’entree simple avant transmission du dossier.</p>
+            <h2>Questions fréquentes</h2>
+            <p>Des pages ciblées pour les problèmes concrets tapés sur Google, avec un point d’entrée simple avant transmission du dossier.</p>
           </div>
         </div>
 
         <div class="grid-2">
           <article class="assistant-card">
             <h3>Question test en ligne</h3>
-            <p>Premiere page ciblee en cours : succession bloquee, notaire qui ne repond plus, dossier qui s’enlise et absence de vision claire sur la suite.</p>
+            <p>Première page ciblée en cours : succession bloquée, notaire qui ne répond plus, dossier qui s’enlise et absence de vision claire sur la suite.</p>
             <div class="hero-actions" style="margin-top:18px;">
-              <a class="btn btn-primary" href="notaire-succession-bloquee.html">Mon notaire ne repond plus</a>
+              <a class="btn btn-primary" href="notaire-succession-bloquee.html">Mon notaire ne répond plus</a>
             </div>
           </article>
 
           <article class="hub-card">
-            <h3>Autres situations traitees</h3>
-            <p>Le hub va s’etoffer progressivement avec les requetes les plus utiles.</p>
+            <h3>Autres situations traitées</h3>
+            <p>Le hub va s’étoffer progressivement avec les requêtes les plus utiles.</p>
             <ul class="hub-list">
-              <li><a href="notaire-succession-bloquee.html">Mon notaire ne repond plus dans une succession</a></li>
-              <li><a href="succession-bloquee.html">Succession bloquee</a></li>
-              <li><a href="organisme-ne-repond-pas.html">Organisme qui ne repond pas</a></li>
-              <li><a href="probleme-huissier.html">Probleme avec un huissier</a></li>
+              <li><a href="notaire-succession-bloquee.html">Mon notaire ne répond plus dans une succession</a></li>
+              <li><a href="succession-bloquee.html">Succession bloquée</a></li>
+              <li><a href="organisme-ne-repond-pas.html">Organisme qui ne répond pas</a></li>
+              <li><a href="probleme-huissier.html">Problème avec un huissier</a></li>
             </ul>
           </article>
         </div>
@@ -887,7 +927,7 @@
           <article class="step">
             <div class="step-no">1</div>
             <h3>Transmission</h3>
-            <p>Envoi du dossier par mail avec un résumé factuel.</p>
+            <p>Envoi du dossier par formulaire ou par mail avec un résumé factuel.</p>
           </article>
           <article class="step">
             <div class="step-no">2</div>
@@ -1000,18 +1040,22 @@
           <article class="price-card">
             <h3>Première lecture</h3>
             <span class="price">90 €</span>
-            <p>Lecture initiale et premier cadrage.</p>
+            <p>Lecture initiale du dossier, premier cadrage et orientation exploitable.</p>
           </article>
           <article class="price-card">
             <h3>Analyse + synthèse</h3>
             <span class="price">190 €</span>
-            <p>Retour écrit structuré et exploitable.</p>
+            <p>Retour écrit structuré avec chronologie, blocages et axes d’action.</p>
           </article>
           <article class="price-card">
             <h3>Courrier complémentaire</h3>
             <span class="price">75 €</span>
-            <p>Rédaction sur la base du dossier déjà étudié.</p>
+            <p>Rédaction fondée sur le dossier déjà étudié et les pièces utiles.</p>
           </article>
+        </div>
+
+        <div style="margin-top:24px; text-align:center;">
+          <a class="btn btn-primary" href="#top">Lancer la première lecture</a>
         </div>
       </div>
     </section>
@@ -1073,7 +1117,7 @@
         </div>
 
         <div style="margin-top:24px; text-align:center;">
-          <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Transmission%20de%20dossier&body=Bonjour,%0A%0AType%20de%20dossier%20:%0A%0AObjectif%20:%0A%0A">Envoyer mon dossier</a>
+          <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=Transmission%20de%20dossier&body=Bonjour,%0A%0AType%20de%20dossier%20:%0A%0AObjectif%20:%0A%0A">Envoyer mon dossier par mail</a>
         </div>
       </div>
     </section>
