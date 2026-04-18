@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Axe Dossier — Paiement confirmé</title>
+  <meta name="description" content="Paiement confirmé. Transmettez maintenant votre dossier pour lancer la première lecture Axe Dossier." />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.86);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --success-soft: #edf6ee;
+      --success-line: #b8d8be;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.92), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.75), transparent 22%),
+        var(--bg);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 20px 0 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand img {
+      height: 54px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .main {
+      padding: 28px 0 56px;
+    }
+
+    .hero-card,
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-card {
+      padding: 34px;
+      margin-bottom: 22px;
+    }
+
+    .success-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--success-soft);
+      border: 1px solid var(--success-line);
+      color: #36573d;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+      max-width: 12ch;
+    }
+
+    .lead {
+      color: #4c473f;
+      font-size: 1.05rem;
+      max-width: 62ch;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(23,23,23,0.08);
+      color: #4d473f;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+    }
+
+    .card {
+      padding: 26px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .check-list,
+    .info-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-list li,
+    .info-list li {
+      position: relative;
+      padding-left: 18px;
+      color: #4f4942;
+    }
+
+    .check-list li::before,
+    .info-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #1a1a1a;
+    }
+
+    .mail-box {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+    }
+
+    .mail-label {
+      display: block;
+      font-size: 0.86rem;
+      color: #70695f;
+      margin-bottom: 6px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .mail-address {
+      font-size: 1.02rem;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      text-align: center;
+      cursor: pointer;
+      background: transparent;
+      font: inherit;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--accent);
+      border-color: rgba(23,23,23,0.1);
+    }
+
+    .template-box {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(23,23,23,0.08);
+    }
+
+    .template-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font: inherit;
+      color: #35312c;
+      line-height: 1.6;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      color: #655f57;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero-card,
+      .card {
+        padding: 20px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .brand {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .brand img {
+        height: 42px;
+      }
+
+      .brand-name {
+        font-size: 1.2rem;
+      }
+
+      h1 {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a href="index.html" class="brand" aria-label="Retour à Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="wrap">
+      <section class="hero-card">
+        <div class="success-badge">Paiement confirmé</div>
+        <h1>Première lecture enregistrée.</h1>
+        <p class="lead">
+          Merci. Pour lancer l’analyse, il faut maintenant transmettre le dossier avec un résumé clair,
+          les pièces utiles et l’objectif recherché.
+        </p>
+
+        <div class="notice">
+          La première lecture commence à réception des éléments. Un dossier clair permet une réponse plus rapide et plus utile.
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Ce qu’il faut envoyer maintenant</h2>
+          <p class="muted">Tu peux transmettre le dossier directement par mail.</p>
+
+          <ul class="check-list">
+            <li>Un résumé simple de la situation en 10 lignes maximum</li>
+            <li>Les pièces utiles uniquement</li>
+            <li>Ton objectif précis : ce que tu veux obtenir ou clarifier</li>
+            <li>Ton nom complet et l’adresse mail utilisée lors du paiement</li>
+          </ul>
+
+          <div class="mail-box">
+            <span class="mail-label">Adresse d’envoi</span>
+            <div class="mail-address">contact@axe-dossier.fr</div>
+          </div>
+
+          <div class="actions">
+            <a
+              class="btn btn-primary"
+              href="mailto:contact@axe-dossier.fr?subject=Transmission%20du%20dossier%20apres%20paiement%20-%20Premiere%20lecture&body=Bonjour,%0A%0AJe%20vous%20transmets%20mon%20dossier%20suite%20au%20paiement%20de%20la%20premiere%20lecture.%0A%0ANom%20complet%20:%0AAdresse%20mail%20utilisee%20lors%20du%20paiement%20:%0A%0AType%20de%20dossier%20:%0A%0AResume%20de%20la%20situation%20(10%20lignes%20max)%20:%0A%0AObjectif%20recherche%20:%0A%0A"
+            >
+              Envoyer mon dossier par mail
+            </a>
+
+            <button class="btn btn-secondary" id="copyEmailBtn" type="button">
+              Copier l’adresse mail
+            </button>
+          </div>
+
+          <p class="footer-note">
+            Formats conseillés : PDF, JPG, PNG. Évite les doublons et les captures inutiles.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Modèle simple à suivre</h2>
+          <p class="muted">Tu peux reprendre exactement cette structure dans ton mail.</p>
+
+          <div class="template-box">
+            <pre id="mailTemplate">Nom complet :
+Adresse mail utilisée lors du paiement :
+
+Type de dossier :
+
+Résumé de la situation (10 lignes max) :
+
+Documents transmis :
+
+Objectif recherché :</pre>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-secondary" id="copyTemplateBtn" type="button">
+              Copier le modèle
+            </button>
+            <a class="btn btn-secondary" href="index.html">
+              Retour à l’accueil
+            </a>
+          </div>
+
+          <ul class="info-list">
+            <li>Réponse sous 24 à 72 h selon la clarté et le volume du dossier</li>
+            <li>La première lecture correspond à un cadrage initial sur pièces</li>
+            <li>Un courrier ou une analyse approfondie peuvent être proposés ensuite si nécessaire</li>
+          </ul>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const copyEmailBtn = document.getElementById('copyEmailBtn');
+      const copyTemplateBtn = document.getElementById('copyTemplateBtn');
+      const mailTemplate = document.getElementById('mailTemplate');
+
+      async function copyText(text, button, successLabel) {
+        const original = button.textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = successLabel;
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1600);
+        } catch (e) {
+          button.textContent = 'Copie impossible';
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1600);
+        }
+      }
+
+      if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', function () {
+          copyText('contact@axe-dossier.fr', copyEmailBtn, 'Adresse copiée');
+        });
+      }
+
+      if (copyTemplateBtn && mailTemplate) {
+        copyTemplateBtn.addEventListener('click', function () {
+          copyText(mailTemplate.textContent.trim(), copyTemplateBtn, 'Modèle copié');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
