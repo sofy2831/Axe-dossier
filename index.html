@@ -257,15 +257,10 @@
       border-color: rgba(23,23,23,0.1);
     }
 
-    .hero-subnote {
-      margin-top: 14px;
-      color: #6a645d;
-      font-size: 0.93rem;
-    }
-
     .hero-side {
       display: grid;
       gap: 20px;
+      align-content: start;
     }
 
     .mini-card {
@@ -305,31 +300,6 @@
       height: 8px;
       border-radius: 999px;
       background: #1a1a1a;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px;
-    }
-
-    .metric {
-      padding: 18px;
-      border-radius: var(--radius-md);
-      background: #f8f5ef;
-      border: 1px solid rgba(23,23,23,0.06);
-    }
-
-    .metric strong {
-      display: block;
-      font-size: 1.45rem;
-      letter-spacing: -0.04em;
-      margin-bottom: 4px;
-    }
-
-    .metric span {
-      color: var(--muted);
-      font-size: 0.9rem;
     }
 
     section {
@@ -417,6 +387,12 @@
       color: #4f4942;
     }
 
+    .assistant-note {
+      margin-top: 10px;
+      color: #6b655d;
+      font-size: 0.92rem;
+    }
+
     .step-no {
       width: 38px;
       height: 38px;
@@ -484,69 +460,6 @@
       margin-bottom: 8px;
       font-size: 1.15rem;
       letter-spacing: -0.02em;
-    }
-
-    .assistant-box {
-      margin-top: 24px;
-      padding: 22px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.76);
-      border: 1px solid rgba(23,23,23,0.08);
-    }
-
-    .assistant-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: #4b453d;
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .assistant-box h3 {
-      font-size: 1.2rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-
-    .assistant-box p {
-      color: #514a42;
-      margin-bottom: 14px;
-    }
-
-    .assistant-input {
-      width: 100%;
-      min-height: 58px;
-      padding: 14px 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(23,23,23,0.12);
-      background: #fff;
-      color: #232323;
-      font: inherit;
-      resize: vertical;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
-    }
-
-    .assistant-input:focus {
-      outline: none;
-      border-color: rgba(23,23,23,0.28);
-    }
-
-    .assistant-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .assistant-note {
-      margin-top: 10px;
-      color: #6b655d;
-      font-size: 0.92rem;
     }
 
     .hub-list {
@@ -633,10 +546,8 @@
       }
 
       .hero { padding-top: 36px; }
-      .hero-actions,
-      .assistant-actions { flex-direction: column; }
+      .hero-actions { flex-direction: column; }
       .btn { width: 100%; }
-      .metrics { grid-template-columns: 1fr; }
       h1 { max-width: none; }
 
       .brand {
@@ -690,60 +601,28 @@
 
           <div class="offer-highlight">
             <div class="offer-label">Première prise de contact gratuite</div>
-            <span class="offer-price">“Voilà ma situation”</span>
+            <span class="offer-price">Expliquez simplement votre situation</span>
+
             <p class="offer-text">
-              Pas besoin d’un dossier parfait. Tu peux simplement expliquer ce qui bloque par mail.
-              Aucun paiement n’est demandé pour ce premier message.
+              Pas besoin d’un dossier parfait. Vous pouvez simplement expliquer ce qui bloque par mail.
+              Aucun paiement n’est demandé à ce stade.
             </p>
 
             <div class="hero-actions">
               <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Premi%C3%A8re%20prise%20de%20contact%20-%20voici%20ma%20situation&body=Bonjour,%0A%0AVoici%20ma%20situation%20:%0A%0A%0AType%20de%20dossier%20:%20succession%20/%20litige%20/%20administratif%20/%20banque%20/%20huissier%20/%20autre%0A%0ACe%20qui%20bloque%20aujourd'hui%20:%0A%0A%0ALes%20documents%20que%20j'ai%20d%C3%A9j%C3%A0%20:%0A%0A%0ACe%20que%20je%20souhaite%20obtenir%20:%0A%0A%0AMerci.">
                 Exposer ma situation gratuitement
               </a>
-
-              <a class="btn btn-secondary" href="#tarifs">
-                Voir l’analyse à 90 €
-              </a>
-            </div>
-          </div>
-
-          <div class="hero-subnote">
-            Tu reçois d’abord un cadrage court : problème compris, blocage probable,
-            éléments à préparer et intervention possible. La proposition payante vient seulement ensuite si un vrai travail est nécessaire.
-          </div>
-
-          <div class="assistant-box">
-            <div class="assistant-label">Premier cadrage</div>
-
-            <h3>Vous n’avez pas de dossier structuré ?</h3>
-
-            <p>
-              C’est normal. Dans la majorité des situations, les documents sont dispersés,
-              les échanges sont incomplets ou les interlocuteurs détiennent une partie des pièces.
-            </p>
-
-            <p>
-              Le premier mail sert à comprendre le problème, pas à produire un dossier parfait.
-            </p>
-
-            <ul class="mini-list">
-              <li>“J’ai compris le problème.”</li>
-              <li>“Le blocage semble venir de…”</li>
-              <li>“Voici ce qu’il faut préparer.”</li>
-              <li>“Voici ce qu’Axe Dossier peut faire.”</li>
-            </ul>
-
-            <div class="assistant-actions">
-              <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Premi%C3%A8re%20prise%20de%20contact%20-%20voici%20ma%20situation&body=Bonjour,%0A%0AVoici%20ma%20situation%20:%0A%0A%0AType%20de%20dossier%20:%0A%0ACe%20qui%20bloque%20:%0A%0ADocuments%20disponibles%20:%0A%0AObjectif%20recherch%C3%A9%20:%0A%0A%0AMerci.">
-                Envoyer mon premier mail
-              </a>
-
-              <a class="btn btn-secondary" href="#situations">
-                Voir les situations fréquentes
-              </a>
             </div>
 
-            <div class="assistant-note">
+            <div class="assistant-note" style="margin-top:18px;">
+              Vous recevrez un message de retour : problème compris, blocage probable,
+              éléments à préparer et intervention possible.
+              La proposition payante vient seulement ensuite si un vrai travail est nécessaire.
+            </div>
+
+            <div class="assistant-note" style="margin-top:12px;">
+              Si le dossier doit aller plus loin, Axe Dossier fera une analyse courte
+              et enverra un devis à 90 € avec RIB sur devis.
               Ce premier échange ne remplace pas une analyse complète du dossier.
               Il permet de savoir si Axe Dossier peut intervenir utilement.
             </div>
@@ -760,44 +639,17 @@
               <li>Accompagnement structuré</li>
             </ul>
           </article>
-
-          <article class="mini-card">
-            <div class="metrics">
-              <div class="metric">
-                <strong>0 €</strong>
-                <span>premier mail</span>
-              </div>
-              <div class="metric">
-                <strong>90 €</strong>
-                <span>cadrage approfondi</span>
-              </div>
-              <div class="metric">
-                <strong>Écrit</strong>
-                <span>retour exploitable</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="mini-card">
-            <h3>Après le premier mail</h3>
-            <ul class="mini-list">
-              <li>Identification du blocage probable</li>
-              <li>Liste des pièces utiles à préparer</li>
-              <li>Orientation claire sur la suite</li>
-              <li>Proposition payante uniquement si nécessaire</li>
-            </ul>
-          </article>
         </div>
       </div>
     </section>
-    <section id="questions">
+        <section id="questions">
       <div class="wrap">
         <div class="section-head">
           <div>
             <h2>Situations fréquentes</h2>
             <p>
-              Certains blocages reviennent souvent. Ces pages permettent de mieux comprendre le type de difficulté rencontrée
-              avant d’envoyer un premier mail.
+              Certains blocages reviennent souvent. Les situations ci-dessous permettent de mieux comprendre
+              le type de difficulté rencontrée avant d’envoyer un premier mail.
             </p>
           </div>
         </div>
@@ -810,14 +662,16 @@
               héritiers perdus dans les démarches.
             </p>
             <div class="hero-actions" style="margin-top:18px;">
-              <a class="btn btn-primary" href="notaire-succession-bloquee.html">Mon notaire ne répond plus</a>
+              <a class="btn btn-primary" href="notaire-succession-bloquee.html">
+                Mon notaire ne répond plus
+              </a>
             </div>
           </article>
 
           <article class="hub-card">
-            <h3>Autres points d’entrée</h3>
+            <h3>Situations proches</h3>
             <p>
-              Choisis la situation la plus proche de ton problème.
+              Vous pouvez consulter la situation la plus proche de votre problème.
               Si rien ne correspond exactement, le premier mail suffit.
             </p>
             <ul class="hub-list">
@@ -843,15 +697,15 @@
         <div class="grid-3">
           <article class="feature">
             <h3>Analyser</h3>
-            <p>Lecture des pièces, chronologie des faits, points de blocage, incohérences et éléments déterminants.</p>
+            <p>Lecture des pièces, chronologie des faits, points de blocage et incohérences.</p>
           </article>
           <article class="feature">
             <h3>Structurer</h3>
-            <p>Organisation du dossier, hiérarchie des documents, synthèse claire et préparation des démarches utiles.</p>
+            <p>Organisation du dossier, hiérarchie des documents et synthèse claire.</p>
           </article>
           <article class="feature">
             <h3>Rédiger</h3>
-            <p>Courrier, réponse argumentée, reformulation factuelle et support écrit exploitable.</p>
+            <p>Courriers, réponses argumentées et documents exploitables immédiatement.</p>
           </article>
         </div>
       </div>
@@ -862,226 +716,33 @@
         <div class="section-head">
           <div>
             <h2>Situations</h2>
-            <p>Successions, litiges du quotidien, blocages administratifs et dossiers civils sensibles.</p>
+            <p>Successions, litiges du quotidien et blocages administratifs.</p>
           </div>
         </div>
 
         <div class="grid-3">
           <article class="feature">
             <h3>Successions</h3>
-            <p>Échanges difficiles, inventaire, notaire, généalogiste, blocages entre héritiers.</p>
+            <p>Notaire, héritiers, blocages et absence de suivi clair.</p>
             <p style="margin-top:14px;">
-              <a href="succession-bloquee.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
+              <a href="succession-bloquee.html" style="font-weight:700; text-decoration:underline;">Voir la page</a>
             </p>
           </article>
 
           <article class="feature">
             <h3>Litiges</h3>
-            <p>Assurance, voisinage, prestataire, relance, mise en demeure, dossier incompris.</p>
+            <p>Assurance, banque, prestataire, décompte incompréhensible.</p>
             <p style="margin-top:14px;">
-              <a href="litige-assurance-banque.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
+              <a href="litige-assurance-banque.html" style="font-weight:700; text-decoration:underline;">Voir la page</a>
             </p>
           </article>
 
           <article class="feature">
             <h3>Administratif</h3>
-            <p>Réponse à un organisme, clarification d’une situation et remise à plat du dossier.</p>
+            <p>Organisme qui ne répond pas, situation bloquée.</p>
             <p style="margin-top:14px;">
-              <a href="organisme-ne-repond-pas.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
+              <a href="organisme-ne-repond-pas.html" style="font-weight:700; text-decoration:underline;">Voir la page</a>
             </p>
-          </article>
-
-          <article class="feature">
-            <h3>Dossier bloqué</h3>
-            <p>Quand plus rien n’avance : silence, refus, pièces contradictoires ou dossier qui tourne en rond.</p>
-            <p style="margin-top:14px;">
-              <a href="dossier-bloque-que-faire.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="guides">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Guides utiles</h2>
-            <p>
-              Des repères simples pour comprendre certaines démarches avant de structurer le dossier.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <article class="feature">
-            <h3>Comment faire une mise en demeure</h3>
-            <p>
-              Structure du courrier, mentions utiles,
-              erreurs à éviter et rédaction d’un courrier exploitable.
-            </p>
-            <p style="margin-top:14px;">
-              <a href="comment-faire-une-mise-en-demeure.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
-            </p>
-          </article>
-
-          <article class="feature">
-            <h3>Répondre à un courrier CAF, URSSAF ou impôts</h3>
-            <p>
-              Comment répondre proprement à une demande de justificatifs,
-              une relance administrative ou un courrier d’organisme.
-            </p>
-            <p style="margin-top:14px;">
-              <a href="courrier-caf-urssaf-impots.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
-            </p>
-          </article>
-
-          <article class="feature">
-            <h3>Problème avec un huissier : que faire</h3>
-            <p>
-              Saisie, signification, paiement non imputé,
-              erreur de dossier ou procédure incomprise.
-            </p>
-            <p style="margin-top:14px;">
-              <a href="probleme-huissier.html" style="font-weight:700; text-decoration:underline;">
-                Voir la page
-              </a>
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="methode">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Méthode</h2>
-            <p>Un parcours simple : expliquer, cadrer, puis décider s’il faut aller plus loin.</p>
-          </div>
-        </div>
-
-        <div class="steps">
-          <article class="step">
-            <div class="step-no">1</div>
-            <h3>Premier mail</h3>
-            <p>Tu expliques la situation simplement, même si les documents sont encore dispersés.</p>
-          </article>
-          <article class="step">
-            <div class="step-no">2</div>
-            <h3>Cadrage court</h3>
-            <p>Retour bref : problème compris, blocage probable, pièces à préparer et suite envisageable.</p>
-          </article>
-          <article class="step">
-            <div class="step-no">3</div>
-            <h3>Proposition</h3>
-            <p>Si une vraie analyse est utile, une proposition claire est faite avant paiement.</p>
-          </article>
-          <article class="step">
-            <div class="step-no">4</div>
-            <h3>Analyse</h3>
-            <p>Après validation, reprise du dossier, chronologie, pièces utiles et orientation écrite exploitable.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="cas-concrets">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Cas concrets accompagnés</h2>
-            <p>Des exemples réels de dossiers confus, bloqués ou sensibles repris et structurés.</p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <article class="feature case-card">
-            <div class="case-tag">Blocage Banque de France</div>
-            <h3>Fichage persistant malgré une régularisation annoncée</h3>
-            <p>
-              Cliente confrontée à une situation confuse entre plusieurs établissements,
-              avec impossibilité de comprendre l’origine exacte du blocage encore actif.
-            </p>
-
-            <div class="case-block">
-              <strong>Intervention</strong>
-              <p>
-                Analyse des pièces, reprise chronologique, identification des points encore ouverts,
-                préparation des courriers utiles et clarification des demandes à adresser aux interlocuteurs concernés.
-              </p>
-            </div>
-
-            <div class="case-block">
-              <strong>Résultat</strong>
-              <p>
-                Origine du blocage isolée, dossier remis à plat et procédure de régularisation relancée sur une base claire.
-              </p>
-            </div>
-          </article>
-
-          <article class="feature case-card">
-            <div class="case-tag">Succession complexe</div>
-            <h3>Succession bloquée entre notaire, généalogiste et héritiers</h3>
-            <p>
-              Dossier successoral devenu illisible au fil des mois :
-              absence de suivi réel, interventions multiples, échanges contradictoires
-              et aucune vision claire de l’avancement.
-            </p>
-
-            <div class="case-block">
-              <strong>Intervention</strong>
-              <p>
-                Reprise complète de la chronologie, tri des échanges,
-                clarification des rôles de chaque intervenant,
-                remise en ordre des pièces et préparation d’un dossier propre.
-              </p>
-            </div>
-
-            <div class="case-block">
-              <strong>Résultat</strong>
-              <p>
-                Dossier clarifié, pièces centralisées, historique reconstitué
-                et transmission d’un dossier structuré permettant une reprise plus propre.
-              </p>
-            </div>
-          </article>
-
-          <article class="feature case-card">
-            <div class="case-tag">Litige huissier / décompte</div>
-            <h3>Décompte confus avec risque de doublons et frais qui s’accumulent</h3>
-            <p>
-              Situation de paiement dégradée avec plusieurs montants, plusieurs versions du dossier
-              et une difficulté à savoir ce qui restait réellement dû.
-            </p>
-
-            <div class="case-block">
-              <strong>Intervention</strong>
-              <p>
-                Audit du décompte, tri des postes facturés, repérage des incohérences,
-                proposition d’échéancier réaliste et rédaction d’un courrier de négociation.
-              </p>
-            </div>
-
-            <div class="case-block">
-              <strong>Résultat</strong>
-              <p>
-                Base de règlement assainie, visibilité retrouvée sur la dette utile
-                et réduction du risque de frais supplémentaires.
-              </p>
-            </div>
           </article>
         </div>
       </div>
@@ -1092,44 +753,28 @@
         <div class="section-head">
           <div>
             <h2>Tarifs</h2>
-            <p>
-              Le premier mail est gratuit. Le paiement intervient uniquement si une analyse structurée est nécessaire.
-            </p>
+            <p>Le premier mail est gratuit. L’analyse est proposée uniquement si nécessaire.</p>
           </div>
         </div>
 
         <div class="pricing">
           <article class="price-card">
-            <h3>Premier mail</h3>
+            <h3>Premier contact</h3>
             <span class="price">0 €</span>
-            <p>
-              Exposition simple de la situation et retour court :
-              problème compris, blocage probable, pièces à préparer.
-            </p>
+            <p>Exposition de votre situation et premier cadrage.</p>
           </article>
 
           <article class="price-card">
-            <h3>Premier cadrage approfondi</h3>
+            <h3>Analyse courte et devis</h3>
             <span class="price">90 €</span>
-            <p>
-              Analyse plus structurée, chronologie, pièces utiles,
-              blocages identifiés et orientation écrite exploitable.
-            </p>
+            <p>Analyse du dossier et envoi d’un devis avec RIB.</p>
           </article>
 
           <article class="price-card">
             <h3>Courrier complémentaire</h3>
             <span class="price">75 €</span>
-            <p>
-              Rédaction fondée sur le dossier déjà étudié et les pièces utiles.
-            </p>
+            <p>Rédaction fondée sur les pièces analysées.</p>
           </article>
-        </div>
-
-        <div style="margin-top:24px; text-align:center;">
-          <a class="btn btn-primary" href="https://buy.stripe.com/14A4gy3Em37Z04Xa997Vm09" target="_blank" rel="noopener">
-            Régler le cadrage approfondi — 90 €
-          </a>
         </div>
       </div>
     </section>
@@ -1138,19 +783,15 @@
       <div class="wrap contact-grid">
         <article class="contact-card">
           <h3>Contact</h3>
-          <strong>Commence par expliquer simplement la situation.</strong>
+          <strong>Commencez par expliquer simplement la situation.</strong>
           <p>
-            Pas besoin d’un dossier parfait. Le premier message sert à comprendre le problème
-            et à vérifier si Axe Dossier peut intervenir utilement.
+            Pas besoin d’un dossier parfait. Le premier message permet de comprendre le problème
+            et de vérifier si Axe Dossier peut intervenir utilement.
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Premi%C3%A8re%20prise%20de%20contact%20-%20voici%20ma%20situation&body=Bonjour,%0A%0AVoici%20ma%20situation%20:%0A%0A%0AType%20de%20dossier%20:%20succession%20/%20litige%20/%20administratif%20/%20banque%20/%20huissier%20/%20autre%0A%0ACe%20qui%20bloque%20aujourd'hui%20:%0A%0A%0ALes%20documents%20que%20j'ai%20d%C3%A9j%C3%A0%20:%0A%0A%0ACe%20que%20je%20souhaite%20obtenir%20:%0A%0A%0AMerci.">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Premi%C3%A8re%20prise%20de%20contact%20-%20voici%20ma%20situation&body=Bonjour,%0A%0AVoici%20ma%20situation%20:%0A%0A%0AType%20de%20dossier%20:%0A%0ACe%20qui%20bloque%20:%0A%0AObjectif%20recherch%C3%A9%20:%0A%0A%0AMerci.">
               Écrire gratuitement
-            </a>
-
-            <a class="btn btn-secondary" href="https://buy.stripe.com/14A4gy3Em37Z04Xa997Vm09" target="_blank" rel="noopener">
-              Régler 90 €
             </a>
           </div>
         </article>
@@ -1159,87 +800,34 @@
           <h3>Cadre d’intervention</h3>
           <p>
             Service d’accompagnement documentaire et rédactionnel.
-            Ne constitue pas une consultation juridique, une représentation en justice
-            ou une prise en charge judiciaire.
+            Ne constitue pas une consultation juridique ni une représentation en justice.
           </p>
         </article>
       </div>
     </section>
 
-    <section id="envoi-dossier">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Envoyer les premiers éléments</h2>
-            <p>
-              Au départ, inutile d’envoyer tout le dossier. L’objectif est d’abord de comprendre
-              ce qui bloque et ce qu’il faudra préparer.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <article class="feature">
-            <h3>À écrire dans le premier mail</h3>
-            <p>
-              • Type de dossier<br>
-              • Ce qui bloque aujourd’hui<br>
-              • Les interlocuteurs concernés<br>
-              • Ce que tu veux obtenir
-            </p>
-          </article>
-
-          <article class="feature">
-            <h3>Documents utiles ensuite</h3>
-            <p>
-              • Courriers reçus<br>
-              • Échanges importants<br>
-              • Décomptes ou justificatifs<br>
-              • Décisions, relances ou mises en demeure
-            </p>
-          </article>
-
-          <article class="feature">
-            <h3>À éviter au départ</h3>
-            <p>
-              • 50 pièces sans explication<br>
-              • Messages trop longs<br>
-              • Documents en doublon<br>
-              • Dossier envoyé sans objectif clair
-            </p>
-          </article>
-        </div>
-
-        <div style="margin-top:24px; text-align:center;">
-          <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=Premiers%20%C3%A9l%C3%A9ments%20-%20Axe%20Dossier&body=Bonjour,%0A%0AVoici%20ma%20situation%20:%0A%0A%0AType%20de%20dossier%20:%0A%0ACe%20qui%20bloque%20:%0A%0AInterlocuteurs%20concern%C3%A9s%20:%0A%0ACe%20que%20je%20souhaite%20obtenir%20:%0A%0A%0AMerci.">
-            Envoyer un premier mail
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-box">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
         <div>
-          <strong style="display:block; font-size:1.05rem; margin-bottom:6px;">Axe Dossier</strong>
+          <strong>Axe Dossier</strong><br>
           <small>Analyse · Structure · Rédaction</small>
         </div>
-
-        <div style="text-align:right;">
-          <a href="mentions-legales.html" style="font-size:0.9rem; color:#666;">Mentions légales</a>
+        <div>
+          <a href="mentions-legales.html">Mentions légales</a>
         </div>
       </div>
 
-      <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(23,23,23,0.08);">
+      <div style="margin-top:16px;">
         <small>
-          Service d’accompagnement documentaire et rédactionnel. Ne constitue pas une consultation juridique,
-          une représentation en justice ou une prise en charge judiciaire.<br>
+          Service d’accompagnement documentaire. Ne constitue pas une consultation juridique.<br>
           © 2026 Axe Dossier
         </small>
       </div>
     </div>
   </footer>
+
 </body>
 </html>
