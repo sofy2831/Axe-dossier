@@ -5,171 +5,606 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Notaire ne répond pas ? Succession bloquée : que faire | Axe Dossier</title>
-  <meta name="description" content="Notaire qui ne répond pas, succession bloquée, héritiers sans réponse : que faire, comment relancer et remettre le dossier successoral en ordre." />
+  <meta name="description" content="Notaire qui ne répond pas, succession bloquée, héritiers sans réponse : délais, relance, mise en demeure, recours possibles et remise en ordre du dossier successoral." />
   
   <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
 
   <meta property="og:title" content="Notaire ne répond pas ? Succession bloquée : que faire" />
-  <meta property="og:description" content="Succession bloquée, notaire silencieux : comment relancer et débloquer." />
+  <meta property="og:description" content="Succession bloquée, notaire silencieux, héritiers sans réponse : comment relancer proprement, comprendre les délais et reprendre le dossier." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://axe-dossier.fr/notaire-succession-bloquee.html" />
   <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
 
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mon notaire ne répond plus dans une succession : que faire ?" />
+  <meta name="twitter:description" content="Comment relancer proprement une succession bloquée quand le notaire ne répond plus." />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
   <style>
-    body{
-      margin:0;
-      font-family:Inter, sans-serif;
-      background:#f3efe8;
-      color:#171717;
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1080px;
     }
-    .wrap{max-width:1080px;margin:auto;padding:20px;}
-    h1{font-size:2.2rem;margin-bottom:10px;}
-    h2{margin-top:30px;font-size:1.4rem;}
-    p{color:#4f4942;}
-    .box{
-      background:white;
-      padding:20px;
-      border-radius:20px;
-      margin-top:20px;
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.6;
     }
-    .list{padding-left:18px;}
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-logo {
+      height: 72px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .hero {
+      padding: 52px 0 22px;
+    }
+
+    .hero-card,
+    .content-card,
+    .sidebar-card,
+    .cta-card,
+    .faq-card,
+    .disclaimer,
+    .step,
+    .warning-box,
+    .mail-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.8), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4e473e;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      max-width: 13ch;
+      margin-bottom: 16px;
+    }
+
+    .lead {
+      max-width: 62ch;
+      color: #4f4942;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.75);
+      color: var(--accent);
+      border-color: rgba(23,23,23,0.1);
+    }
+
+    .hero-proof {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f;
+      font-size: 0.96rem;
+      max-width: 70ch;
+    }
+
+    section { padding: 18px 0; }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .content-card { padding: 28px; }
+
+    .sidebar {
+      display: grid;
+      gap: 18px;
+    }
+
+    .sidebar-card,
+    .cta-card,
+    .faq-card,
+    .mail-card {
+      padding: 24px;
+    }
+
+    .sidebar-card h3,
+    .cta-card h3,
+    .faq-card h3,
+    .mail-card h3,
+    .content-card h2,
+    .warning-box h3,
+    .disclaimer h3,
+    .step h3 {
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .content-card h2 {
+      font-size: 1.65rem;
+      margin-bottom: 14px;
+      margin-top: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .content-card h2:first-child { margin-top: 0; }
+
+    .content-card p,
+    .sidebar-card p,
+    .cta-card p,
+    .faq-card p,
+    .mail-card p,
+    .warning-box p,
+    .disclaimer p,
+    .step p {
+      color: #4f4942;
+    }
+
+    .list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #4d463f;
+    }
+
+    .list li + li { margin-top: 8px; }
+
+    .warning-box {
+      padding: 22px;
+      margin: 20px 0;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .steps {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .step { padding: 22px; }
+
+    .step-no {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .mini-links {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-links a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .mini-links a:hover {
+      transform: translateY(-1px);
+      background: #f2ece2;
+    }
+
+    .mail-box {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+      color: #3f3933;
+      font-size: 0.96rem;
+      white-space: pre-line;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 16px;
+    }
+
+    .faq-card h3 { margin-bottom: 8px; }
+
+    .disclaimer {
+      padding: 22px 24px;
+      margin-top: 12px;
+    }
+
+    .footer { padding: 28px 0 64px; }
+
+    .footer-box {
+      padding: 22px 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      color: #605951;
+      box-shadow: var(--shadow);
+    }
+
+    .footer-box small {
+      display: block;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .grid-main { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 14px 0;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .brand,
+      .nav { justify-content: center; }
+
+      .hero-card,
+      .content-card,
+      .sidebar-card,
+      .cta-card,
+      .faq-card,
+      .mail-card,
+      .warning-box,
+      .step,
+      .disclaimer,
+      .footer-box {
+        padding: 20px;
+      }
+
+      .hero { padding-top: 34px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+
+      .brand {
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .brand-logo {
+        height: 46px;
+        margin: 0 auto;
+      }
+
+      h1 { max-width: none; }
+    }
   </style>
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Article",
-    "headline":"Notaire ne repond plus succession",
-    "author":{"@type":"Organization","name":"Axe Dossier"}
-  }
-  </script>
-
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier - dossiers complexes, successions bloquées et courriers structurés" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
 
-<div class="wrap">
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="index.html">Accueil</a>
+        <a class="pill" href="#que-faire">Que faire</a>
+        <a class="pill" href="#demarche">Démarche</a>
+        <a class="pill" href="#faq">FAQ</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-card">
+          <div class="eyebrow">Succession · Notaire · Héritiers</div>
+          <h1>Notaire qui ne répond pas : que faire quand une succession est bloquée ?</h1>
+          <p class="lead">
+            Une succession peut vite se bloquer quand le notaire ne répond plus,
+            que les héritiers n’ont pas de nouvelles ou que le dossier devient confus.
+            Avant de relancer au hasard, il faut remettre le dossier en ordre.
+          </p>
 
-<h1>Notaire qui ne répond pas : que faire quand une succession est bloquée ?</h1>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Succession%20bloquee">Envoyer mon dossier</a>
+            <a class="btn btn-secondary" href="#que-faire">Voir les étapes</a>
+          </div>
 
-<p>
-Une succession peut vite se bloquer quand le notaire ne répond plus,
-que les héritiers n’ont pas de nouvelles ou que le dossier devient confus.
-</p>
+          <div class="hero-proof">
+            Situation fréquente : dossier dispersé, notaire silencieux, héritiers désorganisés.
+          </div>
+        </article>
+      </div>
+    </section>
 
-<div class="box">
+    <section id="que-faire">
+      <div class="wrap grid-main">
 
-<h2>Pourquoi une succession se bloque</h2>
+        <article class="content-card">
 
-<p>
-Le problème n’est pas toujours le notaire lui-même.
-Souvent, le blocage vient d’un dossier mal structuré.
-</p>
+          <h2>Pourquoi une succession se bloque</h2>
+          <p>
+            Le problème n’est pas toujours le notaire lui-même.
+            Souvent, le blocage vient d’un dossier mal structuré.
+          </p>
 
-<ul class="list">
-<li>pièces manquantes</li>
-<li>héritiers en désaccord</li>
-<li>bien immobilier compliqué</li>
-<li>dossier mal suivi</li>
-</ul>
+          <ul class="list">
+            <li>pièces manquantes</li>
+            <li>héritiers en désaccord</li>
+            <li>bien immobilier compliqué</li>
+            <li>dossier mal suivi</li>
+          </ul>
 
-<h2>Notaire qui ne répond pas : les premiers réflexes</h2>
+          <h2>Notaire qui ne répond pas : les premiers réflexes</h2>
+          <p>
+            Avant de relancer, il faut remettre les choses à plat :
+            date du décès, pièces envoyées, dernières réponses.
+          </p>
 
-<p>
-Avant de relancer, il faut remettre les choses à plat :
-date du décès, pièces envoyées, dernières réponses.
-</p>
+          <h2>Quels sont les délais normaux dans une succession ?</h2>
+          <p>
+            Une succession peut durer plusieurs mois, voire plus.
+            Mais un notaire doit donner une visibilité sur l’avancement.
+          </p>
 
-<h2>Quels sont les délais normaux d’une succession ?</h2>
+          <h2>Que faire si la succession est bloquée</h2>
+          <p>
+            Quand le dossier est bloqué, il faut agir méthodiquement.
+          </p>
 
-<p>
-Une succession peut durer plusieurs mois.
-Mais un notaire doit donner une visibilité.
-</p>
-<h2>Que faire si la succession est bloquée</h2>
+          <ul class="list">
+            <li>reprendre toute la chronologie</li>
+            <li>identifier les pièces manquantes</li>
+            <li>clarifier les demandes</li>
+            <li>préparer une relance écrite claire</li>
+          </ul>
 
-<p>
-Quand le dossier est bloqué, il faut agir méthodiquement.
-Le but n’est pas d’envoyer plus de messages, mais de structurer le dossier.
-</p>
+          <h2>Recours possibles face à un notaire silencieux</h2>
+          <ul class="list">
+            <li>relance écrite structurée</li>
+            <li>courrier recommandé</li>
+            <li>saisine de la chambre des notaires</li>
+            <li>recours à un avocat</li>
+          </ul>
 
-<ul class="list">
-<li>reprendre toute la chronologie</li>
-<li>identifier les pièces manquantes</li>
-<li>clarifier les demandes</li>
-<li>préparer une relance écrite claire</li>
-</ul>
+          <h2 id="demarche">Mise en demeure du notaire : quand agir</h2>
+          <p>
+            La mise en demeure est une étape sérieuse.
+            Elle doit être utilisée uniquement si le dossier est clair et structuré.
+          </p>
 
-<h2>Recours possibles face à un notaire silencieux</h2>
+        </article>
 
-<p>
-Si le notaire ne répond toujours pas, plusieurs actions existent.
-</p>
+        <aside class="sidebar">
 
-<ul class="list">
-<li>relance écrite structurée</li>
-<li>courrier recommandé</li>
-<li>saisine de la chambre des notaires</li>
-<li>recours à un avocat</li>
-</ul>
+          <article class="cta-card">
+            <h3>Situation typique</h3>
+            <p>
+              Plus de réponse du notaire, dossier confus, échanges dispersés.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr">Faire analyser mon dossier</a>
+            </div>
+          </article>
 
-<h2>Mise en demeure du notaire : quand agir</h2>
+          <article class="sidebar-card">
+            <h3>Pages proches</h3>
+            <ul class="mini-links">
+              <li><a href="succession-bloquee.html">Succession bloquée</a></li>
+              <li><a href="dossier-bloque-que-faire.html">Dossier bloqué</a></li>
+              <li><a href="organisme-ne-repond-pas.html">Organisme ne répond pas</a></li>
+              <li><a href="comment-faire-une-mise-en-demeure.html">Mise en demeure</a></li>
+            </ul>
+          </article>
 
-<p>
-La mise en demeure est une étape sérieuse.
-Elle doit être utilisée uniquement si le dossier est clair et documenté.
-</p>
+        </aside>
 
-<p>
-Sans chronologie ni preuves, elle perd en efficacité.
-</p>
+      </div>
+    </section>
 
-</div>
+    <section id="faq">
+      <div class="wrap">
 
-<div class="box">
+        <div class="faq-wrap">
 
-<h2>Besoin d’aide pour débloquer votre dossier ?</h2>
+          <article class="faq-card">
+            <h3>Que faire si le notaire ne répond pas ?</h3>
+            <p>Structurer le dossier avant de relancer.</p>
+          </article>
 
-<p>
-Si votre succession est bloquée et que vous ne savez plus quoi faire,
-vous pouvez expliquer votre situation.
-</p>
+          <article class="faq-card">
+            <h3>Combien de temps dure une succession ?</h3>
+            <p>Plusieurs mois en moyenne.</p>
+          </article>
 
-<p>
-👉 Analyse du dossier et stratégie claire.
-</p>
+          <article class="faq-card">
+            <h3>Peut-on mettre en demeure un notaire ?</h3>
+            <p>Oui, avec un dossier clair et documenté.</p>
+          </article>
 
-<p>
-<a href="mailto:contact@axe-dossier.fr?subject=Succession%20bloquee">Contactez-nous</a>
-</p>
+        </div>
 
-</div>
+      </div>
+    </section>
 
-<div class="box">
+    <section id="contact">
+      <div class="wrap">
+        <article class="cta-card">
+          <h3>Une succession bloquée ne se débloque pas seule</h3>
+          <p>
+            Expliquez votre situation, recevez une analyse claire.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr">Envoyer mon dossier</a>
+            <a class="btn btn-secondary" href="index.html">Retour accueil</a>
+          </div>
+        </article>
+      </div>
+    </section>
 
-<h2>FAQ</h2>
+  </main>
 
-<h3>Que faire si le notaire ne répond pas ?</h3>
-<p>
-Il faut structurer le dossier avant de relancer.
-Une demande claire est plus efficace que plusieurs messages.
-</p>
-
-<h3>Combien de temps dure une succession ?</h3>
-<p>
-Plusieurs mois en moyenne, parfois plus selon la complexité.
-</p>
-
-<h3>Peut-on mettre en demeure un notaire ?</h3>
-<p>
-Oui, mais seulement avec un dossier structuré et des preuves.
-</p>
-
-</div>
-
-</div>
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <strong>Axe Dossier</strong>
+      <small>Analyse · Structure · Rédaction</small>
+    </div>
+  </footer>
 
 </body>
 </html>
