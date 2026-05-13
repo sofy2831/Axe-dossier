@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Solde de tout compte faux ? Vérification STC et bulletins de paie — Axe Dossier</title>
+  <meta name="description" content="Vous avez un doute sur votre solde de tout compte ? Axe Dossier vérifie vos congés payés, indemnités, préavis, IJSS, maintien de salaire, heures supplémentaires et anomalies probables." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b3145" />
+
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Solde de tout compte faux ? Vérification STC et bulletins de paie" />
+  <meta property="og:description" content="Envoyez vos 3 derniers bulletins, votre solde de tout compte et votre contrat. Axe Dossier vérifie les éléments essentiels de votre fin de contrat." />
+  <meta property="og:url" content="https://axe-dossier.fr/verification-solde-de-tout-compte.html" />
+  <meta property="og:site_name" content="Axe Dossier" />
+
+  <link rel="canonical" href="https://axe-dossier.fr/verification-solde-de-tout-compte.html" />
+
+  <style>
+    :root{
+      --bg:#071e2b;--bg2:#0b3145;--card:#ffffff;--soft:#f4f7fb;--text:#10202c;--muted:#5f6f7a;--line:#dbe5ec;--accent:#ff7f1f;--accent2:#ff9b4a;--green:#1f9d68;--shadow:0 24px 70px rgba(7,30,43,.16);--max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#f8fbfd 0%,#edf4f8 52%,#f8fbfd 100%);line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(11,49,69,.10)}
+    .topbar-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;flex-direction:column}
+    .brand strong{font-size:1.05rem;color:var(--bg2)}
+    .brand span{font-size:.86rem;color:var(--muted)}
+    .nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{font-size:.94rem;font-weight:700;color:var(--muted)}
+    .nav a:hover{color:var(--bg2)}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:999px;font-weight:800;border:1px solid transparent;transition:.2s ease;white-space:nowrap}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 14px 30px rgba(255,127,31,.24)}
+    .btn-secondary{background:#fff;color:var(--bg2);border-color:rgba(11,49,69,.18)}
+    .btn:hover{transform:translateY(-1px)}
+
+    .hero{background:radial-gradient(circle at top left,rgba(255,127,31,.18),transparent 32%),radial-gradient(circle at top right,rgba(31,157,104,.12),transparent 30%),linear-gradient(135deg,#071e2b,#0b3145);color:#fff;padding:58px 0 46px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:stretch}
+    .hero-copy,.hero-card{border-radius:30px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.075);box-shadow:var(--shadow)}
+    .hero-copy{padding:40px}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.82);font-weight:800;font-size:.86rem;margin-bottom:18px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    h1{margin:0 0 16px;font-size:clamp(2.35rem,5vw,4rem);line-height:1.02;letter-spacing:-.045em;max-width:12ch}
+    .hero-lead{margin:0 0 22px;color:rgba(255,255,255,.80);font-size:1.08rem;max-width:66ch}
+    .hero-note{margin:0 0 24px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.80);font-size:.95rem}
+    .hero-note strong{color:#fff}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+
+    .hero-card{padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+    .price-box{padding:24px;border-radius:24px;background:#fff;color:var(--text)}
+    .price-kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;font-weight:900;margin-bottom:8px}
+    .price-title{margin:0 0 10px;font-size:1.35rem;line-height:1.15;letter-spacing:-.025em;color:var(--bg2)}
+    .price{display:flex;align-items:flex-end;gap:10px;margin:18px 0 10px}
+    .price strong{font-size:3.3rem;line-height:.9;letter-spacing:-.06em;color:var(--bg2)}
+    .price span{color:var(--muted);font-weight:800;padding-bottom:6px}
+    .price-text{margin:0;color:var(--muted);font-size:.95rem}
+    .documents{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+    .documents li{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.82);font-weight:650}
+    .check{color:#7ce0b4;font-weight:900}
+
+    section{padding:48px 0}
+    .section-head{max-width:820px;margin-bottom:24px}
+    .tag{display:inline-block;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;font-weight:900;margin-bottom:10px}
+    h2{margin:0 0 10px;font-size:clamp(1.7rem,3vw,2.55rem);line-height:1.08;letter-spacing:-.035em;color:var(--bg2)}
+    .section-text{margin:0;color:var(--muted);font-size:1.02rem;max-width:72ch}
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 16px 40px rgba(7,30,43,.08)}
+    .icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:rgba(255,127,31,.12);color:var(--accent);font-weight:900;margin-bottom:14px}
+    .card h3{margin:0 0 8px;color:var(--bg2);font-size:1.08rem}
+    .card p{margin:0;color:var(--muted);font-size:.95rem}
+
+    .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .check-card{display:flex;gap:12px;align-items:flex-start;padding:17px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 36px rgba(7,30,43,.06)}
+    .check-card strong{display:block;color:var(--bg2);margin-bottom:3px}
+    .check-card span:last-child{color:var(--muted);font-size:.94rem}
+    .big-check{color:var(--green);font-weight:900;font-size:1.05rem}
+
+    .process{counter-reset:step;display:grid;gap:16px}
+    .step{display:grid;grid-template-columns:58px 1fr;gap:16px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 14px 34px rgba(7,30,43,.06)}
+    .step:before{counter-increment:step;content:counter(step);width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:grid;place-items:center;font-weight:900;font-size:1.1rem}
+    .step h3{margin:0 0 6px;color:var(--bg2)}
+    .step p{margin:0;color:var(--muted)}
+
+    .cta{background:linear-gradient(135deg,#071e2b,#0b3145);color:#fff;border-radius:32px;padding:34px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+    .cta h2{color:#fff;margin-bottom:10px}
+    .cta p{margin:0;color:rgba(255,255,255,.78)}
+    .mail{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 22px;border-radius:999px;background:#fff;color:var(--bg2);font-weight:900;white-space:nowrap}
+
+    .faq{display:grid;gap:12px}
+    details{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(7,30,43,.05)}
+    summary{cursor:pointer;color:var(--bg2);font-weight:900}
+    details p{color:var(--muted);margin:12px 0 0}
+    .warning{padding:18px;border-radius:20px;background:#fff7ef;border:1px solid #ffd6b8;color:#7a4216;font-size:.95rem}
+    footer{padding:26px 0 38px;color:var(--muted);font-size:.92rem}
+    .footer-inner{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
+
+    @media(max-width:980px){.hero-grid,.grid-3,.checks,.cta{grid-template-columns:1fr}h1{max-width:none}}
+    @media(max-width:720px){.topbar-inner{align-items:flex-start;flex-direction:column;padding:14px 0}.hero{padding:34px 0}.hero-copy,.hero-card,.cta{padding:24px 20px}.hero-actions{flex-direction:column}.btn,.mail{width:100%}.step{grid-template-columns:1fr}}
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Service","name":"Vérification solde de tout compte et bulletins de paie","provider":{"@type":"Organization","name":"Axe Dossier","url":"https://axe-dossier.fr/"},"areaServed":"FR","description":"Vérification des éléments essentiels d’un solde de tout compte : congés payés, indemnités, préavis, maintien de salaire, IJSS, heures supplémentaires et anomalies probables.","offers":{"@type":"Offer","price":"9","priceCurrency":"EUR","description":"Offre découverte de vérification STC"}}
+  </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Comment savoir si mon solde de tout compte est faux ?","acceptedAnswer":{"@type":"Answer","text":"Un solde de tout compte peut présenter une anomalie sur les congés payés, le préavis, les indemnités de rupture, les heures supplémentaires, les IJSS ou le maintien de salaire. Une vérification permet d’identifier les incohérences probables."}},{"@type":"Question","name":"Quels documents envoyer pour vérifier mon STC ?","acceptedAnswer":{"@type":"Answer","text":"Il est conseillé d’envoyer les trois derniers bulletins de salaire, le solde de tout compte et le contrat de travail si vous l’avez."}},{"@type":"Question","name":"La vérification remplace-t-elle un avocat ?","acceptedAnswer":{"@type":"Answer","text":"Non. La vérification vise à repérer les points incohérents et à clarifier les éléments essentiels. En cas de litige complexe ou contentieux, un professionnel du droit peut être nécessaire."}}]}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <strong>Axe Dossier</strong>
+        <span>Remettre un dossier dans l’axe</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="#verification">Vérification</a>
+        <a href="#fonctionnement">Fonctionnement</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=V%C3%A9rification%20STC%20-%20Nom%20Pr%C3%A9nom">Envoyer mes documents</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span> Vérification paie & fin de contrat</div>
+          <h1>Solde de tout compte faux ?</h1>
+          <p class="hero-lead">Vous avez un doute sur votre solde de tout compte, vos congés payés, votre préavis, vos indemnités ou vos derniers bulletins ? Axe Dossier vérifie les éléments essentiels de votre fin de contrat.</p>
+          <div class="hero-note"><strong>Objectif :</strong> repérer les incohérences probables, comprendre les points sensibles et savoir quoi vérifier avant de signer, contester ou laisser passer un délai.</div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=V%C3%A9rification%20STC%20-%20Nom%20Pr%C3%A9nom">Demander la vérification</a>
+            <a class="btn btn-secondary" href="#verification">Voir ce qui est vérifié</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="price-box">
+            <div class="price-kicker">Offre découverte</div>
+            <h2 class="price-title">Mon solde de tout compte est-il juste ?</h2>
+            <div class="price"><strong>9€</strong><span>tarif de lancement</span></div>
+            <p class="price-text">Vérification des éléments essentiels à partir de vos documents transmis par mail.</p>
+          </div>
+
+          <ul class="documents">
+            <li><span class="check">✓</span><span>Vos 3 derniers bulletins de salaire</span></li>
+            <li><span class="check">✓</span><span>Votre solde de tout compte</span></li>
+            <li><span class="check">✓</span><span>Votre contrat de travail, si disponible</span></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="verification">
+      <div class="container">
+        <div class="section-head">
+          <span class="tag">Ce qui est vérifié</span>
+          <h2>Les points qui font souvent perdre de l’argent.</h2>
+          <p class="section-text">Un solde de tout compte peut sembler correct au premier regard, mais cacher une erreur de calcul ou un élément oublié.</p>
+        </div>
+
+        <div class="checks">
+          <div class="check-card"><span class="big-check">✓</span><span><strong>Congés payés cohérents ?</strong> Vérification de la logique des congés acquis, pris et indemnisés.</span></div>
+          <div class="check-card"><span class="big-check">✓</span><span><strong>Indemnités correctes ?</strong> Contrôle des indemnités visibles selon la situation communiquée.</span></div>
+          <div class="check-card"><span class="big-check">✓</span><span><strong>Préavis respecté ?</strong> Vérification de la présence ou de l’absence d’indemnité compensatrice de préavis.</span></div>
+          <div class="check-card"><span class="big-check">✓</span><span><strong>Maintien de salaire / IJSS cohérents ?</strong> Lecture des incohérences possibles liées aux arrêts maladie ou régularisations.</span></div>
+          <div class="check-card"><span class="big-check">✓</span><span><strong>Heures supplémentaires oubliées ?</strong> Repérage des heures ou majorations qui semblent absentes ou mal traitées.</span></div>
+          <div class="check-card"><span class="big-check">✓</span><span><strong>Anomalie probable sur bulletin ou STC ?</strong> Identification des points à éclaircir ou à demander à l’employeur.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fonctionnement">
+      <div class="container">
+        <div class="section-head">
+          <span class="tag">Fonctionnement</span>
+          <h2>Simple : vous envoyez, on vérifie, vous recevez un retour clair.</h2>
+          <p class="section-text">Pour cette première version, tout passe par mail. Pas d’espace client compliqué, pas d’upload technique, pas de blabla.</p>
+        </div>
+
+        <div class="process">
+          <div class="step"><div><h3>Envoyez vos documents</h3><p>Transmettez vos 3 derniers bulletins, votre solde de tout compte et votre contrat si vous l’avez à <strong>contact@axe-dossier.fr</strong>.</p></div></div>
+          <div class="step"><div><h3>Votre dossier est relu</h3><p>Les éléments essentiels sont vérifiés : congés payés, indemnités, préavis, IJSS, maintien de salaire, heures supplémentaires et incohérences visibles.</p></div></div>
+          <div class="step"><div><h3>Vous recevez un retour exploitable</h3><p>Vous savez si le solde semble cohérent, quels points posent question et quelles demandes formuler si une anomalie probable apparaît.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="grid-3">
+          <article class="card"><div class="icon">01</div><h3>Pour les salariés qui doutent</h3><p>Vous quittez l’entreprise, vous recevez votre STC et quelque chose vous semble bizarre. On regarde les points essentiels.</p></article>
+          <article class="card"><div class="icon">02</div><h3>Avant de contester</h3><p>Avant d’écrire à l’employeur ou de partir dans tous les sens, vous obtenez une première lecture structurée.</p></article>
+          <article class="card"><div class="icon">03</div><h3>Sans jargon inutile</h3><p>Le but n’est pas de vous noyer dans le droit social, mais de vous dire clairement ce qui semble cohérent ou non.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="warning"><strong>Important :</strong> cette vérification est une première lecture technique et documentaire. Elle ne remplace pas une consultation d’avocat, ne garantit pas l’existence d’une créance et ne constitue pas une représentation devant le conseil de prud’hommes. En cas de litige lourd, de délai urgent ou de contentieux engagé, un professionnel du droit peut être nécessaire.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>Vous avez un doute sur votre solde de tout compte ?</h2>
+            <p>Envoyez vos documents avec l’objet : <strong>Vérification STC – Nom Prénom</strong>.</p>
+          </div>
+          <a class="mail" href="mailto:contact@axe-dossier.fr?subject=V%C3%A9rification%20STC%20-%20Nom%20Pr%C3%A9nom">contact@axe-dossier.fr</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="tag">FAQ</span>
+          <h2>Questions fréquentes sur le solde de tout compte.</h2>
+        </div>
+
+        <div class="faq">
+          <details><summary>Comment savoir si mon solde de tout compte est faux ?</summary><p>Un STC peut être incohérent si les congés payés, le préavis, les indemnités, les heures supplémentaires ou les régularisations maladie/IJSS ne correspondent pas à votre situation. Une vérification permet de repérer les points suspects.</p></details>
+          <details><summary>Quels documents dois-je envoyer ?</summary><p>Idéalement : vos 3 derniers bulletins de salaire, votre solde de tout compte et votre contrat de travail. Vous pouvez aussi ajouter un avenant, un courrier de licenciement, une rupture conventionnelle ou tout document utile.</p></details>
+          <details><summary>Est-ce que je dois signer mon solde de tout compte ?</summary><p>La signature peut avoir des conséquences sur les délais de contestation. Si vous avez un doute, mieux vaut vérifier les éléments avant de signer ou demander un éclaircissement écrit à l’employeur.</p></details>
+          <details><summary>Est-ce que vous contactez mon employeur ?</summary><p>Non. La vérification vise à vous donner une lecture claire. Vous restez libre d’utiliser ensuite les éléments pour demander une explication, une régularisation ou une analyse plus poussée.</p></details>
+          <details><summary>Est-ce adapté si je veux saisir les prud’hommes ?</summary><p>Cette vérification peut aider à repérer les anomalies probables avant une contestation. Pour une procédure prud’homale complète, il faut ensuite apprécier les preuves, les délais, les demandes et la stratégie.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© Axe Dossier — Vérification STC et bulletins de paie</div>
+      <div class="footer-links">
+        <a href="index.html">Accueil</a>
+        <a href="mailto:contact@axe-dossier.fr">Contact</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
