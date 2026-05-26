@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="IfcyRjoiTZSDTpOFl08nLktH8HWznrqE0YFar0m2ZCs" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Erreur fiche de paie : que faire ? Vérification bulletin salaire</title>
+  <meta name="description" content="Erreur sur fiche de paie : net à payer faux, congés payés, heures supplémentaires, IJSS, absence, prime oubliée, maintien de salaire. Que faire et comment faire vérifier ses bulletins." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://axe-dossier.fr/erreur-fiche-de-paie-que-faire.html" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+    .topbar-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 16px; font-weight: 700; letter-spacing: 0.02em; }
+    .brand-logo { height: 94px; width: auto; display: block; object-fit: contain; flex-shrink: 0; }
+    .brand-name { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .pill:hover { transform: translateY(-1px); background: rgba(255,255,255,0.95); }
+    .hero { padding: 56px 0 26px; }
+    .hero-shell { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: stretch; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius-xl); box-shadow: var(--shadow); backdrop-filter: blur(16px);
+    }
+    .hero-main { padding: 42px; position: relative; overflow: hidden; }
+    .hero-main::after {
+      content: ""; position: absolute; inset: auto -80px -80px auto;
+      width: 220px; height: 220px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.75), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px;
+      background: var(--accent-soft); color: #4e473e;
+      font-size: 0.88rem; font-weight: 700; margin-bottom: 18px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(2.35rem, 4.2vw, 5rem); letter-spacing: -0.055em; line-height: 0.98; max-width: 12ch; margin-bottom: 18px; }
+    h2 { font-size: clamp(1.7rem, 2.4vw, 2.8rem); letter-spacing: -0.04em; }
+    .lead { max-width: 66ch; color: #4c473f; font-size: 1.08rem; }
+    .hero-proof {
+      margin-top: 18px; padding: 14px 16px; border-radius: 18px;
+      background: rgba(255,255,255,0.72); border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f; font-size: 0.96rem;
+    }
+    .offer-highlight {
+      margin-top: 22px; padding: 18px 20px; border-radius: 22px;
+      background: #ffffff; border: 1px solid rgba(23,23,23,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+    .offer-label {
+      display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: #4e473e; font-size: 0.82rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .offer-price { display: block; font-size: 2rem; line-height: 1; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 8px; }
+    .offer-text { color: #4c473f; font-size: 0.98rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .btn {
+      min-height: 52px; padding: 0 20px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--accent); font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease; text-align: center;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.7); color: var(--accent); border-color: rgba(23,23,23,0.1); }
+    .hero-side { display: grid; gap: 20px; align-content: start; }
+    .mini-card {
+      padding: 28px; border-radius: var(--radius-xl); background: var(--surface-strong);
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .mini-card h3 { font-size: 1rem; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .mini-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .mini-list li { padding-left: 18px; position: relative; color: #49443e; }
+    .mini-list li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 999px; background: #1a1a1a; }
+    section { padding: 22px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .section-head p { max-width: 58ch; color: var(--muted); }
+    .grid-3, .steps, .pricing { display: grid; gap: 18px; }
+    .grid-3, .pricing { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .steps { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .feature, .step, .price-card, .disclaimer {
+      padding: 26px; border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.8); border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .feature h3, .step h3, .price-card h3, .disclaimer h3 { font-size: 1.08rem; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .feature p, .step p, .price-card p, .disclaimer p { color: #4f4942; }
+    .step-no { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); font-weight: 800; margin-bottom: 12px; }
+    .case-tag { display: inline-flex; align-items: center; padding: 7px 11px; border-radius: 999px; background: var(--accent-soft); color: #4d463e; font-size: 0.82rem; font-weight: 700; margin-bottom: 14px; }
+    .warning-box { margin-top: 18px; padding: 18px 20px; border-radius: 22px; background: #fff7ef; border: 1px solid rgba(160, 96, 40, 0.18); color: #5c4634; font-size: 0.95rem; }
+    details { padding: 18px 20px; border-radius: 18px; background: rgba(255,255,255,0.78); border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(0,0,0,0.04); }
+    details + details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 800; letter-spacing: -0.01em; }
+    details p { margin-top: 10px; color: #4f4942; }
+    .footer { padding: 28px 0 64px; }
+    .footer-box { padding: 22px 24px; border-radius: var(--radius-lg); background: rgba(255,255,255,0.7); border: 1px solid var(--line); color: #605951; }
+    .footer-box small { display: block; margin-top: 8px; line-height: 1.5; }
+    @media (max-width: 1024px) {
+      .hero-shell, .grid-3, .steps, .pricing { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 720px) {
+      .topbar-inner { min-height: auto; padding: 14px 0; flex-direction: column; align-items: stretch; }
+      .brand, .nav { justify-content: center; }
+      .hero-main, .mini-card, .feature, .step, .price-card, .disclaimer, .footer-box { padding: 20px; }
+      .hero { padding-top: 36px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      h1 { max-width: none; }
+      .brand { justify-content: center; flex-direction: column; text-align: center; }
+      .brand-logo { height: 46px; margin: 0 auto; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Service","name":"Vérification fiche de paie et solde de tout compte","provider":{"@type":"Organization","name":"Axe Dossier","url":"https://axe-dossier.fr/"},"areaServed":"FR","description":"Informations pratiques en cas d’erreur sur fiche de paie : net à payer, congés payés, heures supplémentaires, IJSS, maintien de salaire, primes, absences et régularisations.","offers":{"@type":"Offer","price":"9","priceCurrency":"EUR","description":"Vérification STC et bulletins à tarif découverte"}}
+  </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Que faire en cas d’erreur sur une fiche de paie ?","acceptedAnswer":{"@type":"Answer","text":"Il faut identifier la ligne concernée, comparer avec le contrat et les bulletins précédents, puis demander une correction écrite à l’employeur ou au service paie."}},{"@type":"Question","name":"L’employeur doit-il corriger une fiche de paie fausse ?","acceptedAnswer":{"@type":"Answer","text":"Si une erreur est constatée, l’employeur doit régulariser la situation et corriger les montants concernés. Il est conseillé de demander l’explication par écrit."}},{"@type":"Question","name":"Quelles sont les erreurs fréquentes sur une fiche de paie ?","acceptedAnswer":{"@type":"Answer","text":"Les erreurs fréquentes concernent le net à payer, les congés payés, les heures supplémentaires, les primes, les absences, les IJSS, le maintien de salaire et les régularisations de fin de contrat."}}]}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="#erreurs">Erreurs</a>
+        <a class="pill" href="#actions">Que faire</a>
+        <a class="pill" href="#preuves">Preuves</a>
+        <a class="pill" href="#verification">Vérification 9 €</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-shell">
+        <article class="card hero-main">
+          <div class="eyebrow">Fiche de paie · Bulletin de salaire · Erreur employeur</div>
+          <h1>Erreur sur ma fiche de paie : que faire ?</h1>
+          <p class="lead">Votre net à payer a baissé sans explication, vos heures supplémentaires semblent oubliées, vos congés payés ne correspondent pas ou une absence paraît mal déduite. Une erreur sur fiche de paie peut arriver, mais il faut la traiter proprement.</p>
+          <div class="hero-proof">Le bon réflexe : ne pas partir au conflit tout de suite. Il faut d’abord identifier la ligne douteuse, vérifier les documents et demander une explication écrite.</div>
+          <div class="offer-highlight">
+            <div class="offer-label">Vérification documentaire</div>
+            <span class="offer-price">Bulletins et STC - 9 €</span>
+            <p class="offer-text">Axe Dossier vérifie les éléments essentiels de vos derniers bulletins et de votre solde de tout compte pour repérer les incohérences probables.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="verification-solde-de-tout-compte.html">Faire vérifier mes bulletins</a>
+              <a class="btn btn-secondary" href="#actions">Voir quoi faire d’abord</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="hero-side">
+          <article class="mini-card">
+            <h3>Erreurs fréquentes</h3>
+            <ul class="mini-list">
+              <li>Net à payer différent sans explication</li>
+              <li>Heures supplémentaires absentes</li>
+              <li>Congés payés mal comptés</li>
+              <li>Prime oubliée ou montant inhabituel</li>
+              <li>IJSS ou maintien de salaire incompréhensible</li>
+            </ul>
+          </article>
+          <article class="mini-card">
+            <h3>Documents à garder</h3>
+            <ul class="mini-list">
+              <li>Bulletin concerné</li>
+              <li>Bulletins précédents</li>
+              <li>Contrat de travail et avenants</li>
+              <li>Planning, mails ou décompte d’heures</li>
+            </ul>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="erreurs">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Comment savoir si une fiche de paie est fausse ?</h2><p>Une fiche de paie peut être fausse sans que le total saute aux yeux. Il faut regarder les lignes sensibles, pas seulement le net payé.</p></div></div>
+        <div class="grid-3">
+          <article class="feature"><span class="case-tag">Net à payer</span><h3>Net à payer anormal</h3><p>Une baisse du net peut venir d’une absence, d’une régularisation, d’une saisie, d’un changement de taux ou d’une erreur de paie.</p></article>
+          <article class="feature"><span class="case-tag">Heures</span><h3>Heures supplémentaires oubliées</h3><p>Les heures supplémentaires, majorations ou repos compensateurs doivent correspondre au temps réellement travaillé et justifié.</p></article>
+          <article class="feature"><span class="case-tag">Congés</span><h3>Congés payés incohérents</h3><p>Les congés acquis, pris et restants doivent rester cohérents d’un mois à l’autre, surtout en fin de contrat.</p></article>
+          <article class="feature"><span class="case-tag">Absence</span><h3>Absence mal déduite</h3><p>Une absence peut être mal valorisée, doublée ou déduite sur une mauvaise base. C’est fréquent sur les bulletins complexes.</p></article>
+          <article class="feature"><span class="case-tag">Maladie</span><h3>IJSS et maintien de salaire flous</h3><p>Arrêt maladie, subrogation, indemnités journalières et maintien employeur créent souvent des lignes difficiles à comprendre.</p></article>
+          <article class="feature"><span class="case-tag">Prime</span><h3>Prime oubliée ou réduite</h3><p>Prime contractuelle, variable, panier, transport ou avantage : une ligne peut disparaître ou être mal calculée.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="actions">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Que faire en cas d’erreur sur fiche de paie ?</h2><p>Il faut agir dans l’ordre. Une demande claire et documentée a plus de poids qu’un message vague envoyé sous le coup de l’énervement.</p></div></div>
+        <div class="steps">
+          <article class="step"><div class="step-no">1</div><h3>Comparer les bulletins</h3><p>Regardez le bulletin concerné, les bulletins précédents et les variations inhabituelles de salaire, charges, absences ou primes.</p></article>
+          <article class="step"><div class="step-no">2</div><h3>Identifier la ligne douteuse</h3><p>Notez précisément ce qui pose problème : heures, congés, absence, IJSS, prime, retenue, régularisation ou net à payer.</p></article>
+          <article class="step"><div class="step-no">3</div><h3>Vérifier les pièces</h3><p>Contrat, avenant, planning, compteur d’heures, arrêt maladie, mail RH ou accord écrit peuvent expliquer ou contredire le bulletin.</p></article>
+          <article class="step"><div class="step-no">4</div><h3>Demander une explication écrite</h3><p>Adressez une demande simple au service paie ou à l’employeur avec la ligne concernée et la raison de votre doute.</p></article>
+          <article class="step"><div class="step-no">5</div><h3>Demander une correction</h3><p>Si l’erreur est confirmée, demandez un bulletin rectifié ou une régularisation sur la paie suivante.</p></article>
+          <article class="step"><div class="step-no">6</div><h3>Garder les échanges</h3><p>Conservez vos mails et les réponses. En cas de désaccord persistant, ces éléments pourront devenir utiles.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="preuves">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Quand faut-il vraiment s’inquiéter ?</h2><p>Toutes les variations ne sont pas des erreurs. Mais certains signaux méritent une vérification rapide.</p></div></div>
+        <div class="grid-3">
+          <article class="feature"><span class="case-tag">Répétition</span><h3>L’erreur revient plusieurs mois</h3><p>Une anomalie répétée peut créer un écart important sur plusieurs bulletins. Il faut alors reprendre la période concernée.</p></article>
+          <article class="feature"><span class="case-tag">Fin contrat</span><h3>Vous quittez l’entreprise</h3><p>Les erreurs de paie deviennent plus sensibles au moment du solde de tout compte, car les congés, indemnités et régularisations se cumulent.</p></article>
+          <article class="feature"><span class="case-tag">Silence</span><h3>L’employeur ne répond pas</h3><p>Si la demande est claire et que l’employeur ne répond pas, il peut être nécessaire de formaliser davantage la contestation.</p></article>
+        </div>
+        <div class="warning-box"><strong>Point de vigilance :</strong> ne vous contentez pas de dire “ma fiche de paie est fausse”. Plus votre demande est précise, plus elle est difficile à écarter.</div>
+      </div>
+    </section>
+
+    <section id="verification">
+      <div class="wrap">
+        <article class="card hero-main">
+          <div class="eyebrow">Avant contestation</div>
+          <h2>Faites vérifier vos bulletins avant d’envoyer une demande</h2>
+          <p class="lead">Si vous avez un doute sur une fiche de paie, un solde de tout compte, des congés payés, des heures supplémentaires ou une régularisation, Axe Dossier peut faire une première vérification documentaire.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="verification-solde-de-tout-compte.html">Accéder à la vérification - 9 €</a>
+            <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=Question%20erreur%20fiche%20de%20paie">Poser une question</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Questions fréquentes</h2><p>Les questions les plus courantes quand une fiche de paie semble fausse.</p></div></div>
+        <details><summary>Mon employeur doit-il corriger une fiche de paie fausse ?</summary><p>Oui, si une erreur est constatée, l’employeur doit régulariser la situation. Il peut corriger le bulletin ou procéder à une régularisation sur une paie suivante.</p></details>
+        <details><summary>Est-ce que je peux réclamer une erreur plusieurs mois après ?</summary><p>Oui, mais il ne faut pas attendre inutilement. Plus la demande est tardive, plus il faut conserver des preuves et expliquer clairement la période concernée.</p></details>
+        <details><summary>Une baisse du net à payer signifie-t-elle forcément une erreur ?</summary><p>Non. Une baisse peut venir d’une absence, d’un changement de taux, d’une régularisation ou d’une retenue légitime. Il faut vérifier les lignes avant de conclure.</p></details>
+        <details><summary>Que faire si l’employeur refuse de corriger ?</summary><p>Il faut conserver les échanges, demander une explication écrite et, si l’erreur paraît sérieuse, envisager une contestation plus formelle.</p></details>
+        <details><summary>La vérification à 9 € remplace-t-elle un avocat ?</summary><p>Non. Il s’agit d’une première lecture documentaire pour repérer les incohérences probables. En cas de litige complexe, une analyse juridique complète peut être nécessaire.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+        <div><strong>Axe Dossier</strong><br><small>Analyse · Structure · Rédaction</small></div>
+        <div><a href="mentions-legales.html">Mentions légales</a></div>
+      </div>
+      <div style="margin-top:16px;"><small>Service d’accompagnement documentaire. Ne constitue pas une consultation juridique.<br>© 2026 Axe Dossier</small></div>
+    </div>
+  </footer>
+</body>
+</html>
