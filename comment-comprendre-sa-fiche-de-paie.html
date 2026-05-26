@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Comment comprendre sa fiche de paie ? Guide simple</title>
+<meta name="description" content="Comment comprendre sa fiche de paie ? Salaire brut, net à payer, cotisations, prélèvement à la source, congés, heures supplémentaires, absences et lignes importantes expliquées simplement." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://axe-dossier.fr/comment-comprendre-sa-fiche-de-paie.html" />
+
+<style>
+:root{
+--bg:#f3efe8;
+--surface:rgba(255,255,255,.82);
+--text:#171717;
+--muted:#66615a;
+--line:rgba(23,23,23,.08);
+--accent:#111;
+--soft:#e9e1d4;
+--radius-xl:32px;
+--radius-lg:24px;
+--shadow:0 20px 60px rgba(0,0,0,.08);
+--max:1180px;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Inter,system-ui,sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.55;
+}
+.wrap{width:min(var(--max),calc(100% - 32px));margin:auto}
+.topbar{
+position:sticky;top:0;z-index:20;
+background:rgba(243,239,232,.74);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(23,23,23,.05);
+}
+.topbar-inner{
+min-height:78px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:18px;
+}
+.brand{
+display:flex;
+align-items:center;
+gap:16px;
+font-weight:700;
+}
+.brand-logo{height:70px}
+.brand-name{
+font-size:1.6rem;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+.hero{padding:56px 0 26px}
+.hero-shell{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:20px;
+}
+.card{
+background:var(--surface);
+border:1px solid var(--line);
+border-radius:var(--radius-xl);
+box-shadow:var(--shadow);
+}
+.hero-main{padding:42px}
+.eyebrow{
+display:inline-flex;
+padding:8px 12px;
+border-radius:999px;
+background:var(--soft);
+font-size:.88rem;
+font-weight:700;
+margin-bottom:18px;
+}
+h1{
+font-size:clamp(2.35rem,4vw,4.7rem);
+line-height:.98;
+margin:0 0 18px;
+letter-spacing:-.05em;
+max-width:13ch;
+}
+h2{
+font-size:clamp(1.7rem,2.3vw,2.7rem);
+margin:0 0 14px;
+}
+.lead{
+font-size:1.08rem;
+color:#4c473f;
+max-width:68ch;
+}
+.hero-proof{
+margin-top:18px;
+padding:14px 16px;
+border-radius:18px;
+background:rgba(255,255,255,.72);
+border:1px solid rgba(23,23,23,.07);
+}
+section{padding:22px 0}
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+.box{
+padding:24px;
+border-radius:var(--radius-lg);
+background:#fff;
+border:1px solid var(--line);
+box-shadow:var(--shadow);
+}
+.tag{
+display:inline-flex;
+padding:6px 10px;
+border-radius:999px;
+background:var(--soft);
+font-size:.82rem;
+font-weight:700;
+margin-bottom:12px;
+}
+.box h3{
+margin:0 0 10px;
+font-size:1.05rem;
+}
+.box p{
+margin:0;
+color:#4f4942;
+}
+.cta{
+margin-top:28px;
+padding:28px;
+border-radius:28px;
+background:#111;
+color:#fff;
+}
+.btn{
+display:inline-flex;
+padding:14px 20px;
+border-radius:999px;
+font-weight:700;
+background:#fff;
+color:#111;
+text-decoration:none;
+margin-top:14px;
+}
+details{
+padding:18px 20px;
+border-radius:18px;
+background:#fff;
+margin-top:12px;
+border:1px solid var(--line);
+}
+summary{
+font-weight:700;
+cursor:pointer;
+}
+footer{
+padding:40px 0 60px;
+text-align:center;
+color:#666;
+}
+@media(max-width:1024px){
+.hero-shell,.grid{grid-template-columns:1fr}
+}
+</style>
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{
+"@type":"Question",
+"name":"Comment lire une fiche de paie ?",
+"acceptedAnswer":{"@type":"Answer","text":"Il faut regarder le salaire brut, les heures, les absences, les primes, les cotisations, le prélèvement à la source et le net à payer."}
+},
+{
+"@type":"Question",
+"name":"Quelle différence entre salaire brut et net ?",
+"acceptedAnswer":{"@type":"Answer","text":"Le salaire brut correspond à la rémunération avant cotisations. Le salaire net est ce qu’il reste après déductions."}
+}
+]
+}
+</script>
+</head>
+
+<body>
+
+<header class="topbar">
+<div class="wrap topbar-inner">
+<div class="brand">
+<img src="images/axe-dossier.png" class="brand-logo" alt="Axe Dossier">
+<span class="brand-name">AXE DOSSIER</span>
+</div>
+</div>
+</header>
+
+<main>
+<section class="hero">
+<div class="wrap hero-shell">
+
+<article class="card hero-main">
+<div class="eyebrow">Bulletin de salaire • Guide simple</div>
+
+<h1>Comment comprendre sa fiche de paie ?</h1>
+
+<p class="lead">
+Une fiche de paie peut sembler incompréhensible au premier regard :
+salaire brut, net imposable, net à payer, cotisations, heures, absences,
+prélèvement à la source, primes… Pourtant, quelques lignes suffisent souvent à comprendre ce qui change d’un mois à l’autre.
+</p>
+
+<div class="hero-proof">
+L’objectif de cette page n’est pas de faire un cours de paie, mais de vous aider à lire rapidement votre bulletin sans vous perdre dans le jargon.
+</div>
+
+</article>
+
+<aside class="card hero-main">
+<h2>Les 5 lignes à regarder d’abord</h2>
+
+<div class="box">
+<ul>
+<li>Salaire brut</li>
+<li>Heures travaillées</li>
+<li>Absences ou maladie</li>
+<li>Primes ou heures supplémentaires</li>
+<li>Net à payer</li>
+</ul>
+</div>
+
+</aside>
+
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Les zones importantes d’une fiche de paie</h2>
+
+<div class="grid">
+
+<div class="box">
+<div class="tag">Salaire brut</div>
+<h3>Le point de départ</h3>
+<p>Le brut correspond au salaire avant cotisations. Si votre brut change, il faut regarder les heures, primes ou absences.</p>
+</div>
+
+<div class="box">
+<div class="tag">Cotisations</div>
+<h3>Les retenues</h3>
+<p>Les cotisations sociales financent retraite, santé et chômage. Elles réduisent le brut pour obtenir le net.</p>
+</div>
+
+<div class="box">
+<div class="tag">Net à payer</div>
+<h3>Ce que vous recevez</h3>
+<p>Le net à payer est le montant réellement versé après retenues et impôt à la source.</p>
+</div>
+
+<div class="box">
+<div class="tag">Absences</div>
+<h3>Congés et maladie</h3>
+<p>Une absence, un arrêt maladie ou un congé sans solde peuvent réduire le salaire du mois.</p>
+</div>
+
+<div class="box">
+<div class="tag">Heures</div>
+<h3>Heures supplémentaires</h3>
+<p>Si elles manquent, le salaire peut sembler plus faible. Vérifiez le nombre d’heures et les majorations.</p>
+</div>
+
+<div class="box">
+<div class="tag">Primes</div>
+<h3>Les montants variables</h3>
+<p>Prime de panier, transport, ancienneté ou objectif : une prime absente explique souvent un écart.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Pourquoi comparer avec le mois précédent ?</h2>
+
+<div class="box">
+<p>
+Le moyen le plus simple de comprendre une fiche de paie est de la comparer avec celle du mois précédent.
+Regardez ce qui change : brut, prime, heures, absence, impôt ou retenue inhabituelle.
+</p>
+</div>
+
+<div class="cta">
+<h2>Vous ne comprenez toujours pas votre bulletin ?</h2>
+<p>
+Axe Dossier peut faire une première lecture documentaire de vos bulletins et signaler les points qui semblent incohérents.
+</p>
+<a href="verification-solde-de-tout-compte.html" class="btn">
+Faire vérifier mes bulletins - 9 €
+</a>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Questions fréquentes</h2>
+
+<details>
+<summary>Comment savoir si ma fiche de paie est correcte ?</summary>
+<p>Comparez les heures, le brut, les primes, les absences et le net avec les mois précédents.</p>
+</details>
+
+<details>
+<summary>Pourquoi mon salaire change d’un mois à l’autre ?</summary>
+<p>Une absence, une prime, des heures supplémentaires ou le prélèvement à la source peuvent expliquer un changement.</p>
+</details>
+
+<details>
+<summary>Que faire si je pense qu’il y a une erreur ?</summary>
+<p>Demandez une explication écrite au service paie et conservez les bulletins précédents pour comparaison.</p>
+</details>
+
+</div>
+</section>
+</main>
+
+<footer>
+© 2026 Axe Dossier
+</footer>
+
+</body>
+</html>
