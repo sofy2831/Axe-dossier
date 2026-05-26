@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="IfcyRjoiTZSDTpOFl08nLktH8HWznrqE0YFar0m2ZCs" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contester un solde de tout compte - Délais, erreurs et vérification</title>
+  <meta name="description" content="Comment contester un solde de tout compte ? Délais, signature, congés payés, préavis, indemnités, heures supplémentaires, IJSS et vérification STC à 9 € avec Axe Dossier." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://axe-dossier.fr/contester-solde-de-tout-compte.html" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+    .topbar-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 16px; font-weight: 700; letter-spacing: 0.02em; }
+    .brand-logo { height: 94px; width: auto; display: block; object-fit: contain; flex-shrink: 0; }
+    .brand-name { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .pill:hover { transform: translateY(-1px); background: rgba(255,255,255,0.95); }
+    .hero { padding: 56px 0 26px; }
+    .hero-shell { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: stretch; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius-xl); box-shadow: var(--shadow); backdrop-filter: blur(16px);
+    }
+    .hero-main { padding: 42px; position: relative; overflow: hidden; }
+    .hero-main::after {
+      content: ""; position: absolute; inset: auto -80px -80px auto;
+      width: 220px; height: 220px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.75), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px;
+      background: var(--accent-soft); color: #4e473e;
+      font-size: 0.88rem; font-weight: 700; margin-bottom: 18px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(2.35rem, 4.2vw, 5rem); letter-spacing: -0.055em; line-height: 0.98; max-width: 12ch; margin-bottom: 18px; }
+    h2 { font-size: clamp(1.7rem, 2.4vw, 2.8rem); letter-spacing: -0.04em; }
+    .lead { max-width: 66ch; color: #4c473f; font-size: 1.08rem; }
+    .hero-proof {
+      margin-top: 18px; padding: 14px 16px; border-radius: 18px;
+      background: rgba(255,255,255,0.72); border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f; font-size: 0.96rem;
+    }
+    .offer-highlight {
+      margin-top: 22px; padding: 18px 20px; border-radius: 22px;
+      background: #ffffff; border: 1px solid rgba(23,23,23,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+    .offer-label {
+      display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: #4e473e; font-size: 0.82rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .offer-price { display: block; font-size: 2rem; line-height: 1; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 8px; }
+    .offer-text { color: #4c473f; font-size: 0.98rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .btn {
+      min-height: 52px; padding: 0 20px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--accent); font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease; text-align: center;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.7); color: var(--accent); border-color: rgba(23,23,23,0.1); }
+    .hero-side { display: grid; gap: 20px; align-content: start; }
+    .mini-card {
+      padding: 28px; border-radius: var(--radius-xl); background: var(--surface-strong);
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .mini-card h3 { font-size: 1rem; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .mini-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .mini-list li { padding-left: 18px; position: relative; color: #49443e; }
+    .mini-list li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 999px; background: #1a1a1a; }
+    section { padding: 22px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .section-head p { max-width: 58ch; color: var(--muted); }
+    .grid-3, .steps, .pricing { display: grid; gap: 18px; }
+    .grid-3, .pricing { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .steps { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .feature, .step, .price-card, .disclaimer {
+      padding: 26px; border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.8); border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .feature h3, .step h3, .price-card h3, .disclaimer h3 { font-size: 1.08rem; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .feature p, .step p, .price-card p, .disclaimer p { color: #4f4942; }
+    .assistant-note { margin-top: 10px; color: #6b655d; font-size: 0.92rem; }
+    .step-no { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); font-weight: 800; margin-bottom: 12px; }
+    .case-tag { display: inline-flex; align-items: center; padding: 7px 11px; border-radius: 999px; background: var(--accent-soft); color: #4d463e; font-size: 0.82rem; font-weight: 700; margin-bottom: 14px; }
+    .price { display: block; margin: 10px 0 12px; font-size: 2rem; line-height: 1; font-weight: 800; letter-spacing: -0.05em; }
+    .warning-box { margin-top: 18px; padding: 18px 20px; border-radius: 22px; background: #fff7ef; border: 1px solid rgba(160, 96, 40, 0.18); color: #5c4634; font-size: 0.95rem; }
+    details { padding: 18px 20px; border-radius: 18px; background: rgba(255,255,255,0.78); border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(0,0,0,0.04); }
+    details + details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 800; letter-spacing: -0.01em; }
+    details p { margin-top: 10px; color: #4f4942; }
+    .footer { padding: 28px 0 64px; }
+    .footer-box { padding: 22px 24px; border-radius: var(--radius-lg); background: rgba(255,255,255,0.7); border: 1px solid var(--line); color: #605951; }
+    .footer-box small { display: block; margin-top: 8px; line-height: 1.5; }
+    @media (max-width: 1024px) {
+      .hero-shell, .grid-3, .steps, .pricing { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 720px) {
+      .topbar-inner { min-height: auto; padding: 14px 0; flex-direction: column; align-items: stretch; }
+      .brand, .nav { justify-content: center; }
+      .hero-main, .mini-card, .feature, .step, .price-card, .disclaimer, .footer-box { padding: 20px; }
+      .hero { padding-top: 36px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      h1 { max-width: none; }
+      .brand { justify-content: center; flex-direction: column; text-align: center; }
+      .brand-logo { height: 46px; margin: 0 auto; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Service","name":"Contestation et vérification de solde de tout compte","provider":{"@type":"Organization","name":"Axe Dossier","url":"https://axe-dossier.fr/"},"areaServed":"FR","description":"Informations pratiques pour contester un solde de tout compte et vérifier les anomalies possibles : congés payés, préavis, indemnités, heures supplémentaires, IJSS, maintien de salaire et délais.","offers":{"@type":"Offer","price":"9","priceCurrency":"EUR","description":"Vérification STC à tarif découverte"}}
+  </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Peut-on contester un solde de tout compte signé ?","acceptedAnswer":{"@type":"Answer","text":"Oui, un solde de tout compte signé peut être contesté dans un délai réduit. La signature peut avoir un effet libératoire pour les sommes mentionnées, sous réserve des règles applicables. Il est donc conseillé de vérifier rapidement les éléments avant de laisser passer les délais."}},{"@type":"Question","name":"Quel est le délai pour contester un solde de tout compte ?","acceptedAnswer":{"@type":"Answer","text":"Le délai dépend notamment du fait que le reçu pour solde de tout compte soit signé ou non. En pratique, il faut vérifier rapidement les montants, les congés payés, le préavis, les indemnités et les derniers bulletins."}},{"@type":"Question","name":"Que vérifier avant de contester un solde de tout compte ?","acceptedAnswer":{"@type":"Answer","text":"Il faut vérifier les congés payés, les indemnités de rupture, le préavis, les heures supplémentaires, les primes, les IJSS, le maintien de salaire et les régularisations visibles sur les derniers bulletins de paie."}}]}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="#delais">Délais</a>
+        <a class="pill" href="#erreurs">Erreurs fréquentes</a>
+        <a class="pill" href="#etapes">Étapes</a>
+        <a class="pill" href="#verification">Vérification 9 €</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-shell">
+        <article class="card hero-main">
+          <div class="eyebrow">Solde de tout compte · Paie · Fin de contrat</div>
+          <h1>Comment contester un solde de tout compte ?</h1>
+          <p class="lead">Vous avez quitté votre entreprise et le solde de tout compte vous semble faux : congés payés oubliés, préavis mal calculé, indemnité absente, heures supplémentaires non payées ou régularisation incompréhensible. Avant de contester, il faut vérifier les bons éléments.</p>
+          <div class="hero-proof">Le piège classique : contester trop vite sans avoir identifié l’erreur, ou attendre trop longtemps alors que les délais courent déjà.</div>
+          <div class="offer-highlight">
+            <div class="offer-label">Vérification documentaire</div>
+            <span class="offer-price">STC et bulletins - 9 €</span>
+            <p class="offer-text">Axe Dossier vérifie les éléments essentiels de votre solde de tout compte et de vos derniers bulletins pour repérer les anomalies probables.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="verification-solde-de-tout-compte.html">Faire vérifier mon STC</a>
+              <a class="btn btn-secondary" href="#etapes">Voir les étapes avant contestation</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="hero-side">
+          <article class="mini-card">
+            <h3>À vérifier avant toute contestation</h3>
+            <ul class="mini-list">
+              <li>Congés payés acquis et non pris</li>
+              <li>Indemnité compensatrice de préavis</li>
+              <li>Indemnité de licenciement ou de rupture</li>
+              <li>Heures supplémentaires et primes</li>
+              <li>IJSS, maintien de salaire et régularisations</li>
+            </ul>
+          </article>
+          <article class="mini-card">
+            <h3>Documents utiles</h3>
+            <ul class="mini-list">
+              <li>Solde de tout compte</li>
+              <li>Trois derniers bulletins de salaire</li>
+              <li>Contrat de travail et avenants</li>
+              <li>Courrier de licenciement ou rupture conventionnelle</li>
+            </ul>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="delais">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Peut-on contester un solde de tout compte ?</h2><p>Oui, mais il faut distinguer deux situations : le solde de tout compte signé et le solde de tout compte non signé.</p></div></div>
+        <div class="grid-3">
+          <article class="feature"><span class="case-tag">STC signé</span><h3>Vous avez signé le reçu</h3><p>La signature peut réduire les délais de contestation pour les sommes mentionnées. Il ne faut donc pas laisser traîner si vous avez un doute sérieux.</p></article>
+          <article class="feature"><span class="case-tag">STC non signé</span><h3>Vous n’avez pas signé</h3><p>L’absence de signature ne supprime pas le droit au paiement. Elle évite simplement de donner un effet libératoire au reçu pour les sommes listées.</p></article>
+          <article class="feature"><span class="case-tag">Doute</span><h3>Vous hésitez à signer</h3><p>Si les montants ne sont pas clairs, mieux vaut demander une explication écrite ou vérifier les éléments avant de signer sans comprendre.</p></article>
+        </div>
+        <div class="warning-box"><strong>Point de vigilance :</strong> les délais en droit du travail peuvent varier selon la nature de la demande. Ne partez pas du principe que vous avez “tout le temps”. Sur un solde de tout compte, il faut agir vite et proprement.</div>
+      </div>
+    </section>
+
+    <section id="erreurs">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Les erreurs fréquentes dans un solde de tout compte</h2><p>Un STC faux ne saute pas toujours aux yeux. Certaines erreurs sont visibles seulement en croisant les bulletins, le contrat et la situation de fin de contrat.</p></div></div>
+        <div class="grid-3">
+          <article class="feature"><span class="case-tag">Congés payés</span><h3>Congés oubliés ou mal calculés</h3><p>L’indemnité compensatrice de congés payés doit correspondre aux droits restants. Une incohérence peut apparaître entre le compteur, les bulletins et le solde final.</p></article>
+          <article class="feature"><span class="case-tag">Préavis</span><h3>Préavis absent ou incomplet</h3><p>Selon la situation, une indemnité compensatrice de préavis peut être due. Son absence doit être comprise avant toute contestation.</p></article>
+          <article class="feature"><span class="case-tag">Indemnités</span><h3>Indemnité de rupture douteuse</h3><p>Licenciement, rupture conventionnelle, fin de contrat : chaque situation impose de vérifier la nature et le montant des indemnités versées.</p></article>
+          <article class="feature"><span class="case-tag">Heures</span><h3>Heures supplémentaires non réglées</h3><p>Des heures supplémentaires, majorations ou repos compensateurs peuvent être oubliés dans la dernière paie si le suivi n’est pas clair.</p></article>
+          <article class="feature"><span class="case-tag">Maladie</span><h3>IJSS et maintien de salaire confus</h3><p>Les arrêts maladie, IJSS, subrogations et régularisations peuvent rendre le bulletin final difficile à lire.</p></article>
+          <article class="feature"><span class="case-tag">Primes</span><h3>Prime ou avantage oublié</h3><p>Prime contractuelle, variable, panier, transport ou avantage : certains éléments peuvent disparaître en fin de contrat si personne ne les vérifie.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="etapes">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Que faire avant de contester ?</h2><p>La bonne méthode n’est pas de partir directement au conflit. Il faut d’abord isoler les anomalies et demander les explications utiles.</p></div></div>
+        <div class="steps">
+          <article class="step"><div class="step-no">1</div><h3>Relire les documents</h3><p>Comparez le solde de tout compte, les derniers bulletins, le contrat, les avenants et les courriers de rupture.</p></article>
+          <article class="step"><div class="step-no">2</div><h3>Identifier les lignes douteuses</h3><p>Notez les montants qui posent problème : congés, préavis, indemnités, heures, primes, régularisations.</p></article>
+          <article class="step"><div class="step-no">3</div><h3>Demander une explication écrite</h3><p>Avant une contestation formelle, demandez le détail du calcul à l’employeur ou au service paie.</p></article>
+          <article class="step"><div class="step-no">4</div><h3>Conserver les preuves</h3><p>Gardez bulletins, mails, planning, contrat, compteur d’heures, documents de rupture et tout échange utile.</p></article>
+          <article class="step"><div class="step-no">5</div><h3>Contester par écrit</h3><p>Si l’anomalie est sérieuse, formulez une contestation claire, datée, structurée et fondée sur des montants précis.</p></article>
+          <article class="step"><div class="step-no">6</div><h3>Envisager la suite</h3><p>Si l’employeur refuse ou ne répond pas, il faudra apprécier l’intérêt d’une démarche plus formelle ou prud’homale.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="verification">
+      <div class="wrap">
+        <article class="card hero-main">
+          <div class="eyebrow">Avant de contester</div>
+          <h2>Faites vérifier votre solde de tout compte avant d’envoyer un courrier</h2>
+          <p class="lead">Une contestation mal ciblée perd en efficacité. Axe Dossier propose une vérification simple à 9 € pour repérer les incohérences probables dans votre STC et vos derniers bulletins.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="verification-solde-de-tout-compte.html">Accéder à la vérification STC - 9 €</a>
+            <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=Question%20contestation%20solde%20de%20tout%20compte">Poser une question</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Questions fréquentes</h2><p>Les questions les plus courantes avant une contestation.</p></div></div>
+        <details><summary>Est-ce grave de signer un solde de tout compte ?</summary><p>Signer n’est pas forcément une erreur, mais cela peut réduire les délais de contestation pour les sommes mentionnées. Si vous avez un doute, vérifiez avant de signer ou agissez vite après signature.</p></details>
+        <details><summary>Puis-je refuser de signer mon solde de tout compte ?</summary><p>Oui, vous pouvez refuser de signer si vous ne comprenez pas les montants ou si vous avez un doute. L’employeur doit tout de même payer les sommes dues.</p></details>
+        <details><summary>Comment contester un montant faux ?</summary><p>Il faut écrire clairement ce qui est contesté, pourquoi, avec les documents utiles. Une contestation vague du type “mon STC est faux” est moins efficace qu’une demande chiffrée et ciblée.</p></details>
+        <details><summary>Faut-il aller directement aux prud’hommes ?</summary><p>Pas forcément. Il est souvent plus utile de commencer par une vérification, une demande d’explication, puis une contestation écrite. Les prud’hommes peuvent devenir nécessaires si le désaccord persiste.</p></details>
+        <details><summary>La vérification à 9 € remplace-t-elle un avocat ?</summary><p>Non. Il s’agit d’une première lecture documentaire pour repérer les anomalies probables. En cas de contentieux complexe, une analyse juridique complète peut être nécessaire.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+        <div><strong>Axe Dossier</strong><br><small>Analyse · Structure · Rédaction</small></div>
+        <div><a href="mentions-legales.html">Mentions légales</a></div>
+      </div>
+      <div style="margin-top:16px;"><small>Service d’accompagnement documentaire. Ne constitue pas une consultation juridique.<br>© 2026 Axe Dossier</small></div>
+    </div>
+  </footer>
+</body>
+</html>
