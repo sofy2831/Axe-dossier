@@ -134,6 +134,13 @@
     }
     .feature h3, .step h3, .price-card h3, .disclaimer h3 { font-size: 1.08rem; margin-bottom: 10px; letter-spacing: -0.02em; }
     .feature p, .step p, .price-card p, .disclaimer p { color: #4f4942; }
+    .feature-link {
+      display: inline-flex;
+      margin-top: 14px;
+      font-weight: 800;
+      color: #111;
+      border-bottom: 1px solid rgba(17,17,17,0.28);
+    }
     .assistant-note { margin-top: 10px; color: #6b655d; font-size: 0.92rem; }
     .step-no { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); font-weight: 800; margin-bottom: 12px; }
     .case-tag { display: inline-flex; align-items: center; padding: 7px 11px; border-radius: 999px; background: var(--accent-soft); color: #4d463e; font-size: 0.82rem; font-weight: 700; margin-bottom: 14px; }
@@ -182,6 +189,7 @@
       <nav class="nav" aria-label="Navigation principale">
         <a class="pill" href="#verification">Vérification</a>
         <a class="pill" href="#fonctionnement">Fonctionnement</a>
+        <a class="pill" href="#guides-paie">Guides paie</a>
         <a class="pill" href="#tarif">Tarif</a>
         <a class="pill" href="#faq">FAQ</a>
       </nav>
@@ -198,13 +206,13 @@
           <div class="hero-proof">L’objectif est simple : repérer les incohérences probables, comprendre les points sensibles et savoir quoi vérifier avant de signer, contester ou laisser passer un délai.</div>
           <div class="offer-highlight">
             <div class="offer-label">Offre découverte</div>
-            <span class="offer-price">Vérification STC — 9 €</span>
+            <span class="offer-price">Vérification STC - 9 €</span>
             <p class="offer-text">Tarif de lancement pour tester le service. Après paiement, vous serez redirigé vers une page qui vous indiquera comment envoyer vos documents.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="https://buy.stripe.com/cNi4gz1nrcDh17OcNVgbm00">Payer la vérification — 9 €</a>
+              <a class="btn btn-primary" href="https://buy.stripe.com/cNi4gz1nrcDh17OcNVgbm00">Payer la vérification - 9 €</a>
               <a class="btn btn-secondary" href="mailto:contact@axe-dossier.fr?subject=Question%20v%C3%A9rification%20STC">Poser une question avant paiement</a>
             </div>
-            <div class="assistant-note" style="margin-top:18px;">Après paiement, envoyez vos documents avec l’objet : <strong>Vérification STC – Nom Prénom</strong>.</div>
+            <div class="assistant-note" style="margin-top:18px;">Après paiement, envoyez vos documents avec l’objet : <strong>Vérification STC - Nom Prénom</strong>.</div>
           </div>
         </article>
 
@@ -256,6 +264,65 @@
       </div>
     </section>
 
+    <section id="guides-paie">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Guides utiles autour de la fiche de paie</h2>
+            <p>
+              Avant de payer une vérification ou de contester un document, ces guides permettent
+              de comprendre les principaux problèmes : bulletin faux, baisse du net, lecture du bulletin,
+              contrôle rapide ou contestation du solde de tout compte.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature">
+            <span class="case-tag">Comprendre</span>
+            <h3>Comment comprendre sa fiche de paie</h3>
+            <p>Salaire brut, net à payer, cotisations, primes, absences et lignes importantes expliquées simplement.</p>
+            <a class="feature-link" href="comment-comprendre-sa-fiche-de-paie.html">Lire le guide</a>
+          </article>
+
+          <article class="feature">
+            <span class="case-tag">Vérifier</span>
+            <h3>Comment vérifier un bulletin de salaire</h3>
+            <p>Une checklist simple pour contrôler les heures, primes, absences, acomptes et anomalies possibles.</p>
+            <a class="feature-link" href="comment-verifier-bulletin-de-salaire.html">Voir la checklist</a>
+          </article>
+
+          <article class="feature">
+            <span class="case-tag">Net à payer</span>
+            <h3>Pourquoi mon net à payer a baissé ?</h3>
+            <p>Comprendre une baisse de salaire : maladie, absence, prime manquante, impôt ou erreur de paie.</p>
+            <a class="feature-link" href="pourquoi-mon-net-a-payer-a-baisse.html">Comprendre la baisse</a>
+          </article>
+
+          <article class="feature">
+            <span class="case-tag">Erreur</span>
+            <h3>Erreur sur fiche de paie : que faire ?</h3>
+            <p>Les bons réflexes quand un bulletin paraît incohérent, incomplet ou difficile à expliquer.</p>
+            <a class="feature-link" href="erreur-fiche-de-paie-que-faire.html">Voir les étapes</a>
+          </article>
+
+          <article class="feature">
+            <span class="case-tag">Contestation</span>
+            <h3>Contester un solde de tout compte</h3>
+            <p>Délais, signature, contestation et points à vérifier avant toute démarche écrite.</p>
+            <a class="feature-link" href="contester-solde-de-tout-compte.html">En savoir plus</a>
+          </article>
+
+          <article class="feature">
+            <span class="case-tag">Vérification</span>
+            <h3>Besoin d’une lecture claire ?</h3>
+            <p>La vérification STC permet de repérer les incohérences probables dans vos derniers bulletins et documents de fin de contrat.</p>
+            <a class="feature-link" href="#tarif">Voir le tarif</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="tarif">
       <div class="wrap">
         <div class="section-head"><div><h2>Tarif de lancement</h2><p>L’offre est volontairement simple pour tester le besoin et permettre une première vérification accessible.</p></div></div>
@@ -264,7 +331,7 @@
           <article class="price-card"><h3>Analyse complémentaire</h3><span class="price">Sur devis</span><p>Si le dossier révèle une anomalie sérieuse, une analyse plus complète ou un courrier pourra être proposé.</p></article>
           <article class="price-card"><h3>Question avant paiement</h3><span class="price">0 €</span><p>Vous pouvez envoyer un premier mail pour vérifier si la demande correspond bien au service proposé.</p></article>
         </div>
-        <div style="margin-top:26px; text-align:center;"><a class="btn btn-primary" href="https://buy.stripe.com/cNi4gz1nrcDh17OcNVgbm00">Payer la vérification — 9 €</a></div>
+        <div style="margin-top:26px; text-align:center;"><a class="btn btn-primary" href="https://buy.stripe.com/cNi4gz1nrcDh17OcNVgbm00">Payer la vérification - 9 €</a></div>
         <div class="warning-box"><strong>Important :</strong> cette vérification est une première lecture technique et documentaire. Elle ne remplace pas une consultation d’avocat, ne garantit pas l’existence d’une créance et ne constitue pas une représentation devant le conseil de prud’hommes.</div>
       </div>
     </section>
@@ -287,7 +354,7 @@
           <h2>Prêt à vérifier votre solde de tout compte ?</h2>
           <p class="lead">Après paiement, vous recevrez les consignes pour transmettre vos documents par mail.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://buy.stripe.com/cNi4gz1nrcDh17OcNVgbm00">Payer la vérification — 9 €</a>
+            <a class="btn btn-primary" href="https://buy.stripe.com/cNi4gz1nrcDh17OcNVgbm00">Payer la vérification - 9 €</a>
             <a class="btn btn-secondary" href="index.html">Retour à l’accueil Axe Dossier</a>
           </div>
         </article>
