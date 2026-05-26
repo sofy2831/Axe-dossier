@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="IfcyRjoiTZSDTpOFl08nLktH8HWznrqE0YFar0m2ZCs" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pourquoi mon net à payer a baissé ? Fiche de paie expliquée</title>
+  <meta name="description" content="Pourquoi mon net à payer a baissé ? Absence, acompte, prélèvement à la source, maladie, IJSS, prime absente, heures supplémentaires, régularisation ou erreur de fiche de paie." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://axe-dossier.fr/pourquoi-mon-net-a-payer-a-baisse.html" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+    .topbar-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 16px; font-weight: 700; letter-spacing: 0.02em; }
+    .brand-logo { height: 94px; width: auto; display: block; object-fit: contain; flex-shrink: 0; }
+    .brand-name { font-size: 1.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .pill:hover { transform: translateY(-1px); background: rgba(255,255,255,0.95); }
+    .hero { padding: 56px 0 26px; }
+    .hero-shell { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: stretch; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius-xl); box-shadow: var(--shadow); backdrop-filter: blur(16px);
+    }
+    .hero-main { padding: 42px; position: relative; overflow: hidden; }
+    .hero-main::after {
+      content: ""; position: absolute; inset: auto -80px -80px auto;
+      width: 220px; height: 220px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.75), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px;
+      background: var(--accent-soft); color: #4e473e;
+      font-size: 0.88rem; font-weight: 700; margin-bottom: 18px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(2.35rem, 4.2vw, 5rem); letter-spacing: -0.055em; line-height: 0.98; max-width: 13ch; margin-bottom: 18px; }
+    h2 { font-size: clamp(1.7rem, 2.4vw, 2.8rem); letter-spacing: -0.04em; }
+    .lead { max-width: 68ch; color: #4c473f; font-size: 1.08rem; }
+    .hero-proof {
+      margin-top: 18px; padding: 14px 16px; border-radius: 18px;
+      background: rgba(255,255,255,0.72); border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f; font-size: 0.96rem;
+    }
+    .offer-highlight {
+      margin-top: 22px; padding: 18px 20px; border-radius: 22px;
+      background: #ffffff; border: 1px solid rgba(23,23,23,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+    .offer-label {
+      display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px;
+      background: var(--accent-soft); color: #4e473e; font-size: 0.82rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .offer-price { display: block; font-size: 2rem; line-height: 1; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 8px; }
+    .offer-text { color: #4c473f; font-size: 0.98rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .btn {
+      min-height: 52px; padding: 0 20px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--accent); font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease; text-align: center;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.7); color: var(--accent); border-color: rgba(23,23,23,0.1); }
+    .hero-side { display: grid; gap: 20px; align-content: start; }
+    .mini-card {
+      padding: 28px; border-radius: var(--radius-xl); background: var(--surface-strong);
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .mini-card h3 { font-size: 1rem; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .mini-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .mini-list li { padding-left: 18px; position: relative; color: #49443e; }
+    .mini-list li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 999px; background: #1a1a1a; }
+    section { padding: 22px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .section-head p { max-width: 58ch; color: var(--muted); }
+    .grid-3, .steps { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .steps { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .feature, .step {
+      padding: 26px; border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.8); border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .feature h3, .step h3 { font-size: 1.08rem; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .feature p, .step p { color: #4f4942; }
+    .step-no { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); font-weight: 800; margin-bottom: 12px; }
+    .case-tag { display: inline-flex; align-items: center; padding: 7px 11px; border-radius: 999px; background: var(--accent-soft); color: #4d463e; font-size: 0.82rem; font-weight: 700; margin-bottom: 14px; }
+    .warning-box { margin-top: 18px; padding: 18px 20px; border-radius: 22px; background: #fff7ef; border: 1px solid rgba(160, 96, 40, 0.18); color: #5c4634; font-size: 0.95rem; }
+    details { padding: 18px 20px; border-radius: 18px; background: rgba(255,255,255,0.78); border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(0,0,0,0.04); }
+    details + details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 800; letter-spacing: -0.01em; }
+    details p { margin-top: 10px; color: #4f4942; }
+    .footer { padding: 28px 0 64px; }
+    .footer-box { padding: 22px 24px; border-radius: var(--radius-lg); background: rgba(255,255,255,0.7); border: 1px solid var(--line); color: #605951; }
+    .footer-box small { display: block; margin-top: 8px; line-height: 1.5; }
+    @media (max-width: 1024px) {
+      .hero-shell, .grid-3, .steps { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 720px) {
+      .topbar-inner { min-height: auto; padding: 14px 0; flex-direction: column; align-items: stretch; }
+      .brand, .nav { justify-content: center; }
+      .hero-main, .mini-card, .feature, .step, .footer-box { padding: 20px; }
+      .hero { padding-top: 36px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      h1 { max-width: none; }
+      .brand { justify-content: center; flex-direction: column; text-align: center; }
+      .brand-logo { height: 46px; margin: 0 auto; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Service","name":"Explication et vérification du net à payer","provider":{"@type":"Organization","name":"Axe Dossier","url":"https://axe-dossier.fr/"},"areaServed":"FR","description":"Page pratique pour comprendre pourquoi le net à payer baisse sur une fiche de paie : absence, acompte, maladie, IJSS, prélèvement à la source, prime absente, heures supplémentaires, régularisation ou erreur.","offers":{"@type":"Offer","price":"9","priceCurrency":"EUR","description":"Vérification des bulletins et du solde de tout compte à tarif découverte"}}
+  </script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Pourquoi mon net à payer a baissé ?","acceptedAnswer":{"@type":"Answer","text":"Le net à payer peut baisser à cause d’une absence, d’un acompte, d’un arrêt maladie, d’un changement de prélèvement à la source, d’une prime absente, d’heures non payées, d’une régularisation ou d’une erreur de fiche de paie."}},{"@type":"Question","name":"Une baisse du net à payer signifie-t-elle une erreur ?","acceptedAnswer":{"@type":"Answer","text":"Pas forcément. Il faut comparer le brut, les absences, les primes, les heures, les IJSS, les acomptes, les régularisations et le prélèvement à la source avant de conclure."}},{"@type":"Question","name":"Que faire si je ne comprends pas mon net à payer ?","acceptedAnswer":{"@type":"Answer","text":"Il faut comparer le bulletin avec les mois précédents, identifier la ligne qui varie et demander une explication écrite au service paie ou à l’employeur."}}]}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="#causes">Causes</a>
+        <a class="pill" href="#verifier">Vérifier</a>
+        <a class="pill" href="#erreur">Erreur ou pas</a>
+        <a class="pill" href="#verification">Vérification 9 €</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-shell">
+        <article class="card hero-main">
+          <div class="eyebrow">Net à payer · Bulletin de salaire · Salaire du mois</div>
+          <h1>Pourquoi mon net à payer a baissé ?</h1>
+          <p class="lead">Votre salaire net est plus bas que d’habitude et vous ne comprenez pas pourquoi. Ce n’est pas forcément une erreur, mais il faut regarder les bonnes lignes : absence, maladie, acompte, prime absente, heures supplémentaires, prélèvement à la source ou régularisation.</p>
+          <div class="hero-proof">Le bon réflexe : ne pas regarder uniquement le montant versé. Il faut comparer le brut, les retenues, les absences, les primes et les lignes inhabituelles avec les mois précédents.</div>
+          <div class="offer-highlight">
+            <div class="offer-label">Vérification documentaire</div>
+            <span class="offer-price">Bulletins et STC - 9 €</span>
+            <p class="offer-text">Si vous ne comprenez pas la baisse de votre net, Axe Dossier peut relire vos derniers bulletins et repérer les incohérences probables.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="verification-solde-de-tout-compte.html">Faire vérifier mes bulletins</a>
+              <a class="btn btn-secondary" href="#causes">Voir les causes possibles</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="hero-side">
+          <article class="mini-card">
+            <h3>Causes fréquentes</h3>
+            <ul class="mini-list">
+              <li>Absence ou retard déduit</li>
+              <li>Acompte ou avance repris</li>
+              <li>Arrêt maladie ou IJSS</li>
+              <li>Prime habituelle absente</li>
+              <li>Prélèvement à la source modifié</li>
+            </ul>
+          </article>
+          <article class="mini-card">
+            <h3>À comparer tout de suite</h3>
+            <ul class="mini-list">
+              <li>Net à payer du mois précédent</li>
+              <li>Salaire brut</li>
+              <li>Absences et retenues</li>
+              <li>Primes et heures supplémentaires</li>
+              <li>Lignes de régularisation</li>
+            </ul>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="causes">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Les principales raisons d’une baisse du net à payer</h2><p>Une baisse du net peut venir d’un élément normal ou d’une erreur. Il faut isoler la cause avant de demander une correction.</p></div></div>
+        <div class="grid-3">
+          <article class="feature"><span class="case-tag">Absence</span><h3>Une absence a été déduite</h3><p>Maladie, congé sans solde, retard, absence autorisée ou non : la retenue peut fortement réduire le net à payer.</p></article>
+          <article class="feature"><span class="case-tag">Acompte</span><h3>Un acompte a été repris</h3><p>Si vous avez reçu un acompte ou une avance, il peut être déduit du bulletin. Le risque : une reprise erronée ou doublée.</p></article>
+          <article class="feature"><span class="case-tag">Maladie</span><h3>Un arrêt maladie a modifié la paie</h3><p>IJSS, maintien de salaire, subrogation et délai de carence rendent souvent le bulletin difficile à comprendre.</p></article>
+          <article class="feature"><span class="case-tag">Prime</span><h3>Une prime n’apparaît pas</h3><p>Prime variable, ancienneté, panier, transport, objectif, astreinte : si une prime habituelle disparaît, le net baisse mécaniquement.</p></article>
+          <article class="feature"><span class="case-tag">Heures</span><h3>Des heures ne sont pas payées</h3><p>Heures supplémentaires, complémentaires, dimanche, nuit ou jour férié : une absence de majoration peut expliquer l’écart.</p></article>
+          <article class="feature"><span class="case-tag">Impôt</span><h3>Le prélèvement à la source a changé</h3><p>Un taux plus élevé peut réduire le net versé sans que le salaire brut soit faux. C’est à vérifier avant de parler d’erreur employeur.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="verifier">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Comment vérifier concrètement la baisse ?</h2><p>La méthode est simple : comparer les bulletins et repérer la ligne qui explique l’écart.</p></div></div>
+        <div class="steps">
+          <article class="step"><div class="step-no">1</div><h3>Comparer le brut</h3><p>Si le brut a baissé, cherchez une absence, une prime manquante, des heures non reprises ou une modification du temps de travail.</p></article>
+          <article class="step"><div class="step-no">2</div><h3>Comparer les absences</h3><p>Regardez les dates, heures et montants déduits. Une absence mal valorisée peut créer une grosse différence.</p></article>
+          <article class="step"><div class="step-no">3</div><h3>Comparer les primes</h3><p>Si une prime était présente les mois précédents, vérifiez si elle a disparu, diminué ou été remplacée par une autre ligne.</p></article>
+          <article class="step"><div class="step-no">4</div><h3>Regarder les acomptes</h3><p>Un acompte repris doit correspondre à un montant réellement versé. Une double reprise est une erreur possible.</p></article>
+          <article class="step"><div class="step-no">5</div><h3>Vérifier la maladie</h3><p>Si vous avez été en arrêt, regardez IJSS, maintien employeur, carence, subrogation et régularisations.</p></article>
+          <article class="step"><div class="step-no">6</div><h3>Contrôler l’impôt</h3><p>Si seul le prélèvement à la source augmente, le problème vient peut-être du taux transmis par l’administration fiscale.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="erreur">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Baisse normale ou erreur de fiche de paie ?</h2><p>Le but n’est pas de contester par réflexe. Le but est de savoir si la baisse s’explique.</p></div></div>
+        <div class="grid-3">
+          <article class="feature"><span class="case-tag">Normal</span><h3>La baisse est expliquée</h3><p>Une absence réelle, un acompte versé, un taux d’impôt changé ou une prime non due peut justifier la baisse.</p></article>
+          <article class="feature"><span class="case-tag">Douteux</span><h3>La ligne est incompréhensible</h3><p>Une régularisation sans détail, une retenue inhabituelle ou un montant non justifié mérite une demande écrite.</p></article>
+          <article class="feature"><span class="case-tag">Erreur possible</span><h3>La baisse ne correspond à rien</h3><p>Si aucune absence, avance, prime manquante ou ligne fiscale n’explique l’écart, il faut demander vérification.</p></article>
+        </div>
+        <div class="warning-box"><strong>Formule simple :</strong> “Je constate une baisse de mon net à payer sur le bulletin de [mois]. Pouvez-vous m’indiquer la ligne qui explique l’écart par rapport au mois précédent ?”</div>
+      </div>
+    </section>
+
+    <section id="verification">
+      <div class="wrap">
+        <article class="card hero-main">
+          <div class="eyebrow">Vous ne trouvez pas l’explication ?</div>
+          <h2>Faites vérifier vos bulletins avant de contester</h2>
+          <p class="lead">Si la baisse du net à payer reste incompréhensible, Axe Dossier peut faire une première vérification documentaire de vos derniers bulletins et de votre solde de tout compte.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="verification-solde-de-tout-compte.html">Accéder à la vérification - 9 €</a>
+            <a class="btn btn-secondary" href="erreur-fiche-de-paie-que-faire.html">Voir aussi : erreur sur fiche de paie</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Questions fréquentes</h2><p>Les questions habituelles quand le salaire net du mois paraît trop bas.</p></div></div>
+        <details><summary>Pourquoi mon net à payer est plus bas alors que mon brut est pareil ?</summary><p>Si le brut est identique, regardez le prélèvement à la source, les acomptes, les retenues, les avantages, les régularisations ou les cotisations inhabituelles.</p></details>
+        <details><summary>Une absence peut-elle faire beaucoup baisser le net ?</summary><p>Oui. Selon la méthode de retenue, une absence peut avoir un impact important. Il faut vérifier les dates, le nombre d’heures et le montant déduit.</p></details>
+        <details><summary>Le prélèvement à la source peut-il expliquer la baisse ?</summary><p>Oui. Si le taux augmente, le net versé baisse même si le salaire brut reste correct. Il faut comparer le taux du mois avec celui des bulletins précédents.</p></details>
+        <details><summary>Que faire si je pense que la baisse est une erreur ?</summary><p>Demandez une explication écrite au service paie en indiquant le mois concerné, le montant habituel, le nouveau montant et la ligne qui vous semble incohérente.</p></details>
+        <details><summary>La vérification à 9 € remplace-t-elle un avocat ?</summary><p>Non. Il s’agit d’une première lecture documentaire pour repérer les incohérences probables. Elle ne remplace pas une consultation juridique ni une procédure prud’homale.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+        <div><strong>Axe Dossier</strong><br><small>Analyse · Structure · Rédaction</small></div>
+        <div><a href="mentions-legales.html">Mentions légales</a></div>
+      </div>
+      <div style="margin-top:16px;"><small>Service d’accompagnement documentaire. Ne constitue pas une consultation juridique.<br>© 2026 Axe Dossier</small></div>
+    </div>
+  </footer>
+</body>
+</html>
