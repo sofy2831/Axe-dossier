@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Changer de notaire dans une succession : comment faire ? | Axe Dossier</title>
+  <meta name="description" content="Peut-on changer de notaire pendant une succession ? Conditions, démarches, transfert du dossier, délais et recours si l'ancien notaire ne répond pas." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://axe-dossier.fr/changer-de-notaire.html" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <meta property="og:title" content="Changer de notaire dans une succession : comment faire ?" />
+  <meta property="og:description" content="Succession bloquée, perte de confiance, notaire silencieux : comprendre quand et comment changer de notaire." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://axe-dossier.fr/changer-de-notaire.html" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Changer de notaire dans une succession" />
+  <meta name="twitter:description" content="Comment demander le transfert d'un dossier successoral vers un autre notaire." />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-logo {
+      height: 72px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .hero { padding: 52px 0 22px; }
+
+    .hero-card,
+    .content-card,
+    .sidebar-card,
+    .cta-card,
+    .faq-card,
+    .disclaimer,
+    .step,
+    .warning-box,
+    .mail-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.8), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4e473e;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      max-width: 13ch;
+      margin-bottom: 16px;
+    }
+
+    .lead {
+      max-width: 62ch;
+      color: #4f4942;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.75); color: var(--accent); border-color: rgba(23,23,23,0.1); }
+
+    .hero-proof {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f;
+      font-size: 0.96rem;
+      max-width: 70ch;
+    }
+
+    section { padding: 18px 0; }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .content-card { padding: 28px; }
+    .sidebar { display: grid; gap: 18px; }
+    .sidebar-card, .cta-card, .faq-card, .mail-card { padding: 24px; }
+
+    .sidebar-card h3,
+    .cta-card h3,
+    .faq-card h3,
+    .mail-card h3,
+    .content-card h2,
+    .warning-box h3,
+    .disclaimer h3,
+    .step h3 {
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .content-card h2 {
+      font-size: 1.65rem;
+      margin-bottom: 14px;
+      margin-top: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .content-card h2:first-child { margin-top: 0; }
+
+    .content-card p,
+    .sidebar-card p,
+    .cta-card p,
+    .faq-card p,
+    .mail-card p,
+    .warning-box p,
+    .disclaimer p,
+    .step p { color: #4f4942; }
+
+    .list { margin: 14px 0 0; padding-left: 18px; color: #4d463f; }
+    .list li + li { margin-top: 8px; }
+
+    .warning-box {
+      padding: 22px;
+      margin: 20px 0;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .steps { display: grid; gap: 16px; margin-top: 18px; }
+    .step { padding: 22px; }
+
+    .step-no {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .mini-links {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-links a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .mini-links a:hover { transform: translateY(-1px); background: #f2ece2; }
+
+    .faq-wrap { display: grid; gap: 16px; }
+    .faq-card h3 { margin-bottom: 8px; }
+
+    .disclaimer { padding: 22px 24px; margin-top: 12px; }
+
+    .footer { padding: 28px 0 64px; }
+    .footer-box {
+      padding: 22px 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      color: #605951;
+      box-shadow: var(--shadow);
+    }
+
+    .footer-box small { display: block; margin-top: 8px; line-height: 1.5; }
+
+    @media (max-width: 980px) { .grid-main { grid-template-columns: 1fr; } }
+
+    @media (max-width: 720px) {
+      .topbar-inner { min-height: auto; padding: 14px 0; flex-direction: column; align-items: stretch; }
+      .brand, .nav { justify-content: center; }
+      .hero-card, .content-card, .sidebar-card, .cta-card, .faq-card, .mail-card, .warning-box, .step, .disclaimer, .footer-box { padding: 20px; }
+      .hero { padding-top: 34px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .brand { justify-content: center; flex-direction: column; text-align: center; }
+      .brand-logo { height: 46px; margin: 0 auto; }
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier - dossiers complexes, successions bloquées et courriers structurés" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="index.html">Accueil</a>
+        <a class="pill" href="#possible">Est-ce possible ?</a>
+        <a class="pill" href="#demarche">Démarche</a>
+        <a class="pill" href="#faq">FAQ</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-card">
+          <div class="eyebrow">Succession · Changement de notaire · Transfert de dossier</div>
+          <h1>Changer de notaire dans une succession : est-ce possible ?</h1>
+          <p class="lead">
+            Oui, il est possible de changer de notaire pendant une succession dans de nombreux cas.
+            Mais le transfert du dossier doit être demandé proprement, surtout si le dossier est déjà bloqué,
+            incomplet ou conflictuel entre héritiers.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Changer%20de%20notaire%20succession">Faire analyser ma situation</a>
+            <a class="btn btn-secondary" href="#demarche">Voir les étapes</a>
+          </div>
+
+          <div class="hero-proof">
+            Changer de notaire ne règle pas tout automatiquement. Il faut d'abord comprendre où le dossier bloque,
+            quelles pièces existent et quelles demandes doivent être formulées.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="possible">
+      <div class="wrap grid-main">
+        <article class="content-card">
+          <h2>Pourquoi vouloir changer de notaire ?</h2>
+          <p>
+            Le changement de notaire intervient souvent quand la confiance est rompue ou quand les héritiers
+            n'ont plus de visibilité sur l'avancement de la succession.
+          </p>
+
+          <ul class="list">
+            <li>notaire qui ne répond pas aux mails ou aux courriers ;</li>
+            <li>absence de calendrier clair ;</li>
+            <li>pièces demandées plusieurs fois sans suite concrète ;</li>
+            <li>succession bloquée depuis plusieurs mois ;</li>
+            <li>désaccord entre héritiers sur le suivi du dossier ;</li>
+            <li>perte de confiance dans l'étude notariale.</li>
+          </ul>
+
+          <h2>Peut-on changer de notaire en cours de succession ?</h2>
+          <p>
+            En pratique, un héritier peut consulter un autre notaire et demander à ce que le dossier soit repris.
+            Le point sensible n'est pas seulement le choix du nouveau notaire : c'est le transfert effectif du dossier,
+            des pièces et de l'historique.
+          </p>
+
+          <div class="warning-box">
+            <h3>Point de vigilance</h3>
+            <p>
+              Avant de changer de notaire, il faut vérifier si le blocage vient réellement de l'étude notariale
+              ou d'un autre élément : pièces manquantes, héritier silencieux, bien immobilier non réglé,
+              fiscalité, dettes, désaccord familial ou absence de décision commune.
+            </p>
+          </div>
+
+          <h2 id="demarche">Comment demander le transfert d'un dossier successoral ?</h2>
+          <p>
+            Le changement doit être cadré. Une demande floue peut ralentir encore davantage la succession.
+            L'idéal est de préparer une chronologie claire et un courrier précis.
+          </p>
+
+          <div class="steps">
+            <article class="step">
+              <div class="step-no">1</div>
+              <h3>Reprendre la chronologie</h3>
+              <p>
+                Date du décès, ouverture du dossier, pièces transmises, relances effectuées,
+                réponses reçues, blocages identifiés.
+              </p>
+            </article>
+
+            <article class="step">
+              <div class="step-no">2</div>
+              <h3>Identifier le nouveau notaire</h3>
+              <p>
+                Le nouveau notaire doit accepter de reprendre le dossier et comprendre rapidement
+                l'état réel de la succession.
+              </p>
+            </article>
+
+            <article class="step">
+              <div class="step-no">3</div>
+              <h3>Demander le transfert du dossier</h3>
+              <p>
+                La demande doit viser les pièces utiles : actes, échanges, inventaire éventuel,
+                état actif-passif, courriers, documents fiscaux et justificatifs déjà collectés.
+              </p>
+            </article>
+
+            <article class="step">
+              <div class="step-no">4</div>
+              <h3>Suivre le transfert</h3>
+              <p>
+                Il faut contrôler que le dossier n'est pas seulement annoncé comme transféré,
+                mais effectivement transmis avec les pièces nécessaires.
+              </p>
+            </article>
+          </div>
+
+          <h2>Le changement de notaire ralentit-il la succession ?</h2>
+          <p>
+            Pas forcément. Il peut provoquer un délai technique au départ, le temps que le nouveau notaire
+            reprenne connaissance du dossier. Mais si l'ancien suivi était bloqué, le changement peut au contraire
+            permettre de remettre la succession en mouvement.
+          </p>
+
+          <h2>Que faire si l'ancien notaire ne coopère pas ?</h2>
+          <p>
+            Si le transfert n'avance pas, il faut revenir à une méthode écrite : relance claire,
+            courrier recommandé, demande précise de communication des pièces et, si nécessaire,
+            saisine de la chambre des notaires ou accompagnement par un professionnel du droit.
+          </p>
+
+          <ul class="list">
+            <li>relancer par écrit avec dates et références ;</li>
+            <li>demander la communication des pièces du dossier ;</li>
+            <li>éviter les appels dispersés sans trace ;</li>
+            <li>documenter chaque absence de réponse ;</li>
+            <li>préparer un recours si le silence persiste.</li>
+          </ul>
+        </article>
+
+        <aside class="sidebar">
+          <article class="cta-card">
+            <h3>Votre succession est bloquée ?</h3>
+            <p>
+              Axe Dossier peut vous aider à remettre le dossier en ordre avant de relancer,
+              demander un transfert ou envisager un changement de notaire.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Succession%20-%20changer%20de%20notaire">Envoyer mon dossier</a>
+            </div>
+          </article>
+
+          <article class="sidebar-card">
+            <h3>Pages utiles</h3>
+            <ul class="mini-links">
+              <li><a href="notaire-succession-bloquee.html">Succession bloquée chez le notaire</a></li>
+              <li><a href="notaire-ne-repond-pas.html">Notaire qui ne répond pas</a></li>
+              <li><a href="dessaisir-notaire.html">Dessaisir un notaire</a></li>
+              <li><a href="demarches-apres-deces.html">Démarches après décès</a></li>
+              <li><a href="checklist-succession-complete.html">Checklist succession complète</a></li>
+            </ul>
+          </article>
+
+          <article class="sidebar-card">
+            <h3>À éviter</h3>
+            <p>
+              Ne demandez pas un changement de notaire uniquement sous le coup de l'énervement.
+              Si le dossier est mal préparé, le nouveau notaire récupérera surtout un désordre plus coûteux à comprendre.
+            </p>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="faq-wrap">
+          <article class="faq-card">
+            <h3>Peut-on changer de notaire après l'ouverture d'une succession ?</h3>
+            <p>
+              Oui, dans de nombreux cas. Il faut toutefois organiser correctement la reprise du dossier
+              et la transmission des pièces entre les études notariales.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3>Tous les héritiers doivent-ils être d'accord ?</h3>
+            <p>
+              Cela dépend de la situation. En cas de désaccord entre héritiers, il faut clarifier qui demande quoi,
+              quel notaire intervient et sur quelle partie du dossier.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3>Le dossier est-il automatiquement transféré au nouveau notaire ?</h3>
+            <p>
+              Non. Une demande de transfert doit être faite et suivie. Il faut vérifier que les documents utiles
+              sont bien communiqués.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3>Changer de notaire coûte-t-il plus cher ?</h3>
+            <p>
+              Cela dépend du stade d'avancement du dossier, des actes déjà réalisés et du travail nécessaire
+              pour reprendre la succession. Le changement peut entraîner des frais, mais un dossier bloqué peut aussi coûter cher en inertie.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3>Que faire si l'ancien notaire refuse de transmettre le dossier ?</h3>
+            <p>
+              Il faut formaliser la demande par écrit, conserver les preuves de relance et envisager une saisine
+              de la chambre des notaires si le silence ou le blocage persiste.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <article class="cta-card">
+          <h3>Changer de notaire commence par remettre le dossier à plat</h3>
+          <p>
+            Expliquez votre situation, les dates clés, les relances déjà faites et les points de blocage.
+            Vous recevrez une première lecture claire de la situation.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Analyse%20succession%20-%20changer%20de%20notaire">Faire analyser mon dossier</a>
+            <a class="btn btn-secondary" href="notaire-succession-bloquee.html">Retour succession bloquée</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <strong>Axe Dossier</strong>
+      <small>Analyse · Structure · Rédaction</small>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dessaisir un notaire : succession bloquée, que faire ? | Axe Dossier</title>
+  <meta name="description" content="Dessaisir un notaire dans une succession bloquée : quand l’envisager, quelles étapes respecter, quels recours préparer et comment structurer le dossier avant d’agir." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://axe-dossier.fr/dessaisir-notaire.html" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <meta property="og:title" content="Dessaisir un notaire : succession bloquée, que faire ?" />
+  <meta property="og:description" content="Notaire silencieux, succession bloquée, dossier à reprendre : méthode pour préparer un dessaisissement sans agir dans le désordre." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://axe-dossier.fr/dessaisir-notaire.html" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dessaisir un notaire dans une succession bloquée" />
+  <meta name="twitter:description" content="Quand et comment envisager le dessaisissement d’un notaire dans une succession bloquée." />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-logo {
+      height: 72px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .hero { padding: 52px 0 22px; }
+
+    .hero-card,
+    .content-card,
+    .sidebar-card,
+    .cta-card,
+    .faq-card,
+    .disclaimer,
+    .step,
+    .warning-box,
+    .mail-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.8), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4e473e;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      max-width: 14ch;
+      margin-bottom: 16px;
+    }
+
+    .lead {
+      max-width: 66ch;
+      color: #4f4942;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.75);
+      color: var(--accent);
+      border-color: rgba(23,23,23,0.1);
+    }
+
+    .hero-proof {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f;
+      font-size: 0.96rem;
+      max-width: 72ch;
+    }
+
+    section { padding: 18px 0; }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .content-card { padding: 28px; }
+
+    .sidebar {
+      display: grid;
+      gap: 18px;
+    }
+
+    .sidebar-card,
+    .cta-card,
+    .faq-card,
+    .mail-card {
+      padding: 24px;
+    }
+
+    .sidebar-card h3,
+    .cta-card h3,
+    .faq-card h3,
+    .mail-card h3,
+    .content-card h2,
+    .warning-box h3,
+    .disclaimer h3,
+    .step h3 {
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .content-card h2 {
+      font-size: 1.65rem;
+      margin-bottom: 14px;
+      margin-top: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .content-card h2:first-child { margin-top: 0; }
+
+    .content-card p,
+    .sidebar-card p,
+    .cta-card p,
+    .faq-card p,
+    .mail-card p,
+    .warning-box p,
+    .disclaimer p,
+    .step p {
+      color: #4f4942;
+    }
+
+    .list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #4d463f;
+    }
+
+    .list li + li { margin-top: 8px; }
+
+    .warning-box {
+      padding: 22px;
+      margin: 20px 0;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .steps {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .step { padding: 22px; }
+
+    .step-no {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .mini-links {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-links a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .mini-links a:hover {
+      transform: translateY(-1px);
+      background: #f2ece2;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 16px;
+    }
+
+    .faq-card h3 { margin-bottom: 8px; }
+
+    .disclaimer {
+      padding: 22px 24px;
+      margin-top: 12px;
+    }
+
+    .footer { padding: 28px 0 64px; }
+
+    .footer-box {
+      padding: 22px 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      color: #605951;
+      box-shadow: var(--shadow);
+    }
+
+    .footer-box small {
+      display: block;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .grid-main { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 14px 0;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .brand,
+      .nav { justify-content: center; }
+
+      .hero-card,
+      .content-card,
+      .sidebar-card,
+      .cta-card,
+      .faq-card,
+      .mail-card,
+      .warning-box,
+      .step,
+      .disclaimer,
+      .footer-box {
+        padding: 20px;
+      }
+
+      .hero { padding-top: 34px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+
+      .brand {
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .brand-logo {
+        height: 46px;
+        margin: 0 auto;
+      }
+
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier - dossiers complexes, successions bloquées et courriers structurés" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="index.html">Accueil</a>
+        <a class="pill" href="#quand">Quand agir</a>
+        <a class="pill" href="#etapes">Étapes</a>
+        <a class="pill" href="#faq">FAQ</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-card">
+          <div class="eyebrow">Succession · Notaire · Recours</div>
+          <h1>Dessaisir un notaire : que faire quand la succession est bloquée ?</h1>
+          <p class="lead">
+            Demander le dessaisissement d’un notaire n’est pas un réflexe de colère.
+            C’est une démarche à préparer lorsque la succession n’avance plus,
+            que les relances restent sans effet ou que la confiance est rompue.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Dessaisir%20un%20notaire">Faire analyser mon dossier</a>
+            <a class="btn btn-secondary" href="#etapes">Voir les étapes</a>
+          </div>
+          <div class="hero-proof">
+            Avant de demander le dessaisissement, il faut une chronologie claire, des relances datées et un blocage identifiable.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="quand">
+      <div class="wrap grid-main">
+        <article class="content-card">
+          <h2>Dessaisir un notaire : dans quels cas ?</h2>
+          <p>
+            Le dessaisissement peut être envisagé quand le dossier est durablement bloqué
+            et que les démarches classiques ne suffisent plus. Il ne s’agit pas seulement
+            de trouver le notaire lent : il faut pouvoir expliquer ce qui bloque réellement.
+          </p>
+
+          <ul class="list">
+            <li>absence de réponse malgré plusieurs relances écrites ;</li>
+            <li>succession sans avancement visible depuis plusieurs mois ;</li>
+            <li>pièces ou informations demandées sans retour clair ;</li>
+            <li>héritiers sans visibilité sur l’état réel du dossier ;</li>
+            <li>relation de confiance rompue avec l’étude notariale.</li>
+          </ul>
+
+          <h2>Ce qu’il faut faire avant de demander le dessaisissement</h2>
+          <p>
+            Une demande mal préparée peut se retourner contre vous : dossier trop vague,
+            accusations imprécises, pièces absentes. Avant d’agir, il faut remettre le dossier
+            dans l’ordre et établir une chronologie exploitable.
+          </p>
+
+          <div class="warning-box">
+            <h3>Point de vigilance</h3>
+            <p>
+              Le but n’est pas d’écrire un courrier agressif. Le but est de montrer clairement :
+              ce qui a été demandé, quand, à qui, ce qui manque encore et pourquoi la situation
+              justifie une reprise du dossier par un autre notaire.
+            </p>
+          </div>
+
+          <h2 id="etapes">Les étapes avant de dessaisir un notaire</h2>
+          <div class="steps">
+            <article class="step">
+              <div class="step-no">1</div>
+              <h3>Reconstituer la chronologie</h3>
+              <p>
+                Date du décès, ouverture de la succession, courriers envoyés,
+                mails, appels, demandes restées sans réponse : tout doit être classé.
+              </p>
+            </article>
+            <article class="step">
+              <div class="step-no">2</div>
+              <h3>Envoyer une relance structurée</h3>
+              <p>
+                Avant de parler de dessaisissement, une relance claire permet de demander
+                un point d’avancement, les pièces manquantes et un calendrier prévisible.
+              </p>
+            </article>
+            <article class="step">
+              <div class="step-no">3</div>
+              <h3>Formaliser le blocage</h3>
+              <p>
+                Si aucune réponse utile n’arrive, il faut constater précisément le blocage :
+                silence, absence d’acte, absence de compte-rendu, succession immobilisée.
+              </p>
+            </article>
+            <article class="step">
+              <div class="step-no">4</div>
+              <h3>Préparer la demande de changement ou de dessaisissement</h3>
+              <p>
+                Selon la situation, les héritiers peuvent envisager le transfert du dossier
+                vers un autre notaire ou une démarche plus formelle auprès des instances compétentes.
+              </p>
+            </article>
+          </div>
+
+          <h2>Faut-il saisir la chambre des notaires ?</h2>
+          <p>
+            La chambre des notaires peut être saisie lorsque les démarches amiables échouent.
+            Là encore, la qualité du dossier compte : un courrier clair, factuel et documenté
+            a beaucoup plus de poids qu’un récit désordonné.
+          </p>
+
+          <h2>Changer de notaire ou demander le dessaisissement ?</h2>
+          <p>
+            Les deux démarches ne recouvrent pas toujours la même logique.
+            Changer de notaire peut être une solution pratique si les héritiers s’accordent.
+            Le dessaisissement suppose généralement un blocage plus sérieux ou une rupture nette
+            dans le suivi du dossier.
+          </p>
+        </article>
+
+        <aside class="sidebar">
+          <article class="cta-card">
+            <h3>Succession bloquée chez le notaire ?</h3>
+            <p>
+              Envoyez les grandes lignes : date du décès, nom de l’étude, dernières réponses,
+              relances déjà faites et blocage actuel.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Analyse%20dessaisissement%20notaire">Demander une analyse</a>
+            </div>
+          </article>
+
+          <article class="sidebar-card">
+            <h3>Cluster succession</h3>
+            <ul class="mini-links">
+              <li><a href="notaire-succession-bloquee.html">Succession bloquée par le notaire</a></li>
+              <li><a href="notaire-ne-repond-pas.html">Notaire qui ne répond pas</a></li>
+              <li><a href="changer-de-notaire.html">Changer de notaire</a></li>
+              <li><a href="demarches-apres-deces.html">Démarches après décès</a></li>
+              <li><a href="checklist-succession-complete.html">Checklist succession complète</a></li>
+            </ul>
+          </article>
+
+          <article class="sidebar-card">
+            <h3>Pages utiles</h3>
+            <ul class="mini-links">
+              <li><a href="dossier-bloque-que-faire.html">Dossier bloqué : que faire ?</a></li>
+              <li><a href="organisme-ne-repond-pas.html">Organisme qui ne répond pas</a></li>
+              <li><a href="comment-faire-une-mise-en-demeure.html">Faire une mise en demeure</a></li>
+              <li><a href="courrier-caf-urssaf-impots.html">Courrier CAF, URSSAF, impôts</a></li>
+            </ul>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="faq-wrap">
+          <article class="faq-card">
+            <h3>Peut-on dessaisir un notaire pendant une succession ?</h3>
+            <p>
+              Oui, dans certaines situations, notamment si le dossier est durablement bloqué
+              ou si un transfert vers un autre notaire est organisé. La démarche doit être préparée.
+            </p>
+          </article>
+          <article class="faq-card">
+            <h3>Que faire avant de demander le dessaisissement du notaire ?</h3>
+            <p>
+              Il faut reconstituer la chronologie, réunir les échanges, envoyer une relance écrite
+              et identifier précisément le blocage.
+            </p>
+          </article>
+          <article class="faq-card">
+            <h3>Faut-il l’accord de tous les héritiers pour changer de notaire ?</h3>
+            <p>
+              Cela dépend de la situation et du rôle du notaire dans le dossier. En pratique,
+              l’accord des héritiers facilite fortement le transfert et évite un nouveau blocage.
+            </p>
+          </article>
+          <article class="faq-card">
+            <h3>La chambre des notaires peut-elle intervenir ?</h3>
+            <p>
+              Elle peut être saisie en cas de difficulté persistante. La demande doit être factuelle,
+              datée et accompagnée des éléments utiles.
+            </p>
+          </article>
+          <article class="faq-card">
+            <h3>Un notaire lent suffit-il à justifier un dessaisissement ?</h3>
+            <p>
+              Pas forcément. Il faut distinguer lenteur normale, dossier complexe et véritable absence
+              de suivi. C’est cette analyse qui permet de choisir la bonne démarche.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <article class="cta-card">
+          <h3>Avant de dessaisir, il faut structurer</h3>
+          <p>
+            Axe Dossier aide à remettre la succession dans l’ordre : faits, dates,
+            courriers, pièces, relances et stratégie de sortie du blocage.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Dessaisir%20un%20notaire">Envoyer mon dossier</a>
+            <a class="btn btn-secondary" href="notaire-succession-bloquee.html">Retour succession bloquée</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <strong>Axe Dossier</strong>
+      <small>Analyse · Structure · Rédaction</small>
+      <small>Information générale : cette page ne remplace pas un conseil juridique personnalisé.</small>
+    </div>
+  </footer>
+</body>
+</html>

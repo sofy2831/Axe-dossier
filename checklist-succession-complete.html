@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Checklist succession complète : démarches après décès | Axe Dossier</title>
+  <meta name="description" content="Checklist succession complète après un décès : notaire, banques, assurances, impôts, logement, véhicules, retraite, organismes à prévenir et PDF à télécharger." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://axe-dossier.fr/checklist-succession-complete.html" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://axe-dossier.fr/images/axe-dossier.png" />
+  <link rel="shortcut icon" href="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <meta property="og:title" content="Checklist succession complète : démarches après décès" />
+  <meta property="og:description" content="Une checklist interactive pour suivre les démarches après un décès : notaire, banques, assurances, impôts, logement et organismes." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://axe-dossier.fr/checklist-succession-complete.html" />
+  <meta property="og:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Checklist succession complète à télécharger" />
+  <meta name="twitter:description" content="Cochez les démarches réalisées après un décès et téléchargez votre checklist succession en PDF." />
+  <meta name="twitter:image" content="https://axe-dossier.fr/images/axe-dossier.png" />
+
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #171717;
+      --muted: #66615a;
+      --line: rgba(23,23,23,0.08);
+      --accent: #111111;
+      --accent-soft: #e9e1d4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.08);
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 30%),
+        radial-gradient(circle at right 20%, rgba(233,225,212,0.8), transparent 22%),
+        var(--bg);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243,239,232,0.74);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(23,23,23,0.05);
+    }
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .brand-logo { height: 72px; width: auto; display: block; object-fit: contain; flex-shrink: 0; }
+    .brand-name { font-size: 1.45rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(23,23,23,0.07);
+      font-size: 0.94rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .pill:hover { transform: translateY(-1px); background: rgba(255,255,255,0.95); }
+
+    .hero { padding: 52px 0 22px; }
+    .hero-card, .content-card, .sidebar-card, .cta-card, .faq-card, .checklist-card, .disclaimer {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .hero-card { padding: 38px; position: relative; overflow: hidden; }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(233,225,212,0.8), rgba(233,225,212,0));
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #4e473e;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(2.1rem, 4vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      max-width: 14ch;
+      margin-bottom: 16px;
+    }
+    .lead { max-width: 68ch; color: #4f4942; font-size: 1.08rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .btn {
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      font: inherit;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.75); color: var(--accent); border-color: rgba(23,23,23,0.1); }
+    .hero-proof {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,23,23,0.07);
+      color: #4b463f;
+      font-size: 0.96rem;
+      max-width: 72ch;
+    }
+
+    section { padding: 18px 0; }
+    .grid-main { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 20px; align-items: start; }
+    .content-card, .sidebar-card, .cta-card, .faq-card, .checklist-card, .disclaimer { padding: 26px; }
+    .content-card h2, .checklist-card h2 {
+      font-size: 1.62rem;
+      margin-bottom: 14px;
+      margin-top: 28px;
+      letter-spacing: -0.03em;
+    }
+    .content-card h2:first-child, .checklist-card h2:first-child { margin-top: 0; }
+    .content-card p, .sidebar-card p, .cta-card p, .faq-card p, .checklist-card p, .disclaimer p { color: #4f4942; }
+    .list { margin: 14px 0 0; padding-left: 18px; color: #4d463f; }
+    .list li + li { margin-top: 8px; }
+
+    .progress-box {
+      position: sticky;
+      top: 96px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .progress-title { font-weight: 800; font-size: 1.08rem; margin-bottom: 8px; }
+    .progress-text { color: #4f4942; font-size: 0.96rem; margin-bottom: 14px; }
+    .bar { width: 100%; height: 13px; background: #eee7dd; border-radius: 999px; overflow: hidden; border: 1px solid rgba(23,23,23,0.05); }
+    .bar-fill { height: 100%; width: 0%; background: #111; border-radius: 999px; transition: width 0.25s ease; }
+    .small-note { margin-top: 12px; font-size: 0.88rem; color: #6a6259; }
+
+    .check-section {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(23,23,23,0.06);
+    }
+    .check-section h3 { font-size: 1.08rem; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .check-row {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 0;
+      border-top: 1px solid rgba(23,23,23,0.06);
+    }
+    .check-row:first-of-type { border-top: 0; }
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: #111;
+      cursor: pointer;
+    }
+    .check-label { color: #3f3933; }
+    .check-label small { display: block; color: #70685f; margin-top: 2px; }
+
+    .mini-links { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+    .mini-links a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8f5ef;
+      border: 1px solid rgba(23,23,23,0.06);
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .mini-links a:hover { transform: translateY(-1px); background: #f2ece2; }
+    .faq-wrap { display: grid; gap: 16px; }
+    .faq-card h3, .sidebar-card h3, .cta-card h3 { margin-bottom: 8px; font-size: 1.12rem; }
+    .footer { padding: 28px 0 64px; }
+    .footer-box { padding: 22px 24px; border-radius: 24px; background: rgba(255,255,255,0.7); border: 1px solid var(--line); color: #605951; box-shadow: var(--shadow); }
+    .footer-box small { display: block; margin-top: 8px; line-height: 1.5; }
+
+    @media print {
+      .topbar, .hero-actions, .sidebar, .footer, .btn { display: none !important; }
+      body { background: #fff; }
+      .hero-card, .content-card, .checklist-card, .faq-card, .cta-card { box-shadow: none; border: 1px solid #ddd; }
+      .grid-main { display: block; }
+    }
+
+    @media (max-width: 980px) {
+      .grid-main { grid-template-columns: 1fr; }
+      .progress-box { position: relative; top: auto; }
+    }
+    @media (max-width: 720px) {
+      .topbar-inner { min-height: auto; padding: 14px 0; flex-direction: column; align-items: stretch; }
+      .brand, .nav { justify-content: center; }
+      .brand { flex-direction: column; text-align: center; }
+      .brand-logo { height: 46px; margin: 0 auto; }
+      .hero-card, .content-card, .sidebar-card, .cta-card, .faq-card, .checklist-card, .disclaimer, .progress-box { padding: 20px; }
+      .hero { padding-top: 34px; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="index.html" class="brand" aria-label="Axe Dossier">
+        <img src="images/axe-dossier.png" alt="Axe Dossier - dossiers complexes, successions bloquées et démarches administratives" class="brand-logo" />
+        <span class="brand-name">AXE DOSSIER</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a class="pill" href="index.html">Accueil</a>
+        <a class="pill" href="#checklist">Checklist</a>
+        <a class="pill" href="#pdf">PDF</a>
+        <a class="pill" href="#faq">FAQ</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-card">
+          <div class="eyebrow">Succession · Décès · Démarches</div>
+          <h1>Checklist succession complète : les démarches après un décès</h1>
+          <p class="lead">
+            Après un décès, les démarches arrivent vite : acte de décès, banques, assurances, impôts,
+            logement, véhicules, retraite, notaire et suivi de la succession. Cette checklist permet de
+            cocher les étapes réalisées et de télécharger un PDF récapitulatif.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#checklist">Commencer la checklist</a>
+            <button class="btn btn-secondary" type="button" onclick="downloadChecklistPDF()">Télécharger le PDF</button>
+          </div>
+          <div class="hero-proof">
+            Outil gratuit, sans compte et sans enregistrement serveur : les cases cochées restent uniquement dans votre navigateur.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap grid-main">
+        <article class="content-card">
+          <h2>Que faire après le décès d’un proche ?</h2>
+          <p>
+            La priorité est de sécuriser la situation, obtenir les documents essentiels et prévenir les organismes importants.
+            Une succession devient vite difficile à suivre quand les courriers, mails et justificatifs sont dispersés.
+          </p>
+          <ul class="list">
+            <li>regrouper les documents d’état civil ;</li>
+            <li>prévenir les banques et assurances ;</li>
+            <li>identifier les biens, dettes et contrats ;</li>
+            <li>contacter un notaire si nécessaire ;</li>
+            <li>suivre les délais fiscaux et administratifs.</li>
+          </ul>
+
+          <h2>Quand faut-il contacter un notaire ?</h2>
+          <p>
+            Un notaire est généralement nécessaire lorsqu’il existe un bien immobilier, un testament, une donation,
+            un contrat de mariage, une situation familiale complexe ou un patrimoine important. Même lorsqu’il n’est
+            pas obligatoire, il peut aider à sécuriser la liquidation de la succession.
+          </p>
+
+          <h2>Pourquoi utiliser une checklist succession ?</h2>
+          <p>
+            Parce qu’après un décès, on oublie facilement une banque, un contrat, une assurance vie, une pension,
+            un abonnement ou une dette. Une checklist permet de garder une vision claire et de préparer un dossier
+            propre pour le notaire ou les héritiers.
+          </p>
+        </article>
+
+        <aside class="sidebar">
+          <div class="progress-box" id="pdf">
+            <div class="progress-title">Progression succession</div>
+            <div class="progress-text"><span id="doneCount">0</span> démarche(s) réalisée(s) sur <span id="totalCount">0</span></div>
+            <div class="bar" aria-label="Progression de la checklist"><div class="bar-fill" id="barFill"></div></div>
+            <p class="small-note" id="percentText">0 % complété</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="button" onclick="downloadChecklistPDF()">Télécharger ma checklist PDF</button>
+              <button class="btn btn-secondary" type="button" onclick="resetChecklist()">Réinitialiser</button>
+            </div>
+          </div>
+
+          <article class="sidebar-card">
+            <h3>Pages utiles</h3>
+            <ul class="mini-links">
+              <li><a href="demarches-apres-deces.html">Démarches après décès</a></li>
+              <li><a href="notaire-succession-bloquee.html">Succession bloquée</a></li>
+              <li><a href="notaire-ne-repond-pas.html">Notaire ne répond pas</a></li>
+              <li><a href="dessaisir-notaire.html">Dessaisir un notaire</a></li>
+              <li><a href="changer-de-notaire.html">Changer de notaire</a></li>
+            </ul>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="checklist">
+      <div class="wrap">
+        <article class="checklist-card">
+          <h2>Checklist interactive succession</h2>
+          <p>Cochez les démarches effectuées. Vous pourrez ensuite télécharger un PDF récapitulatif.</p>
+
+          <div class="check-section" data-section="Urgence - premières 48 heures">
+            <h3>1. Urgence — premières 48 heures</h3>
+            <label class="check-row"><input type="checkbox" data-label="Obtenir plusieurs copies de l’acte de décès"><span class="check-label">Obtenir plusieurs copies de l’acte de décès<small>Prévoir plusieurs exemplaires pour banques, assurances, retraite, organismes.</small></span></label>
+            <label class="check-row"><input type="checkbox" data-label="Prévenir les proches et les héritiers connus"><span class="check-label">Prévenir les proches et les héritiers connus</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Organiser les obsèques ou vérifier un contrat obsèques"><span class="check-label">Organiser les obsèques ou vérifier un contrat obsèques</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Sécuriser le logement du défunt"><span class="check-label">Sécuriser le logement du défunt<small>Clés, accès, courrier, objets de valeur, risques d’intrusion.</small></span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier la prise en charge des animaux domestiques"><span class="check-label">Vérifier la prise en charge des animaux domestiques</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Rechercher testament, donation, contrat de mariage ou assurance vie"><span class="check-label">Rechercher testament, donation, contrat de mariage ou assurance vie</span></label>
+          </div>
+
+          <div class="check-section" data-section="Documents essentiels">
+            <h3>2. Documents essentiels</h3>
+            <label class="check-row"><input type="checkbox" data-label="Rassembler le livret de famille"><span class="check-label">Rassembler le livret de famille</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Récupérer les pièces d’identité du défunt"><span class="check-label">Récupérer les pièces d’identité du défunt</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Demander les actes de naissance nécessaires"><span class="check-label">Demander les actes de naissance nécessaires</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Réunir contrat de mariage, jugement de divorce ou PACS"><span class="check-label">Réunir contrat de mariage, jugement de divorce ou PACS</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Classer les courriers, mails et justificatifs reçus"><span class="check-label">Classer les courriers, mails et justificatifs reçus</span></label>
+          </div>
+
+          <div class="check-section" data-section="Organismes à prévenir">
+            <h3>3. Organismes à prévenir</h3>
+            <label class="check-row"><input type="checkbox" data-label="Informer l’employeur ou l’ancien employeur"><span class="check-label">Informer l’employeur ou l’ancien employeur</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer les caisses de retraite"><span class="check-label">Informer les caisses de retraite</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer la CPAM ou l’assurance maladie"><span class="check-label">Informer la CPAM ou l’assurance maladie</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer la mutuelle"><span class="check-label">Informer la mutuelle</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer la CAF si concernée"><span class="check-label">Informer la CAF si concernée</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer France Travail si concerné"><span class="check-label">Informer France Travail si concerné</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer les services fiscaux"><span class="check-label">Informer les services fiscaux</span></label>
+          </div>
+
+          <div class="check-section" data-section="Banques et argent">
+            <h3>4. Banques, comptes et moyens de paiement</h3>
+            <label class="check-row"><input type="checkbox" data-label="Identifier toutes les banques du défunt"><span class="check-label">Identifier toutes les banques du défunt</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer les banques du décès"><span class="check-label">Informer les banques du décès</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Lister comptes courants, livrets, PEL, placements"><span class="check-label">Lister comptes courants, livrets, PEL, placements</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier crédits, prêts, découverts et cautions"><span class="check-label">Vérifier crédits, prêts, découverts et cautions</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier cartes bancaires, chéquiers et prélèvements"><span class="check-label">Vérifier cartes bancaires, chéquiers et prélèvements</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Rechercher l’existence d’un coffre-fort"><span class="check-label">Rechercher l’existence d’un coffre-fort</span></label>
+          </div>
+
+          <div class="check-section" data-section="Assurances">
+            <h3>5. Assurances et contrats</h3>
+            <label class="check-row"><input type="checkbox" data-label="Rechercher les contrats d’assurance vie"><span class="check-label">Rechercher les contrats d’assurance vie</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer l’assurance habitation"><span class="check-label">Informer l’assurance habitation</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Informer l’assurance automobile"><span class="check-label">Informer l’assurance automobile</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier assurance emprunteur et prévoyance décès"><span class="check-label">Vérifier assurance emprunteur et prévoyance décès</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier protection juridique ou garantie obsèques"><span class="check-label">Vérifier protection juridique ou garantie obsèques</span></label>
+          </div>
+
+          <div class="check-section" data-section="Logement et biens">
+            <h3>6. Logement, immobilier et biens matériels</h3>
+            <label class="check-row"><input type="checkbox" data-label="Identifier résidence principale et résidences secondaires"><span class="check-label">Identifier résidence principale et résidences secondaires</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Réunir titres de propriété et diagnostics disponibles"><span class="check-label">Réunir titres de propriété et diagnostics disponibles</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier taxe foncière et taxe d’habitation éventuelle"><span class="check-label">Vérifier taxe foncière et taxe d’habitation éventuelle</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Préparer l’inventaire des meubles et objets de valeur"><span class="check-label">Préparer l’inventaire des meubles et objets de valeur</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Identifier véhicules, cartes grises et assurances"><span class="check-label">Identifier véhicules, cartes grises et assurances</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Gérer eau, électricité, gaz, téléphone, internet"><span class="check-label">Gérer eau, électricité, gaz, téléphone, internet</span></label>
+          </div>
+
+          <div class="check-section" data-section="Notaire et succession">
+            <h3>7. Notaire et dossier successoral</h3>
+            <label class="check-row"><input type="checkbox" data-label="Déterminer si un notaire est nécessaire"><span class="check-label">Déterminer si un notaire est nécessaire</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Contacter un notaire et ouvrir le dossier"><span class="check-label">Contacter un notaire et ouvrir le dossier</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Transmettre les documents d’état civil"><span class="check-label">Transmettre les documents d’état civil</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Transmettre les éléments bancaires et patrimoniaux"><span class="check-label">Transmettre les éléments bancaires et patrimoniaux</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier l’identification de tous les héritiers"><span class="check-label">Vérifier l’identification de tous les héritiers</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Suivre l’inventaire et l’évaluation des biens"><span class="check-label">Suivre l’inventaire et l’évaluation des biens</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Suivre la déclaration fiscale de succession"><span class="check-label">Suivre la déclaration fiscale de succession<small>Délai généralement de 6 mois si le décès est survenu en France.</small></span></label>
+          </div>
+
+          <div class="check-section" data-section="Points de blocage">
+            <h3>8. Points de blocage à surveiller</h3>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier si le notaire répond et donne une visibilité"><span class="check-label">Vérifier si le notaire répond et donne une visibilité</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Identifier les pièces manquantes"><span class="check-label">Identifier les pièces manquantes</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Identifier les désaccords entre héritiers"><span class="check-label">Identifier les désaccords entre héritiers</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Vérifier dettes, créances, factures et frais d’obsèques"><span class="check-label">Vérifier dettes, créances, factures et frais d’obsèques</span></label>
+            <label class="check-row"><input type="checkbox" data-label="Préparer une relance écrite si le dossier est bloqué"><span class="check-label">Préparer une relance écrite si le dossier est bloqué</span></label>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap faq-wrap">
+        <article class="faq-card">
+          <h3>Que faire immédiatement après un décès ?</h3>
+          <p>Obtenir l’acte de décès, organiser les obsèques, sécuriser le logement et rechercher les contrats importants : assurance vie, obsèques, testament, contrat de mariage.</p>
+        </article>
+        <article class="faq-card">
+          <h3>Faut-il obligatoirement un notaire pour une succession ?</h3>
+          <p>Pas toujours. Mais un notaire est généralement nécessaire en présence d’un bien immobilier, d’un testament, d’une donation, d’un contrat de mariage ou d’une succession complexe.</p>
+        </article>
+        <article class="faq-card">
+          <h3>Comment savoir s’il existe une assurance vie ?</h3>
+          <p>Il faut rechercher les documents du défunt, interroger les banques ou assureurs connus et effectuer les démarches adaptées auprès des organismes compétents.</p>
+        </article>
+        <article class="faq-card">
+          <h3>Que faire si le notaire ne répond pas ?</h3>
+          <p>Il faut reprendre la chronologie, identifier les pièces transmises, relancer par écrit puis envisager des recours si le silence persiste.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <article class="cta-card">
+          <h3>Votre succession est bloquée ou confuse ?</h3>
+          <p>
+            Axe Dossier aide à remettre de l’ordre dans les pièces, la chronologie et les courriers pour relancer proprement un dossier successoral.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:contact@axe-dossier.fr?subject=Checklist%20succession%20-%20dossier%20a%20analyser">Envoyer mon dossier</a>
+            <a class="btn btn-secondary" href="notaire-succession-bloquee.html">Voir succession bloquée</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-box">
+      <strong>Axe Dossier</strong>
+      <small>Analyse · Structure · Rédaction · Dossiers successoraux complexes</small>
+    </div>
+  </footer>
+
+  <script>
+    const storageKey = "axeDossierChecklistSuccession";
+
+    function getCheckboxes() {
+      return Array.from(document.querySelectorAll("input[type='checkbox'][data-label]"));
+    }
+
+    function saveChecklist() {
+      const states = getCheckboxes().map((box, index) => ({ index, checked: box.checked }));
+      localStorage.setItem(storageKey, JSON.stringify(states));
+    }
+
+    function loadChecklist() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        if (!raw) return;
+        const states = JSON.parse(raw);
+        const boxes = getCheckboxes();
+        states.forEach(item => {
+          if (boxes[item.index]) boxes[item.index].checked = Boolean(item.checked);
+        });
+      } catch (error) {
+        console.warn("Checklist non chargée", error);
+      }
+    }
+
+    function updateProgress() {
+      const boxes = getCheckboxes();
+      const total = boxes.length;
+      const done = boxes.filter(box => box.checked).length;
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById("doneCount").textContent = done;
+      document.getElementById("totalCount").textContent = total;
+      document.getElementById("barFill").style.width = percent + "%";
+      document.getElementById("percentText").textContent = percent + " % complété";
+    }
+
+    function resetChecklist() {
+      if (!confirm("Réinitialiser toutes les cases cochées ?")) return;
+      getCheckboxes().forEach(box => box.checked = false);
+      localStorage.removeItem(storageKey);
+      updateProgress();
+    }
+
+    function escapePDFText(text) {
+      return String(text || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\(/g, "\\(")
+        .replace(/\)/g, "\\)")
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201C\u201D]/g, '"')
+        .replace(/œ/g, "oe")
+        .replace(/Œ/g, "OE")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function wrapText(text, maxLength) {
+      const words = escapePDFText(text).split(" ");
+      const lines = [];
+      let line = "";
+      words.forEach(word => {
+        if ((line + " " + word).trim().length > maxLength) {
+          lines.push(line.trim());
+          line = word;
+        } else {
+          line = (line + " " + word).trim();
+        }
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function buildPDFContent() {
+      const boxes = getCheckboxes();
+      const done = boxes.filter(box => box.checked).length;
+      const total = boxes.length;
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      const date = new Date().toLocaleDateString("fr-FR");
+
+      let pages = [];
+      let currentLines = [];
+      const maxLines = 42;
+
+      function addLine(text) {
+        if (currentLines.length >= maxLines) {
+          pages.push(currentLines);
+          currentLines = [];
+        }
+        currentLines.push(text);
+      }
+
+      addLine("Checklist succession complete - Axe Dossier");
+      addLine("Date de generation : " + date);
+      addLine("Progression : " + done + " / " + total + " demarches realisees (" + percent + " %)");
+      addLine(" ");
+
+      document.querySelectorAll(".check-section").forEach(section => {
+        addLine(" ");
+        addLine(section.dataset.section || "Section");
+        section.querySelectorAll("input[type='checkbox'][data-label]").forEach(box => {
+          const prefix = box.checked ? "[x] " : "[ ] ";
+          wrapText(prefix + box.dataset.label, 78).forEach(line => addLine(line));
+        });
+      });
+
+      addLine(" ");
+      addLine("Document genere depuis axe-dossier.fr - checklist indicative, a adapter a votre situation.");
+      pages.push(currentLines);
+      return pages;
+    }
+
+    function downloadChecklistPDF() {
+      const pages = buildPDFContent();
+      const objects = [];
+      const pageObjectNumbers = [];
+      const contentObjectNumbers = [];
+
+      objects.push("<< /Type /Catalog /Pages 2 0 R >>");
+      objects.push("");
+      objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+
+      pages.forEach((lines, pageIndex) => {
+        const contentObjNum = 4 + pageIndex * 2;
+        const pageObjNum = 5 + pageIndex * 2;
+        contentObjectNumbers.push(contentObjNum);
+        pageObjectNumbers.push(pageObjNum);
+
+        const textOps = ["BT", "/F1 10 Tf", "50 790 Td"];
+        lines.forEach((line, index) => {
+          if (index > 0) textOps.push("0 -17 Td");
+          textOps.push("(" + escapePDFText(line) + ") Tj");
+        });
+        textOps.push("ET");
+        const stream = textOps.join("\n");
+
+        objects.push("<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream");
+        objects.push("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents " + contentObjNum + " 0 R >>");
+      });
+
+      objects[1] = "<< /Type /Pages /Kids [" + pageObjectNumbers.map(n => n + " 0 R").join(" ") + "] /Count " + pages.length + " >>";
+
+      let pdf = "%PDF-1.4\n";
+      const offsets = [0];
+      objects.forEach((obj, index) => {
+        offsets.push(pdf.length);
+        pdf += (index + 1) + " 0 obj\n" + obj + "\nendobj\n";
+      });
+
+      const xrefOffset = pdf.length;
+      pdf += "xref\n0 " + (objects.length + 1) + "\n";
+      pdf += "0000000000 65535 f \n";
+      offsets.slice(1).forEach(offset => {
+        pdf += String(offset).padStart(10, "0") + " 00000 n \n";
+      });
+      pdf += "trailer\n<< /Size " + (objects.length + 1) + " /Root 1 0 R >>\nstartxref\n" + xrefOffset + "\n%%EOF";
+
+      const blob = new Blob([pdf], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "checklist-succession-axe-dossier.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadChecklist();
+      updateProgress();
+      getCheckboxes().forEach(box => {
+        box.addEventListener("change", () => {
+          saveChecklist();
+          updateProgress();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
